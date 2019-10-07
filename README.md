@@ -6,7 +6,7 @@
 
 See API Doc
 
-https://app.swaggerhub.com/apis/megrez/Surge-Lst/1.0.0#/
+https://app.swaggerhub.com/apis-docs/megrez/Surge-Lst/1.0.0
 
 Not all APIs available are listed in the doc.
 
