@@ -3,7 +3,7 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
   Handler,
-} from "aws-lambda"
+} from "aws-lambda";
 import axios from "axios";
 import ini from "ini";
 import { OrderedMap, List } from "immutable";
@@ -23,7 +23,7 @@ const handle = async (url: string, {
     noOutbound: noOutboundFilters = [],
     noMultiplier: noMultiplierFilters = [],
     noServerType: noServerTypeFilters = [],
-  }: {[name: string]: string[]}, resolver: Resolver) => {
+  }: {[name: string]: string[]}, resolver: Resolver, sortMethod: string[]) => {
   let resp = await axios.get(url);
   const config : {[key: string]: Iterable<[string, string]>} = ini.decode(resp.data);
   const proxies: OrderedMap<string,Server> = OrderedMap<string,string>(config.Proxy).map((value, name) => {
@@ -47,10 +47,12 @@ const handle = async (url: string, {
         }
         return filter.includes(property);
       });
-  }).valueSeq().map((server) => {
+  }).valueSeq().sort((a, b) => {
+    return List(sortMethod).map((key) => {
+      return <number>(<string>(<any>a)[key]).localeCompare(<string>(<any>b)[key]);
+    }).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
+  }).map((server) => {
     return `${addFlag(server.name)} = ${server.value}`
-  }).sort((a, b) => {
-    return a.localeCompare(b, "pinyin");
   }).toArray().join("\n");
 }
 
@@ -64,10 +66,11 @@ export const yoyu: Handler<
       body: "invalid parameters"
     }
   }
-  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {}
+  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {};
   const token = event.queryStringParameters.token;
   const id = event.queryStringParameters.id;
-  const result = await handle(`https://home.yoyu.cc/subscribe/${id}/${token}/surge3/`, event.multiValueQueryStringParameters, yoyuResolver);
+  const sortMethod = event.queryStringParameters.sort ? event.queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"];
+  const result = await handle(`https://home.yoyu.cc/subscribe/${id}/${token}/surge3/`, event.multiValueQueryStringParameters, yoyuResolver, sortMethod);
   return {
     statusCode: 200,
     headers: {"content-type": "text/plain"},
@@ -85,9 +88,10 @@ export const boslife: Handler<
       body: "invalid parameters"
     }
   }
-  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {}
+  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {};
   const token = event.queryStringParameters.token;
-  const result = await handle(`https://api.cn1.info/downloads/conf/${token}.conf`, event.multiValueQueryStringParameters, boslifeResolver);
+  const sortMethod = event.queryStringParameters.sort ? event.queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"];
+  const result = await handle(`https://api.cn1.info/downloads/conf/${token}.conf`, event.multiValueQueryStringParameters, boslifeResolver, sortMethod);
   return {
     statusCode: 200,
     headers: {"content-type": "text/plain"},
@@ -105,9 +109,10 @@ export const conair: Handler<
       body: "invalid parameters"
     }
   }
-  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {}
+  event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {};
   const token = event.queryStringParameters.token;
-  const result = await handle(`https://conair.me/link/${token}?mu=6`, event.multiValueQueryStringParameters, boslifeResolver);
+  const sortMethod = event.queryStringParameters.sort ? event.queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"];
+  const result = await handle(`https://conair.me/link/${token}?mu=6`, event.multiValueQueryStringParameters, boslifeResolver, sortMethod);
   return {
     statusCode: 200,
     headers: {"content-type": "text/plain"},

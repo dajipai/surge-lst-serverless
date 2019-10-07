@@ -1,13 +1,13 @@
 import Resolver from "./resolver";
 
 class Server {
-    name: string;
-    value: string;
-    provider: string;
-    serverType: string;
-    inbound: string;
-    outbound: string;
-    multiplier: string;
+    readonly name: string;
+    readonly value: string;
+    readonly provider: string;
+    readonly serverType: string;
+    readonly inbound: string;
+    readonly outbound: string;
+    readonly multiplier: string;
 
     constructor(name: string, value: string, provider: string, serverType: string, inbound: string, outbound: string, multiplier: string = "1.0") {
         this.name = name;
@@ -17,6 +17,10 @@ class Server {
         this.inbound = inbound;
         this.outbound = outbound;
         this.multiplier = multiplier;
+    }
+
+    static isValidComparator(key: string): boolean {
+        return ["inbound", "outbound", "serverType"].includes(key);
     }
 }
 
