@@ -30,7 +30,6 @@ const handle = async (url: string, {
   const proxies: OrderedMap<string,Server> = OrderedMap<string,string>(config.Proxy).map((value, name) => {
     return (new ServerBuilder(name, value)).withResolver(resolver).build();
   }).filter(resolver.defaultFilter());
-  console.log(proxies.toArray());
   return proxies.filter((server) => {
     return List<string>([server.inbound, server.outbound, server.multiplier, server.serverType])
       .zip<string[]>(List([inboundFilters, outboundFilters, multiplierFilters, serverTypeFilters]))
