@@ -10,6 +10,7 @@ import { OrderedMap, List } from "immutable";
 import Server, { ServerBuilder } from "./server";
 import yoyuResolver from "./yoyu";
 import boslifeResolver from "./boslife";
+import conairResolver from "./conair";
 import { addFlag } from "emoji-append";
 import Resolver from "./resolver";
 
@@ -29,6 +30,7 @@ const handle = async (url: string, {
   const proxies: OrderedMap<string,Server> = OrderedMap<string,string>(config.Proxy).map((value, name) => {
     return (new ServerBuilder(name, value)).withResolver(resolver).build();
   }).filter(resolver.defaultFilter());
+  console.log(proxies.toArray());
   return proxies.filter((server) => {
     return List<string>([server.inbound, server.outbound, server.multiplier, server.serverType])
       .zip<string[]>(List([inboundFilters, outboundFilters, multiplierFilters, serverTypeFilters]))
@@ -112,7 +114,7 @@ export const conair: Handler<
   event.multiValueQueryStringParameters = event.multiValueQueryStringParameters || {};
   const token = event.queryStringParameters.token;
   const sortMethod = event.queryStringParameters.sort ? event.queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"];
-  const result = await handle(`https://conair.me/link/${token}?mu=6`, event.multiValueQueryStringParameters, boslifeResolver, sortMethod);
+  const result = await handle(`https://conair.me/link/${token}?mu=6`, event.multiValueQueryStringParameters, conairResolver, sortMethod);
   return {
     statusCode: 200,
     headers: {"content-type": "text/plain"},
