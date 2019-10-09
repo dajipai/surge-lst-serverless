@@ -1144,6 +1144,11 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
+core-js@3:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.2.1.tgz#cd41f38534da6cc59f7db050fe67307de9868b09"
+  integrity sha512-Qa5XSVefSVPRxy2XfUC13WbvqkxhkwB3ve+pgCQveNgYzbM/UxZeu1dcOX/xr4UmfUd+muuvsaxilQzCyUurMw==
+
 core-js@^2.5.7:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
@@ -1424,10 +1429,12 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-emoji-append@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.1.0.tgz#ebc716a75b9b1e2a77c83e60d8204e0220f12b75"
-  integrity sha512-nhXJX9QBnFMdh1WH9bYLwNMLrtnVUwBYuAHnEfHGxJPMxVoQtLTODWIZe45Bh78LOA2s5U7vQFzieyIMSG9gAw==
+emoji-append@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.1.2.tgz#ae9df4d2d6b3d1d52a3ad1188cbb53d318cda654"
+  integrity sha512-TmsdR+42CukJNmZvlCeXe+3XPWIQw3goaAVmUYyjjSRBbhoaf4qdC8F2eRVzMc5z0T0yUR4UO1kXgVt5Za6z0w==
+  dependencies:
+    core-js "3"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
