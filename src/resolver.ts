@@ -33,10 +33,6 @@ export default class Resolver {
                 break;
             }
         }
-        const matches = builder.name.match(/\[(\d\.\d)\]/);
-        if (matches != null) {
-            builder.multiplier = matches[1];
-        }
     }
 
     public defaultFilter(): (server: Server) => boolean {
