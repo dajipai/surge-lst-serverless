@@ -77,6 +77,12 @@ functions:
       - http:
           path: conair
           method: get
+  ytoo:
+    handler: src/bridge.ytoo
+    events:
+      - http:
+          path: ytoo
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
