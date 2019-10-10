@@ -4,7 +4,6 @@ trigger:
 variables:
 - group: AWS Serverless
 
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -28,5 +27,5 @@ steps:
 - script: npx serverless config credentials --provider aws --key $(SERVERLESS_ACCESS_KEY_ID) --secret $(SERVERLESS_SECRET_ACCESS_KEY)
   displayName: 'Config credentials'
 
-- script: npx serverless deploy -v
+- script: npx serverless deploy --stage production -v
   displayName: 'Deploy to aws'
