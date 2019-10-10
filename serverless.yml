@@ -15,8 +15,8 @@ service: surge-lst-serverless
 plugins:
   - serverless-offline
 # app and org for use with dashboard.serverless.com
-app: surge-lst
-org: lujiajing1126
+# app: surge-lst
+# org: lujiajing1126
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details

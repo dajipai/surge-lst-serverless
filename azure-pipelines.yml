@@ -25,3 +25,8 @@ steps:
 - script: npx jest
   displayName: 'Run test-cases'
 
+- script: npx serverless config credentials --provider aws --key $(SERVERLESS_ACCESS_KEY_ID) --secret $(SERVERLESS_SECRET_ACCESS_KEY)
+  displayName: 'Config credentials'
+
+- script: npx serverless deploy -v
+  displayName: 'Deploy to aws'
