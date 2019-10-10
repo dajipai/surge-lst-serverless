@@ -20,5 +20,5 @@ steps:
 - script: yarn
   displayName: 'Install dependencies'
 
-- script: jest
+- script: npx jest
   displayName: 'Run test-cases'
