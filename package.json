@@ -12,11 +12,14 @@
     "@types/aws-lambda": "^8.10.33",
     "@types/js-base64": "^2.3.1",
     "@types/node": "^12.7.12",
+    "@types/validator": "^10.11.3",
+    "@usefultools/monads": "^2.1.0",
     "axios": "^0.19.0",
     "emoji-append": "^1.1.2",
     "immutable": "^4.0.0-rc.12",
     "js-base64": "^2.5.1",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "validator": "^11.1.0"
   }
 }
