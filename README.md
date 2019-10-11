@@ -17,6 +17,7 @@ Not all APIs available are listed in the doc.
 - [x] YoYu
 - [x] Conair
 - [x] Boslife
+- [x] YTOO
 
 ## LICENSE
 
