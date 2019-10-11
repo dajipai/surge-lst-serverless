@@ -5,7 +5,7 @@ import { addFlag } from "emoji-append";
 import Resolver from "./resolver";
 import Server, { ServerBuilder } from "./server";
 
-interface SurgeProxiesProvider {
+export interface SurgeProxiesProvider {
     proxies(url: string) : Promise<Array<[string, string]>>
 }
 

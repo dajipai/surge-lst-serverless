@@ -10,6 +10,7 @@ import { ProxyContext, SurgeProfile, SurgeNodeList } from "./profile";
 import { SurgeNodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
+import { V2raySubscription } from "./formatter/v2ray";
 
 export const yoyu: Handler<
   APIGatewayProxyEvent,
@@ -77,10 +78,8 @@ export const ytoo: Handler<
     if(interceptor.check(id).isEmpty()) {
       return Err(ValidationError.create(400, "id cannot be empty"));
     }
-    const commonSubUrl = `https://ytoo.dev/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}`
-    const commonSubUrlBase64 = Base64.encodeURI(commonSubUrl);
-    const context = new ProxyContext(new SurgeNodeList());
-    const result = await context.handle(`https://node.ytoo.site/api/v1/subtrans?url=${commonSubUrlBase64}&dest=surgenl`, multiValueQueryStringParameters, ytooResolver, sortMethod);
+    const context = new ProxyContext(new V2raySubscription());
+    const result = await context.handle(`https://ytoo.dev/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}`, multiValueQueryStringParameters, ytooResolver, sortMethod);
     return Ok({
       statusCode: 200,
       headers: {"content-type": "text/plain"},
