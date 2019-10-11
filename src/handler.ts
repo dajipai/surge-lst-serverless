@@ -5,12 +5,10 @@ import {
   Handler,
 } from "aws-lambda";
 import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver } from "./provider";
-import { Base64 } from "js-base64";
-import { ProxyContext, SurgeProfile, SurgeNodeList } from "./profile";
+import { ProxyContext, SurgeProfile, SurgeNodeList, V2raySubscription } from "./profile";
 import { SurgeNodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
-import { V2raySubscription } from "./formatter/v2ray";
 
 export const yoyu: Handler<
   APIGatewayProxyEvent,

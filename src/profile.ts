@@ -81,4 +81,6 @@ export class ProxyContext {
             return `${addFlag(server.name)} = ${server.value}`
         }).toArray().join("\n");
     }
- }
+}
+
+export { V2raySubscription } from "./formatter/v2ray";
