@@ -2,6 +2,7 @@ import validator from "validator";
 
 export interface IValidator {
     isEmpty(): boolean
+    isNotBoolean(): boolean
 }
 
 export class ValidationError extends Error {
@@ -26,5 +27,9 @@ export class Validator implements IValidator {
 
     isEmpty(): boolean {
         return this.value === undefined || validator.isEmpty(this.value);
+    }
+
+    isNotBoolean() : boolean {
+        return this.value === undefined || !validator.isBoolean(this.value);
     }
 }

@@ -15,10 +15,11 @@ type ControllerFunction<T> = (context: Interceptor<T>, parameters: T) => Promise
 
 export interface SurgeNodeListLambdaParameters {
     id?: string
+    useEmoji: string
     token: string
     sortMethod: string[]
     multiValueQueryStringParameters: {[name: string]: string[]}
-};
+}
 
 export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
 
@@ -32,6 +33,7 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
         if (!event.queryStringParameters) {
             return {
               statusCode: 400,
+              headers: {"content-type": "text/plain"},
               body: "invalid parameters"
             };
         }
@@ -41,16 +43,17 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
         const res = await callback(this, this.convert(event.queryStringParameters, event.multiValueQueryStringParameters));
         return res.match({
             ok: val => val,
-            err: errVal => ({ statusCode: errVal.code, body: errVal.message, "content-type": "text/plain" })
+            err: errVal => ({ statusCode: errVal.code, body: errVal.message, headers: {"content-type": "text/plain" }})
         });
     }
-};
+}
 
 export class SurgeNodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
     convert(queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): SurgeNodeListLambdaParameters {
         return {
             id: queryStringParameters.id,
             token: queryStringParameters.token || "",
+            useEmoji: queryStringParameters.emoji ? queryStringParameters.emoji : "true",
             sortMethod: queryStringParameters.sort ? queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"],
             multiValueQueryStringParameters
         }
