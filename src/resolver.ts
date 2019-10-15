@@ -1,4 +1,5 @@
-import Server, { ServerBuilder } from "./server";
+import ServerInfo, { ServerBuilder } from "./server";
+import { Direct } from "./proxy";
 
 export default class Resolver {
     private readonly inboundsMap: {[key: string]: string};
@@ -35,9 +36,9 @@ export default class Resolver {
         }
     }
 
-    public defaultFilter(): (server: Server) => boolean {
+    public defaultFilter(): (server: ServerInfo) => boolean {
         return (server) => {
-            return server.name.toLowerCase() !== "direct";
+            return !(server.proxy instanceof Direct);
         };
     }
 }
