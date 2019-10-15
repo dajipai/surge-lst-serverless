@@ -1,6 +1,6 @@
 import Resolver from "./resolver";
 
-class Server {
+class ServerInfo {
     readonly name: string;
     readonly value: string;
     readonly provider: string;
@@ -69,7 +69,7 @@ export class ServerBuilder {
     }
 
     build() {
-        return new Server(this.name, 
+        return new ServerInfo(this.name, 
             this.value, 
             this._provider, 
             this._serverType,
@@ -79,4 +79,4 @@ export class ServerBuilder {
     }
 }
 
-export default Server
+export default ServerInfo
