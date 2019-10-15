@@ -22,7 +22,23 @@ export class ShadowsocksProxy implements Proxy {
 }
 
 export class V2rayProxy implements Proxy {
+    readonly host: string;
+    readonly port: number;
+    readonly username: string;
+    readonly wsPath: string;
+    readonly ws: boolean;
+    readonly tls: boolean;
+    readonly wsHeaders: string;
 
+    constructor(host: string, port: number, username: string, ws: boolean, tls: boolean, wsPath: string, wsHeaders: string = "") {
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.ws = ws;
+        this.tls = tls;
+        this.wsPath = wsPath;
+        this.wsHeaders = wsHeaders;
+    }
 }
 
 export class Direct implements Proxy {

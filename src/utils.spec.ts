@@ -1,5 +1,5 @@
 import { getProxiesFromSurgeProfile, getProxiesFromSurgeNodeList } from "./utils";
-import { Direct, HttpProxy, ExternalProxy, Reject, RejectTinyPNG, ShadowsocksProxy } from "./proxy";
+import { Direct, HttpProxy, ExternalProxy, Reject, RejectTinyPNG, ShadowsocksProxy, V2rayProxy } from "./proxy";
 
 const mockedProfile = `
 #!MANAGED-CONFIG https://example.com/surge.conf interval=86400 strict=true
@@ -78,6 +78,14 @@ const customLegacyNodeListExample = `
 香港 - 中转 1 - 上海 = custom,1.2.3.4,12345,rc4-md5,password,https://raw.githubusercontent.com/ConnersHua/SSEncrypt/master/SSEncrypt.module
 `
 
+const customLegacyNodeListWithUDPRelay = `
+專綫-上海-加拿大 = custom,1.2.3.4,12345,aes-128-cfb,password,udp-relay=true
+`
+
+const vmessExample = `
+BGP-京韩-KT-A(0.2) = vmess, 1.2.3.4, 12345, username=user-name-example-uuid, ws=true, tls=false, ws-path=/
+`
+
 
 test("General Profile", () => {
     let proxies = getProxiesFromSurgeProfile(mockedProfile);
@@ -132,4 +140,20 @@ test("legacySSNodeList", () => {
     expect(proxies[0][0]).toEqual("香港 - 中转 1 - 上海");
     expect(proxies[0][1]).toBeInstanceOf(ShadowsocksProxy);
     expect(proxies[0][1]).toStrictEqual(new ShadowsocksProxy("1.2.3.4", 12345, "password", "rc4-md5"));
+});
+
+test("legacySSNodeListUDP", () => {
+    let proxies = getProxiesFromSurgeNodeList(customLegacyNodeListWithUDPRelay);
+    expect(proxies.length).toBe(1);
+    expect(proxies[0][0]).toEqual("專綫-上海-加拿大");
+    expect(proxies[0][1]).toBeInstanceOf(ShadowsocksProxy);
+    expect(proxies[0][1]).toStrictEqual(new ShadowsocksProxy("1.2.3.4", 12345, "password", "aes-128-cfb", undefined, undefined, true));
+})
+
+test("legacyVmess", () => {
+    let proxies = getProxiesFromSurgeNodeList(vmessExample);
+    expect(proxies.length).toBe(1);
+    expect(proxies[0][0]).toEqual("BGP-京韩-KT-A(0.2)");
+    expect(proxies[0][1]).toBeInstanceOf(V2rayProxy);
+    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/"));
 })

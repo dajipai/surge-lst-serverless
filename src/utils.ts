@@ -1,4 +1,4 @@
-import { Proxy, ShadowsocksProxy, Direct, Reject, RejectTinyPNG, HttpProxy, ExternalProxy } from "./proxy";
+import { Proxy, ShadowsocksProxy, Direct, Reject, RejectTinyPNG, HttpProxy, ExternalProxy, V2rayProxy } from "./proxy";
 import { SurgeDict } from "./dict";
 
 export const getProxiesFromSurgeProfile = (content: string): Array<[string, Proxy]> => {
@@ -54,7 +54,7 @@ export const getProxiesFromSurgeNodeList = (content: string): Array<[string, Pro
 }
 
 export const createSurgeProxy = (content: string): Proxy => {
-    // vmess
+    // ss
     if (content.startsWith("ss")) {
         const server = new SurgeDict(content);
         let host = server.getKey(1);
@@ -83,8 +83,39 @@ export const createSurgeProxy = (content: string): Proxy => {
             udpRelay = true;
         }
         return new ShadowsocksProxy(host, port, password, encryptMethod, obfs, obfsHost, udpRelay);
+    // vmess
     } else if (content.startsWith("vmess")) {
-        throw new Error("Unimplemented now"); 
+        const server = new SurgeDict(content); 
+        let host = server.getKey(1);
+        if (host === undefined) {
+            throw new Error("host not valid");
+        }
+        let portStr = server.getKey(2);
+        if (portStr === undefined) {
+            throw new Error("port not valid");
+        }
+        let port = parseInt(portStr);
+        let username = server.getKey("username");
+        if (username === undefined) {
+            throw new Error("username not valid");
+        }
+        let wsStr = server.getKey("ws");
+        let ws = false;
+        if (wsStr === "true") {
+            ws = true;
+        }
+        let tlsStr = server.getKey("tls");
+        let tls = false;
+        if (tlsStr == "true") {
+            tls = true;
+        }
+        let wsPath = server.getKey("ws-path");
+        if (wsPath === undefined) {
+            wsPath = "/";
+        }
+        let wsHeaders = server.getKey("ws-headers");
+        return new V2rayProxy(host, port, username, ws, tls, wsPath, wsHeaders);
+    // custom, probably ss
     } else if (content.startsWith("custom")) {
         const server = new SurgeDict(content);
         let host = server.getKey(1);
