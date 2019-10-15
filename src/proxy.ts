@@ -28,9 +28,9 @@ export class V2rayProxy implements Proxy {
     readonly wsPath: string;
     readonly ws: boolean;
     readonly tls: boolean;
-    readonly wsHeaders: string;
+    readonly wsHeaders?: string;
 
-    constructor(host: string, port: number, username: string, ws: boolean, tls: boolean, wsPath: string, wsHeaders: string = "") {
+    constructor(host: string, port: number, username: string, ws: boolean, tls: boolean, wsPath: string, wsHeaders?: string) {
         this.host = host;
         this.port = port;
         this.username = username;
