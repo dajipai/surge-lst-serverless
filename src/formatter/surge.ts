@@ -2,9 +2,9 @@ import { Formatter } from ".";
 import { Proxy, ShadowsocksProxy, V2rayProxy } from "../proxy";
 
 export class SurgeFormatter implements Formatter {
-    format(proxy: Proxy) : string {
+    format(proxy: Proxy, name: string) : string {
         if (proxy instanceof ShadowsocksProxy) {
-            let res = `ss,${proxy.host},${proxy.port},encrypt-method=${proxy.encryptionMethod},password=${proxy.password}`;
+            let res = `${name} = ss,${proxy.host},${proxy.port},encrypt-method=${proxy.encryptionMethod},password=${proxy.password}`;
             if (proxy.obfs !== undefined) {
                res += `,obfs=${proxy.obfs},obfs-host=${proxy.obfsHost}`;
             }
@@ -13,12 +13,12 @@ export class SurgeFormatter implements Formatter {
             }
             return res;
         } else if (proxy instanceof V2rayProxy) {
-            let res = `vmess,${proxy.host},${proxy.port},username=${proxy.username},ws=${proxy.ws},tls=${proxy.tls},ws-path=${proxy.wsPath}`;
+            let res = `${name} = vmess,${proxy.host},${proxy.port},username=${proxy.username},ws=${proxy.ws},tls=${proxy.tls},ws-path=${proxy.wsPath}`;
             if (proxy.wsHeaders !== undefined) {
                 res += `,ws-headers=${proxy.wsHeaders}`
             }
             return res;
         }
-        throw new Error("the proxy type is not supported");
+        throw new Error("the proxy type is not supported by Surge");
     }
 }

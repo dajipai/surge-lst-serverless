@@ -39,6 +39,14 @@ export class V2rayProxy implements Proxy {
         this.wsPath = wsPath;
         this.wsHeaders = wsHeaders;
     }
+
+    // helpers
+    get method(): string {
+        if (this.ws == true) {
+            return "chacha20-ietf-poly1305";
+        }
+        return "none;"
+    }
 }
 
 export class Direct implements Proxy {

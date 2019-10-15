@@ -59,9 +59,9 @@ export class ProxyContext {
             }).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {
-                return `${addFlag(server.name)} = ${this.formatter.format(server.proxy)}`;
+                return this.formatter.format(server.proxy, addFlag(server.name));
             } else {
-                return `${server.name} = ${this.formatter.format(server.proxy)}`;
+                return this.formatter.format(server.proxy, server.name);
             }
         }).toArray().join("\n");
     }
