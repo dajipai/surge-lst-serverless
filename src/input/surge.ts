@@ -1,5 +1,27 @@
-import { Proxy, ShadowsocksProxy, Direct, Reject, RejectTinyPNG, HttpProxy, ExternalProxy, V2rayProxy } from "./proxy";
-import { SurgeDict } from "./dict";
+import { Proxy, ShadowsocksProxy, Direct, Reject, RejectTinyPNG, HttpProxy, ExternalProxy, V2rayProxy } from "../proxy";
+import { SurgeDict } from "../dict";
+import axios from "axios";
+import { ProxiesInput } from ".";
+
+export class SurgeProfile implements ProxiesInput {
+    constructor() {
+    }
+
+    async proxies(url: string) : Promise<Array<[string, Proxy]>> {
+        let resp = await axios.get<string>(url);
+        return getProxiesFromSurgeProfile(resp.data);
+    }
+}
+
+export class SurgeNodeList implements ProxiesInput {
+    constructor() {
+    }
+
+    async proxies(url: string) : Promise<Array<[string, Proxy]>> {
+        let resp = await axios.get<string>(url);
+        return getProxiesFromSurgeNodeList(resp.data);
+    }
+}
 
 export const getProxiesFromSurgeProfile = (content: string): Array<[string, Proxy]> => {
     let proxies: Array<[string, Proxy]> = [];

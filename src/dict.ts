@@ -1,4 +1,4 @@
-import { splitKV } from "./utils";
+import { splitKV } from "./input/surge";
 
 export class SurgeDict {
     value: string;

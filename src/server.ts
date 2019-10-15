@@ -1,17 +1,18 @@
 import Resolver from "./resolver";
+import { Proxy } from "./proxy";
 
 class ServerInfo {
     readonly name: string;
-    readonly value: string;
+    readonly proxy: Proxy;
     readonly provider: string;
     readonly serverType: string;
     readonly inbound: string;
     readonly outbound: string;
     readonly multiplier: string;
 
-    constructor(name: string, value: string, provider: string, serverType: string, inbound: string, outbound: string, multiplier: string = "1.0") {
+    constructor(name: string, proxy: Proxy, provider: string, serverType: string, inbound: string, outbound: string, multiplier: string = "1.0") {
         this.name = name;
-        this.value = value;
+        this.proxy = proxy;
         this.provider = provider;
         this.serverType = serverType;
         this.inbound = inbound;
@@ -26,16 +27,16 @@ class ServerInfo {
 
 export class ServerBuilder {
     name: string;
-    value: string;
+    proxy: Proxy;
     private _provider: string;
     private _serverType: string;
     private _inbound: string;
     private _outbound: string;
     private _multiplier: string;
 
-    constructor(name: string, value: string) {
+    constructor(name: string, proxy: Proxy) {
         this.name = name;
-        this.value = value;
+        this.proxy = proxy;
         this._serverType = "";
         this._provider = "unknown";
         this._inbound = "";
@@ -70,7 +71,7 @@ export class ServerBuilder {
 
     build() {
         return new ServerInfo(this.name, 
-            this.value, 
+            this.proxy, 
             this._provider, 
             this._serverType,
             this._inbound,

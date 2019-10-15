@@ -1,42 +1,22 @@
-import axios from "axios";
 import { OrderedMap, List } from "immutable";
-import { getProxiesFromSurgeProfile, getProxiesFromSurgeNodeList } from "./utils";
 import { addFlag } from "emoji-append";
 import Resolver from "./resolver";
-import Server, { ServerBuilder, Proxy } from "./server";
-
-export interface ProxiesInput {
-    proxies(url: string) : Promise<Array<[string, Proxy]>>
-}
-
-export class SurgeProfile implements ProxiesInput {
-    constructor() {
-    }
-
-    async proxies(url: string) : Promise<Array<[string, Proxy]>> {
-        let resp = await axios.get<string>(url);
-        return getProxiesFromSurgeProfile(resp.data);
-    }
-}
-
-export class SurgeNodeList implements ProxiesInput {
-    constructor() {
-    }
-
-    async proxies(url: string) : Promise<Array<[string, Proxy]>> {
-        let resp = await axios.get<string>(url);
-        return getProxiesFromSurgeNodeList(resp.data);
-    }
-}
+import ServerInfo, { ServerBuilder } from "./server";
+import { Proxy } from "./proxy";
+import { Formatter } from "./formatter";
+import { SurgeFormatter } from "./formatter/surge";
+import { ProxiesInput } from "./input";
 
 export class ProxyContext {
-    private provider: SurgeProxiesProvider;
+    private provider: ProxiesInput;
+    private formatter: Formatter;
   
-    constructor(provider: SurgeProxiesProvider){
-       this.provider = provider;
+    constructor(provider: ProxiesInput) {
+        this.formatter = new SurgeFormatter();
+        this.provider = provider;
     }
   
-    async getProxies(url: string): Promise<Array<[string, Server]>> {
+    async getProxies(url: string): Promise<Array<[string, Proxy]>> {
        return await this.provider.proxies(url);
     }
 
@@ -52,7 +32,7 @@ export class ProxyContext {
         noServerType: noServerTypeFilters = [],
       }: {[name: string]: string[]}, resolver: Resolver, sortMethod: string[], useEmoji: boolean) {
         const data = await this.getProxies(url);
-        const proxies: OrderedMap<string,Server> = OrderedMap<string,string>(data).map((value, name) => {
+        const proxies: OrderedMap<string,ServerInfo> = OrderedMap<string,Proxy>(data).map((value, name) => {
             return (new ServerBuilder(name, value)).withResolver(resolver).build();
         }).filter(resolver.defaultFilter());
         return proxies.filter((server) => {
@@ -79,12 +59,10 @@ export class ProxyContext {
             }).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {
-                return `${addFlag(server.name)} = ${server.value}`;
+                return `${addFlag(server.name)} = ${this.formatter.format(server.proxy)}`;
             } else {
-                return `${server.name} = ${server.value}`;
+                return `${server.name} = ${this.formatter.format(server.proxy)}`;
             }
         }).toArray().join("\n");
     }
 }
-
-export { V2raySubscription } from "./formatter/v2ray";

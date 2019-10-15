@@ -5,7 +5,8 @@ import {
   Handler,
 } from "aws-lambda";
 import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver } from "./provider";
-import { ProxyContext, SurgeProfile, SurgeNodeList, V2raySubscription } from "./profile";
+import { ProxyContext } from "./profile";
+import { SurgeProfile, SurgeNodeList, V2raySubscription } from "./input";
 import { SurgeNodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";

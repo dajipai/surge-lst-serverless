@@ -1,5 +1,5 @@
-import { getProxiesFromSurgeProfile, getProxiesFromSurgeNodeList } from "./utils";
-import { Direct, HttpProxy, ExternalProxy, Reject, RejectTinyPNG, ShadowsocksProxy, V2rayProxy } from "./proxy";
+import { getProxiesFromSurgeProfile, getProxiesFromSurgeNodeList } from "./surge";
+import { Direct, HttpProxy, ExternalProxy, Reject, RejectTinyPNG, ShadowsocksProxy, V2rayProxy } from "../proxy";
 
 const mockedProfile = `
 #!MANAGED-CONFIG https://example.com/surge.conf interval=86400 strict=true
