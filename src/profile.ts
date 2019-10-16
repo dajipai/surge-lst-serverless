@@ -7,13 +7,16 @@ import { Formatter } from "./formatter";
 import { SurgeFormatter } from "./formatter/surge";
 import { ProxiesInput } from "./input";
 import { QuantumultXFormatter } from "./formatter/quanx";
+import { Software, Surge } from "./softwares";
 
 export class ProxyContext {
     private provider: ProxiesInput;
     private formatter: Formatter;
+    private software: Software;
 
-    constructor(provider: ProxiesInput, output: string = "surge") {
-        if (output === "surge") {
+    constructor(provider: ProxiesInput, output: Software) {
+        this.software = output;
+        if (output instanceof Surge) {
             this.formatter = new SurgeFormatter();
         } else {
             this.formatter = new QuantumultXFormatter();
@@ -40,7 +43,9 @@ export class ProxyContext {
         const proxies: OrderedMap<string,ServerInfo> = OrderedMap<string,Proxy>(data).map((value, name) => {
             return (new ServerBuilder(name, value)).withResolver(resolver).build();
         }).filter(resolver.defaultFilter());
-        return proxies.filter((server) => {
+        return proxies.filter(
+            info => this.software.satisfies(info.proxy)
+        ).filter((server) => {
             return List<string>([server.inbound, server.outbound, server.multiplier, server.serverType])
                 .zip<string[]>(List([inboundFilters, outboundFilters, multiplierFilters, serverTypeFilters]))
                 .every(([property, filter]) => {
