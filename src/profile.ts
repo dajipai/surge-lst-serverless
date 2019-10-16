@@ -6,13 +6,18 @@ import { Proxy } from "./proxy";
 import { Formatter } from "./formatter";
 import { SurgeFormatter } from "./formatter/surge";
 import { ProxiesInput } from "./input";
+import { QuantumultXFormatter } from "./formatter/quanx";
 
 export class ProxyContext {
     private provider: ProxiesInput;
     private formatter: Formatter;
-  
-    constructor(provider: ProxiesInput) {
-        this.formatter = new SurgeFormatter();
+
+    constructor(provider: ProxiesInput, output: string = "surge") {
+        if (output === "surge") {
+            this.formatter = new SurgeFormatter();
+        } else {
+            this.formatter = new QuantumultXFormatter();
+        }
         this.provider = provider;
     }
   

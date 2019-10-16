@@ -4,7 +4,7 @@ import {
 } from "aws-lambda";
 import Server from "./server";
 import { IValidator, Validator, ValidationError } from "./validator";
-import { Result } from "@usefultools/monads";
+import { Result, Ok, Err } from "@usefultools/monads";
 
 export interface Interceptor<T> {
     check(data?: string): IValidator
@@ -18,6 +18,7 @@ export interface SurgeNodeListLambdaParameters {
     useEmoji: string
     token: string
     sortMethod: string[]
+    output: string
     multiValueQueryStringParameters: {[name: string]: string[]}
 }
 
@@ -27,7 +28,7 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
         return new Validator(data);
     }
 
-    protected abstract convert(queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): T
+    protected abstract convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<T, Error>
 
     async process(event: APIGatewayProxyEvent, callback: ControllerFunction<T>): Promise<APIGatewayProxyResult> {
         if (!event.queryStringParameters) {
@@ -40,7 +41,13 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
 
         event.multiValueQueryStringParameters =  event.multiValueQueryStringParameters || {};
 
-        const res = await callback(this, this.convert(event.queryStringParameters, event.multiValueQueryStringParameters));
+        let parameters = this.convert(event.headers, event.queryStringParameters, event.multiValueQueryStringParameters);
+
+        if (parameters.is_err()) {
+            return ({ statusCode: 403, body: parameters.unwrap_err().message, headers: {"content-type": "text/plain" }})
+        }
+
+        const res = await callback(this, parameters.unwrap());
         return res.match({
             ok: val => val,
             err: errVal => ({ statusCode: errVal.code, body: errVal.message, headers: {"content-type": "text/plain" }})
@@ -49,13 +56,33 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
 }
 
 export class SurgeNodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
-    convert(queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): SurgeNodeListLambdaParameters {
-        return {
+    convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<SurgeNodeListLambdaParameters, Error> {
+        let output = queryStringParameters.output;
+        if (output === undefined || !["surge", "quanx"].includes(output)) {
+            let userAgent = headers["User-Agent"].toLowerCase();
+            if (userAgent.startsWith("surge")) {
+                output = "surge";
+                // TODO: check version and platform
+            } else if (userAgent.startsWith("quantumult x")) {
+                output = "quanx";
+                let UA = userAgent.match(/^quantumult x\/(\d+)/);
+                if (UA === null) {
+                    return Err(new Error("invalid user-agent"));
+                }
+                if (parseInt(UA[1]) < 123) {
+                    return Err(new Error("unsupported quantumult x version"));
+                }
+            } else {
+                output = "surge";
+            }
+        }
+        return Ok({
             id: queryStringParameters.id,
             token: queryStringParameters.token || "",
-            useEmoji: queryStringParameters.emoji ? queryStringParameters.emoji : "true",
+            useEmoji: queryStringParameters.emoji || "true",
             sortMethod: queryStringParameters.sort ? queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"],
-            multiValueQueryStringParameters
-        }
+            multiValueQueryStringParameters,
+            output,
+        });
     }
 }

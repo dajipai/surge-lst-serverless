@@ -15,7 +15,7 @@ export const yoyu: Handler<
   APIGatewayProxyEvent,
   APIGatewayProxyResult
 > = async (event) => {
-  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {token, id, sortMethod, useEmoji, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {output, token, id, sortMethod, useEmoji, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
     if(interceptor.check(token).isEmpty()) {
       return Err(ValidationError.create(400, "token cannot be empty"));
     }
@@ -25,7 +25,7 @@ export const yoyu: Handler<
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new SurgeNodeList());
+    const context = new ProxyContext(new SurgeNodeList(), output);
     const result = await context.handle(`https://home.yoyu.cc/subscribe/${id}/${token}/node-list/`, multiValueQueryStringParameters, yoyuResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,
@@ -39,14 +39,14 @@ export const boslife: Handler<
   APIGatewayProxyEvent,
   APIGatewayProxyResult
 > = async (event) => {
-  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {output, token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
     if(interceptor.check(token).isEmpty()) {
       return Err(ValidationError.create(400, "token cannot be empty"));
     }
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new SurgeProfile());
+    const context = new ProxyContext(new SurgeProfile(), output);
     const result = await context.handle(`https://api.cn1.info/downloads/conf/${token}.conf`, multiValueQueryStringParameters, boslifeResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,
@@ -60,12 +60,12 @@ export const conair: Handler<
   APIGatewayProxyEvent,
   APIGatewayProxyResult
 > = async (event) => {
-  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {output, token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
     if(interceptor.check(token).isEmpty()) return Err(ValidationError.create(400, "token cannot be empty"));
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new SurgeProfile());
+    const context = new ProxyContext(new SurgeProfile(), output);
     const result = await context.handle(`https://conair.me/link/${token}?mu=6`, multiValueQueryStringParameters, conairResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,
@@ -79,7 +79,7 @@ export const ytoo: Handler<
   APIGatewayProxyEvent,
   APIGatewayProxyResult
 > = async (event) => {
-  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {token, id, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  return await new SurgeNodeListInterceptor().process(event, async (interceptor, {output, token, id, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
     if(interceptor.check(token).isEmpty()) {
       return Err(ValidationError.create(400, "token cannot be empty"));
     }
@@ -89,7 +89,7 @@ export const ytoo: Handler<
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new V2raySubscription());
+    const context = new ProxyContext(new V2raySubscription(), output);
     const result = await context.handle(`https://ytoo.dev/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}`, multiValueQueryStringParameters, ytooResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,

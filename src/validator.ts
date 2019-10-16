@@ -3,6 +3,7 @@ import validator from "validator";
 export interface IValidator {
     isEmpty(): boolean
     isNotBoolean(): boolean
+    isNotIn(values: string[]): boolean
 }
 
 export class ValidationError extends Error {
@@ -31,5 +32,9 @@ export class Validator implements IValidator {
 
     isNotBoolean() : boolean {
         return this.value === undefined || !validator.isBoolean(this.value);
+    }
+
+    isNotIn(values: string[]): boolean {
+        return this.value === undefined || !validator.isIn(this.value, values);
     }
 }
