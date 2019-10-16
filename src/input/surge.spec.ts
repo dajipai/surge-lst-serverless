@@ -155,5 +155,5 @@ test("legacyVmess", () => {
     expect(proxies.length).toBe(1);
     expect(proxies[0][0]).toEqual("BGP-京韩-KT-A(0.2)");
     expect(proxies[0][1]).toBeInstanceOf(V2rayProxy);
-    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/"));
+    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/", ""));
 })

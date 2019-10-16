@@ -25,7 +25,7 @@ export class QuantumultXFormatter implements Formatter {
             } else {
                 return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},fast-open=false,udp-relay=false,tag=${name}`;
             }
-            return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},obfs-host=${proxy.host},obfs=${obfs},obfs-uri=${proxy.wsPath},fast-open=false,udp-relay=false,tag=${name}`;
+            return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},obfs-host=${proxy.obfsHost},obfs=${obfs},obfs-uri=${proxy.wsPath},fast-open=false,udp-relay=false,tag=${name}`;
         }
         throw new Error("the proxy type is not supported by Quantumult");
     }

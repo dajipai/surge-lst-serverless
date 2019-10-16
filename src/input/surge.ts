@@ -136,7 +136,7 @@ export const createSurgeProxy = (content: string): Proxy => {
             wsPath = "/";
         }
         let wsHeaders = server.getKey("ws-headers");
-        return new V2rayProxy(host, port, username, ws, tls, wsPath, wsHeaders);
+        return new V2rayProxy(host, port, username, ws, tls, wsPath, "", wsHeaders);
     // custom, probably ss
     } else if (content.startsWith("custom")) {
         const server = new SurgeDict(content);
