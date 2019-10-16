@@ -5,6 +5,7 @@ import {
 import Server from "./server";
 import { IValidator, Validator, ValidationError } from "./validator";
 import { Result, Ok, Err } from "@usefultools/monads";
+import semver from "semver";
 
 export interface Interceptor<T> {
     check(data?: string): IValidator
@@ -62,16 +63,34 @@ export class SurgeNodeListInterceptor extends AbstractLambdaInterceptor<SurgeNod
             let userAgent = unescape(headers["User-Agent"].toLowerCase());
             if (userAgent.startsWith("surge")) {
                 output = "surge";
-                // TODO: check version and platform
+                // if (userAgent.includes("x86_64")) {
+                //     // macos version
+                //     // build 893 is the last stable version of `3.3.0`
+                //     let UA = userAgent.match(/^surge\/([\d\.]+)/);
+                //     if (UA === null) {
+                //         return Err(new Error("invalid user-agent"));
+                //     }
+                //     if (semver.lt(UA[1], '3.1.1')) {
+                //         return Err(new Error("unsupported surge/macos version"));
+                //     }
+                // } else {
+                //     let UA = userAgent.match(/^surge\/(\d+)/);
+                //     if (UA === null) {
+                //         return Err(new Error("invalid user-agent"));
+                //     }
+                //     if (parseInt(UA[1]) < 1429) {
+                //         return Err(new Error("unsupported surge version"));
+                //     }
+                // }
             } else if (userAgent.startsWith("quantumult x")) {
                 output = "quanx";
-                let UA = userAgent.match(/^quantumult x\/(\d+)/);
-                if (UA === null) {
-                    return Err(new Error("invalid user-agent"));
-                }
-                if (parseInt(UA[1]) < 123) {
-                    return Err(new Error("unsupported quantumult x version"));
-                }
+                // let UA = userAgent.match(/^quantumult x\/(\d+)/);
+                // if (UA === null) {
+                //     return Err(new Error("invalid user-agent"));
+                // }
+                // if (parseInt(UA[1]) < 123) {
+                //     return Err(new Error("unsupported quantumult x version"));
+                // }
             } else {
                 output = "surge";
             }
