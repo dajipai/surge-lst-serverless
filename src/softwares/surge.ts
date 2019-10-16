@@ -3,6 +3,7 @@ import { Proxy, V2rayProxy, ShadowsocksProxy } from "../proxy";
 import { SemVer, gte, coerce } from "semver";
 
 export class Surge implements Software {
+    static IOS_BUILD_1429 = <SemVer> coerce("1429");
     readonly version?: SemVer;
     readonly platform?: string;
 
@@ -19,7 +20,7 @@ export class Surge implements Software {
             if (this.platform === "macos") {
                 return gte(this.version, "3.3.1");
             } else if (this.platform === "ios") {
-                return gte(this.version, <SemVer> coerce("1429"));
+                return gte(this.version, Surge.IOS_BUILD_1429);
             }
         } else if (proxy instanceof ShadowsocksProxy) {
             return true;
