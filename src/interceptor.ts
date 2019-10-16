@@ -59,7 +59,7 @@ export class SurgeNodeListInterceptor extends AbstractLambdaInterceptor<SurgeNod
     convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<SurgeNodeListLambdaParameters, Error> {
         let output = queryStringParameters.output;
         if (output === undefined || !["surge", "quanx"].includes(output)) {
-            let userAgent = headers["User-Agent"].toLowerCase();
+            let userAgent = unescape(headers["User-Agent"].toLowerCase());
             if (userAgent.startsWith("surge")) {
                 output = "surge";
                 // TODO: check version and platform
