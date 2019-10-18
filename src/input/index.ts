@@ -5,4 +5,4 @@ export interface ProxiesInput {
 }
 
 export { SurgeProfile, SurgeNodeList } from "./surge";
-export { V2raySubscription } from "./v2ray";
+export { Subscription } from "./subscription";

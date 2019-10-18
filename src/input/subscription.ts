@@ -1,20 +1,29 @@
 import { ProxiesInput } from ".";
 import axios from "axios";
 import { Base64 } from "js-base64";
-import { Proxy, ShadowsocksRProxy } from "../proxy";
+import { Proxy, V2rayProxy, ShadowsocksRProxy } from "../proxy";
 import { splitKV } from "./surge";
 
-export class ShadowsocksRSubscription implements ProxiesInput {
+export class Subscription implements ProxiesInput {
+    constructor() {
+    }
 
-    async proxies(url: string): Promise<Array<[string, Proxy]>> {
+    async proxies(url: string) : Promise<Array<[string, Proxy]>> {
         let resp = await axios.get<string>(url);
         return <Array<[string,string]>> (Base64.decode(resp.data).split("\n").map((link): [string, Proxy]|null => {
-            if(link.startsWith("ssr://")) {
+            if(link.startsWith("vmess://")) {
+                return parseVmessLink(link);
+            } else if (link.startsWith("ssr://")) {
                 return parseSSRLink(link);
             }
             return null;
         }).filter(arr => arr !== null) || []);
     }
+}
+
+export const parseVmessLink = (vmessUrl: string) : [string, Proxy] => {
+    const vmessObj = JSON.parse(Base64.decode(vmessUrl.trim().substr("vmess://".length)));
+    return [vmessObj.ps, new V2rayProxy(vmessObj.add, parseInt(vmessObj.port), vmessObj.id, vmessObj.net === "ws", vmessObj.tls === "tls", vmessObj.path, vmessObj.host)];
 }
 
 export const parseSSRLink = (data: string): [string, Proxy] => {
