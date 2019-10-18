@@ -7,8 +7,8 @@ export class QuantumultX implements Software {
     constructor(build?: number) {
         this.build = build;
     }
+    
     satisfies(proxy: Proxy) : boolean {
-        
         if (proxy instanceof ShadowsocksProxy) {
             return true;
         }
