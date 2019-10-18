@@ -21,6 +21,32 @@ export class ShadowsocksProxy implements Proxy {
     }
 }
 
+export class ShadowsocksRProxy implements Proxy {
+    readonly host: string;
+    readonly port: number;
+    readonly password: string;
+    readonly encryptionMethod: string;
+    readonly protocol: string;
+    readonly protoParameter?: string;
+    readonly obfs: string;
+    readonly obfsParameter?: string;
+    readonly udpRelay: boolean;
+    readonly group?: string;
+
+    constructor(host: string, port: number, password: string, encryptionMethod: string, protocol: string, obfs: string, group?: string, obfsParameter?: string, protoParameter?: string, udpRelay: boolean = false) {
+        this.host = host;
+        this.port = port;
+        this.password = password;
+        this.encryptionMethod = encryptionMethod;
+        this.protocol = protocol;
+        this.protoParameter = protoParameter;
+        this.obfs = obfs;
+        this.obfsParameter = obfsParameter;
+        this.udpRelay = udpRelay;
+        this.group = group;
+    }
+}
+
 export class V2rayProxy implements Proxy {
     readonly host: string;
     readonly port: number;

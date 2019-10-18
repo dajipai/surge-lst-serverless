@@ -60,7 +60,7 @@ export const getProxiesFromSurgeProfile = (content: string): Array<[string, Prox
 
 export const splitKV = (input: string): [string, string] => {
     const idx = input.indexOf("=");
-    return [input.substring(0, idx).trim(), input.substring(idx + 1, input.length).trim()];
+    return [input.substring(0, idx).trim(), input.substr(idx + 1).trim()];
 }
 
 export const getProxiesFromSurgeNodeList = (content: string): Array<[string, Proxy]> => {
