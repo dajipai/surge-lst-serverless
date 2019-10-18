@@ -13,10 +13,10 @@ export class Surge implements Software {
     }
 
     satisfies(proxy: Proxy) : boolean {
-        if (this.version === undefined || this.platform === undefined) {
-            return true;
-        }
         if (proxy instanceof V2rayProxy) {
+            if (this.version === undefined || this.platform === undefined) {
+                return true;
+            }
             if (this.platform === "macos") {
                 return gte(this.version, "3.3.1");
             } else if (this.platform === "ios") {
