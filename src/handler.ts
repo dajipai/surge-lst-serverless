@@ -6,7 +6,7 @@ import {
 } from "aws-lambda";
 import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver } from "./provider";
 import { ProxyContext } from "./profile";
-import { SurgeProfile, SurgeNodeList, V2raySubscription } from "./input";
+import { SurgeProfile, SurgeNodeList, Subscription } from "./input";
 import { SurgeNodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
@@ -89,7 +89,7 @@ export const ytoo: Handler<
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new V2raySubscription(), output);
+    const context = new ProxyContext(new Subscription(), output);
     const result = await context.handle(`https://ytoo.dev/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}`, multiValueQueryStringParameters, ytooResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,
