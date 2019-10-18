@@ -57,7 +57,7 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
     }
 }
 
-export class SurgeNodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
+export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
     convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<SurgeNodeListLambdaParameters, Error> {
         let output: Software;
         if (queryStringParameters.output === undefined || !["surge", "quanx"].includes(queryStringParameters.output)) {

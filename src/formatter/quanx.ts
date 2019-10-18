@@ -1,6 +1,8 @@
 import { Formatter } from ".";
-import { Proxy, ShadowsocksProxy, V2rayProxy } from "../proxy";
+import { Proxy, ShadowsocksProxy, V2rayProxy, ShadowsocksRProxy } from "../proxy";
 
+
+// refer to: https://github.com/ConnersHua/Profiles/blob/master/Quantumult/X/Pro.conf
 export class QuantumultXFormatter implements Formatter {
     format(proxy: Proxy, name: string) : string {
         if (proxy instanceof ShadowsocksProxy) {
@@ -26,6 +28,17 @@ export class QuantumultXFormatter implements Formatter {
                 return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},fast-open=false,udp-relay=false,tag=${name}`;
             }
             return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},obfs-host=${proxy.obfsHost},obfs=${obfs},obfs-uri=${proxy.wsPath},fast-open=false,udp-relay=false,tag=${name}`;
+        } else if (proxy instanceof ShadowsocksRProxy) {
+            // shadowsocks=ssr-a.example.com:443, method=chacha20, password=pwd, ssr-protocol=auth_chain_b, ssr-protocol-param=def, obfs=tls1.2_ticket_fastauth, obfs-host=bing.com, tag=Sample-D
+            let res = `shadowsocks=${proxy.host}:${proxy.port},method=${proxy.encryptionMethod},password=${proxy.password},ssr-protocol=${proxy.protocol},obfs=${proxy.obfs}`;
+            if (proxy.obfsParameter) {
+                res += `,obfs-host=${proxy.obfsParameter}`;
+            }
+            if (proxy.protoParameter) {
+                res += `,ssr-protocol-param=${proxy.protoParameter}`;
+            }
+            res += `,tag=${name}`;
+            return res;
         }
         throw new Error("the proxy type is not supported by Quantumult");
     }

@@ -4,7 +4,6 @@ import { Base64 } from "js-base64";
 import { Proxy, V2rayProxy, ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { splitKV } from "./surge";
 import { URL } from "url";
-import { isIndexed } from "immutable";
 
 export class Subscription implements ProxiesInput {
     constructor() {

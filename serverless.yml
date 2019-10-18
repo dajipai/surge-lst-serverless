@@ -83,6 +83,12 @@ functions:
       - http:
           path: ytoo
           method: get
+  maying:
+    handler: src/bridge.maying
+    events:
+      - http:
+          path: maying
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
