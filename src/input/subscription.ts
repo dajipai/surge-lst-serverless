@@ -1,8 +1,9 @@
 import { ProxiesInput } from ".";
 import axios from "axios";
 import { Base64 } from "js-base64";
-import { Proxy, V2rayProxy, ShadowsocksRProxy } from "../proxy";
+import { Proxy, V2rayProxy, ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { splitKV } from "./surge";
+import { URL } from "url";
 
 export class Subscription implements ProxiesInput {
     constructor() {
@@ -15,6 +16,8 @@ export class Subscription implements ProxiesInput {
                 return parseVmessLink(link);
             } else if (link.startsWith("ssr://")) {
                 return parseSSRLink(link);
+            } else if (link.startsWith("ss://")) {
+                return parseSIP002Link(link);
             }
             return null;
         }).filter(arr => arr !== null) || []);
@@ -41,4 +44,13 @@ export const parseSSRLink = (data: string): [string, Proxy] => {
     group = group === undefined ? undefined : Base64.decode(group);
     return [remarks,
         new ShadowsocksRProxy(host, parseInt(port), Base64.decode(base64pass), method, protocol, obfs, group, obfsparam, protoparam)];
+}
+
+export const parseSIP002Link = (data: string): [string, Proxy] => {
+    const url = new URL(data.trim());
+    const host = url.hostname;
+    const port = parseInt(url.port);
+    const [method, password] = Base64.decode(decodeURIComponent(url.username)).split(":");
+    const remarks = decodeURIComponent(url.hash).replace(/^#/, "");
+    return [remarks, new ShadowsocksProxy(host, port, password, method)];
 }

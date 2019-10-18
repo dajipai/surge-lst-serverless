@@ -1,6 +1,6 @@
-import { ShadowsocksRProxy } from "../proxy";
+import { ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { V2rayProxy } from "../proxy";
-import { parseSSRLink, parseVmessLink } from "./subscription";
+import { parseSSRLink, parseVmessLink, parseSIP002Link } from "./subscription";
 
 // https://github.com/shadowsocksr-backup/shadowsocks-rss/wiki/SSR-QRcode-scheme
 const ExampleSSR = "ssr://MTI3LjAuMC4xOjEyMzQ6YXV0aF9hZXMxMjhfbWQ1OmFlcy0xMjgtY2ZiOnRsczEuMl90aWNrZXRfYXV0aDpZV0ZoWW1KaS8_b2Jmc3BhcmFtPVluSmxZV3QzWVRFeExtMXZaUSZyZW1hcmtzPTVyV0w2Sy1WNUxpdDVwYUg";
@@ -60,4 +60,13 @@ test("decode fake ytoo link", () => {
     expect(name).toBe("BGP-京德-GIA-A(0.3)");
     expect(value).toBeInstanceOf(V2rayProxy);
     expect(value).toStrictEqual(new V2rayProxy("1.5.1.5", 2333, "1386f85e-657b-4d6e-9d56-78badb75e1fd", true, false, "/", "appleid.apple.com"));
-})
+});
+
+const SIP002example = "ss://Y2hhY2hhMjAtaWV0ZjpwYXNzd29yZA==@example.yoyu.xyz:12345#BGP%20%E5%8C%97%E4%BA%AC-%E7%BE%8E%E5%9B%BD%2001%20%5B0.3%5D"
+
+test("SIP002 without obfs", () => {
+    let [name, value] = parseSIP002Link(SIP002example);
+    expect(name).toBe("BGP 北京-美国 01 [0.3]");
+    expect(value).toBeInstanceOf(ShadowsocksProxy);
+    expect(value).toStrictEqual(new ShadowsocksProxy("example.yoyu.xyz", 12345, "password", "chacha20-ietf"));
+});
