@@ -4,6 +4,7 @@ import { Base64 } from "js-base64";
 import { Proxy, V2rayProxy, ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { splitKV } from "./surge";
 import { URL } from "url";
+import { isIndexed } from "immutable";
 
 export class Subscription implements ProxiesInput {
     constructor() {
@@ -52,5 +53,16 @@ export const parseSIP002Link = (data: string): [string, Proxy] => {
     const port = parseInt(url.port);
     const [method, password] = Base64.decode(decodeURIComponent(url.username)).split(":");
     const remarks = decodeURIComponent(url.hash).replace(/^#/, "");
+    const plugin = url.searchParams.get("plugin");
+    if (plugin !== null) {
+        const pluginMap = decodeURIComponent(plugin).split(";").reduce<{[name: string]: string|undefined}>((map, item) => {
+            let pos = -1;
+            if ((pos = item.indexOf("=")) > -1) {
+                map[item.substr(0, pos)] = item.substr(pos+1);
+            }
+            return map;
+        }, {});
+        return [remarks, new ShadowsocksProxy(host, port, password, method, pluginMap['obfs'], pluginMap['obfs-host'])];
+    }
     return [remarks, new ShadowsocksProxy(host, port, password, method)];
 }
