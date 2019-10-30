@@ -2113,10 +2113,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-emoji-append@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.1.2.tgz#ae9df4d2d6b3d1d52a3ad1188cbb53d318cda654"
-  integrity sha512-TmsdR+42CukJNmZvlCeXe+3XPWIQw3goaAVmUYyjjSRBbhoaf4qdC8F2eRVzMc5z0T0yUR4UO1kXgVt5Za6z0w==
+emoji-append@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.1.3.tgz#99c98cccce9663a7b6ae0321e0dbfa8d0aa9966c"
+  integrity sha512-ixRiBJbJJ6quqCkdcTe4EYPQrdBCwGEYUnf2RfDR9PzPFMAkCA2zTc4GqE/gQndRMsV9S19m63JP2uPf7L3E+A==
   dependencies:
     core-js "3"
 
