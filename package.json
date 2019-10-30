@@ -4,14 +4,14 @@
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "jest": "^24.9.0",
-    "serverless": "^1.54.0",
-    "serverless-offline": "^6.0.0-alpha.41",
+    "serverless": "^1.55.1",
+    "serverless-offline": "^6.0.0-alpha.42",
     "ts-jest": "^24.1.0"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.33",
+    "@types/aws-lambda": "^8.10.34",
     "@types/js-base64": "^2.3.1",
-    "@types/node": "^12.7.12",
+    "@types/node": "^12.12.3",
     "@types/semver": "^6.0.2",
     "@types/validator": "^10.11.3",
     "@usefultools/monads": "^2.1.0",
@@ -21,7 +21,7 @@
     "js-base64": "^2.5.1",
     "semver": "^6.3.0",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.3",
+    "typescript": "^3.6.4",
     "validator": "^11.1.0"
   }
 }
