@@ -4,7 +4,7 @@ import {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
-import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver } from "./provider";
+import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver, mayingResolver } from "./provider";
 import { ProxyContext } from "./profile";
 import { SurgeProfile, SurgeNodeList, Subscription } from "./input";
 import { NodeListInterceptor } from "./interceptor";
@@ -111,7 +111,7 @@ export const maying: Handler<
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
     const context = new ProxyContext(new Subscription(), output);
-    const result = await context.handle(`https://sub.ssr.sh/link/${token}?mu=1`, multiValueQueryStringParameters, ytooResolver, sortMethod, useEmoji === "true");
+    const result = await context.handle(`https://sub.ssr.sh/link/${token}?mu=1`, multiValueQueryStringParameters, mayingResolver, sortMethod, useEmoji === "true");
     return Ok({
       statusCode: 200,
       headers: {"content-type": "text/plain"},
