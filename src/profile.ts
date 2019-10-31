@@ -66,7 +66,7 @@ export class ProxyContext {
         }).valueSeq().sort((a, b) => {
             return List(sortMethod).map((key) => {
                 return <number>(<string>(<any>a)[key]).localeCompare(<string>(<any>b)[key]);
-            }).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
+            }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {
                 return this.formatter.format(server.proxy, addFlag(server.name));

@@ -20,6 +20,14 @@ class ServerInfo {
         this.multiplier = multiplier;
     }
 
+    get priority(): number {
+        if (this.inbound === "" && this.outbound === "" && this.serverType === "") {
+            // make remarks the first place
+            return Infinity;
+        }
+        return 0;
+    }
+
     static isValidComparator(key: string): boolean {
         return ["inbound", "outbound", "serverType"].includes(key);
     }
