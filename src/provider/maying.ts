@@ -26,6 +26,7 @@ const MayingOutboundsMap: {[key: string]: string} = {
     悉尼: "AU",
     曼谷: "TH",
     台中: "TW",
+    埼玉: "JP",
 };
 const MayingServerTypes: string[] = ["测试", "应急"];
 

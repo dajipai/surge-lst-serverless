@@ -1,5 +1,5 @@
 import { Software } from ".";
-import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy } from "../proxy";
+import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy, HttpProxy } from "../proxy";
 
 export class QuantumultX implements Software {
     readonly build?: number;
@@ -23,6 +23,15 @@ export class QuantumultX implements Software {
                 return true;
             }
         }
+        // TODO: For future support
+        // if (proxy instanceof HttpProxy) {
+        //     if (this.build === undefined) {
+        //         return true;
+        //     }
+        //     if (this.build >= 136) {
+        //         return true;
+        //     }
+        // }
         return false;
     }
 }
