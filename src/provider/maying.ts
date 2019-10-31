@@ -1,5 +1,5 @@
 import Resolver from "../resolver";
-import { ServerBuilder } from "../server";
+import { ServerBuilder, AllowSortedKeys } from "../server";
 
 const MayingInboundsMap: {[key: string]: string} = { 上海: "SH", 深圳: "SZ"};
 const MayingOutboundsMap: {[key: string]: string} = { 
@@ -50,8 +50,8 @@ class MayingResolver extends Resolver {
         }
     }
 
-    public sortMethod(): string[] {
-        return ["name"];
+    public sortMethod(): AllowSortedKeys[] {
+        return [];
     }
 }
 

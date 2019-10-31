@@ -1,5 +1,16 @@
 import Resolver from "./resolver";
 import { Proxy } from "./proxy";
+import { Union, Literal } from "runtypes";
+
+export type AllowSortedKeys = "name" | "inbound" | "outbound" | "serverType";
+export type FromServerInfoKeys = { [k in AllowSortedKeys]: string };
+
+const ServerInfoKeyUnion = Union(
+    Literal('name'),
+    Literal('inbound'),
+    Literal('outbound'),
+    Literal('serverType'),
+);
 
 class ServerInfo {
     readonly name: string;
@@ -28,8 +39,11 @@ class ServerInfo {
         return 0;
     }
 
-    static isValidComparator(key: string): boolean {
-        return ["inbound", "outbound", "serverType"].includes(key);
+    static isValidComparator(key: string): key is AllowSortedKeys {
+        if (ServerInfoKeyUnion.guard(key)) {
+            return true;
+        }
+        return false;
     }
 }
 

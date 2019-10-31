@@ -5525,6 +5525,11 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
+runtypes@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/runtypes/-/runtypes-4.0.3.tgz#dd32206633c1166a45c22d64abcabeb5c5c790b7"
+  integrity sha512-ss4Smt9GVqz7TP1hPNZ5Kdz0poUVO04IMzSpk4iaKOvFPOpcDleQUb8yGpzdsA2rzwZXy2ztU2PA10qhcNMwZw==
+
 rxjs@^6.4.0:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.3.tgz#510e26317f4db91a7eb1de77d9dd9ba0a4899a3a"

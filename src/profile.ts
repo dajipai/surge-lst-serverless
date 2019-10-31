@@ -1,7 +1,7 @@
 import { OrderedMap, List } from "immutable";
 import { addFlag } from "emoji-append";
 import Resolver from "./resolver";
-import ServerInfo, { ServerBuilder } from "./server";
+import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Proxy } from "./proxy";
 import { Formatter } from "./formatter";
 import { SurgeFormatter } from "./formatter/surge";
@@ -38,7 +38,7 @@ export class ProxyContext {
         noOutbound: noOutboundFilters = [],
         noMultiplier: noMultiplierFilters = [],
         noServerType: noServerTypeFilters = [],
-      }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, sortMethod?: string[]) {
+      }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, sortMethod?: AllowSortedKeys[]) {
         if (sortMethod === undefined) {
             sortMethod = resolver.sortMethod();
         }
@@ -68,7 +68,8 @@ export class ProxyContext {
             });
         }).valueSeq().sort((a, b) => {
             return List(sortMethod!).map((key) => {
-                return <number>(<string>(<any>a)[key]).localeCompare(<string>(<any>b)[key]);
+                // TODO: extract properties of class
+                return <number>a[key].localeCompare(b[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {

@@ -1,4 +1,4 @@
-import ServerInfo, { ServerBuilder } from "./server";
+import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Direct } from "./proxy";
 
 export default class Resolver {
@@ -42,7 +42,7 @@ export default class Resolver {
         };
     }
 
-    public sortMethod(): string[] {
+    public sortMethod(): AllowSortedKeys[] {
         return ["outbound"];
     }
 }

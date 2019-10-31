@@ -2,12 +2,11 @@ import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult,
 } from "aws-lambda";
-import Server from "./server";
+import Server, { AllowSortedKeys } from "./server";
 import { IValidator, Validator, ValidationError } from "./validator";
 import { Result, Ok, Err } from "@usefultools/monads";
 import semver, { coerce, SemVer } from "semver";
 import { Software, Surge, QuantumultX } from "./softwares";
-import Resolver from "./resolver";
 
 export interface Interceptor<T> {
     check(data?: string): IValidator
@@ -20,7 +19,7 @@ export interface SurgeNodeListLambdaParameters {
     id?: string
     useEmoji: string
     token: string
-    sortMethod?: string[]
+    sortMethod?: AllowSortedKeys[]
     output: Software
     multiValueQueryStringParameters: {[name: string]: string[]}
 }
