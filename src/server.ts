@@ -57,6 +57,10 @@ export class ServerBuilder {
         this._serverType = value;
     }
 
+    get serverType(): string {
+        return this._serverType;
+    }
+
     set inbound(value: string) {
         this._inbound = value;
     }

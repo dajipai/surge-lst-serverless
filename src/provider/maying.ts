@@ -27,7 +27,7 @@ const MayingOutboundsMap: {[key: string]: string} = {
     曼谷: "TH",
     台中: "TW",
 };
-const MayingServerTypes: string[] = ["测试", "HGC", "CN2", "LW", "HKBN", "NTT", "BBETC", "HE", "KI", "NME", "PCCW", "RS", "TATA", "QN", "INAP", "FC", "M247", "I3D", "BBIX", "L3", "AZ", "KT", "TFN", "TIG", "HiNet", "EX", "WR", "ST", "TTK", "MP", "CAT", "GCX", "PZ", "应急"];
+const MayingServerTypes: string[] = ["测试", "应急"];
 
 class MayingResolver extends Resolver {
     constructor() {
@@ -40,6 +40,14 @@ class MayingResolver extends Resolver {
         if (matches != null) {
             builder.multiplier = matches[1];
         }
+        // match serverType
+        if (builder.serverType === "") {
+            const serverTypeMatches = builder.name.match(/^V\d{3}[U,T]{1}-[\d\.]+X-[\u4e00-\u9fa5]+([A-Z\d]+)/);
+            if (serverTypeMatches != null) {
+                builder.serverType = serverTypeMatches[1];
+            }
+        }
+
     }
 }
 
