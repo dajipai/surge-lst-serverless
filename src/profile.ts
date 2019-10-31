@@ -33,11 +33,13 @@ export class ProxyContext {
         outbound: outboundFilters = [],
         multiplier: multiplierFilters = [],
         serverType: serverTypeFilters = [],
+        tags: tagFilters = [],
         // filterNot
         noInbound: noInboundFilters = [],
         noOutbound: noOutboundFilters = [],
         noMultiplier: noMultiplierFilters = [],
         noServerType: noServerTypeFilters = [],
+        noTags: noTagFilters = [],
       }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, sortMethod?: AllowSortedKeys[]) {
         if (sortMethod === undefined) {
             sortMethod = resolver.sortMethod();
@@ -49,22 +51,32 @@ export class ProxyContext {
         return proxies.filter(
             info => this.software.satisfies(info.proxy)
         ).filter((server) => {
-            return List<string>([server.inbound, server.outbound, server.multiplier, server.serverType])
-                .zip<string[]>(List([inboundFilters, outboundFilters, multiplierFilters, serverTypeFilters]))
+            return List<string|string[]>([server.inbound, server.outbound, server.multiplier, server.serverType, server.tags])
+                .zip<string[]>(List([inboundFilters, outboundFilters, multiplierFilters, serverTypeFilters, tagFilters]))
                 .every(([property, filter]) => {
                     if (filter.length == 0) {
                         return true;
                     }
-                    return filter.includes(property);
+                    if (typeof property === "string") {
+                        return filter.includes(property);
+                    } else {
+                        // make intersection
+                        return property.filter(p => filter.includes(p)).length > 0;
+                    }
             });
         }).filterNot((server) => {
-            return List<string>([server.inbound, server.outbound, server.multiplier, server.serverType])
-                .zip<string[]>(List([noInboundFilters, noOutboundFilters, noMultiplierFilters, noServerTypeFilters]))
+            return List<string|string[]>([server.inbound, server.outbound, server.multiplier, server.serverType, server.tags])
+                .zip<string[]>(List([noInboundFilters, noOutboundFilters, noMultiplierFilters, noServerTypeFilters, noTagFilters]))
                 .some(([property, filter]) => {
                     if (filter.length == 0) {
                         return false;
                     }
-                return filter.includes(property);
+                    if (typeof property === "string") {
+                        return filter.includes(property);
+                    } else {
+                        // make intersection
+                        return property.filter(p => filter.includes(p)).length > 0;
+                    }
             });
         }).valueSeq().sort((a, b) => {
             return List(sortMethod!).map((key) => {

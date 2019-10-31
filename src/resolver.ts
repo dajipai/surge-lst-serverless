@@ -31,6 +31,8 @@ export default class Resolver {
         for (const serverType of this.serverTypes) {
             if (builder.name.includes(serverType)) {
                 builder.serverType = serverType;
+                // append serverType as the default behavior
+                builder.tag = builder.serverType;
                 break;
             }
         }

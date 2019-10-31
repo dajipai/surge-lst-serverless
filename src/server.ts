@@ -20,8 +20,9 @@ class ServerInfo {
     readonly inbound: string;
     readonly outbound: string;
     readonly multiplier: string;
+    readonly tags: string[];
 
-    constructor(name: string, proxy: Proxy, provider: string, serverType: string, inbound: string, outbound: string, multiplier: string = "1.0") {
+    constructor(name: string, proxy: Proxy, provider: string, serverType: string, inbound: string, outbound: string, multiplier: string = "1.0", tags: string[] = []) {
         this.name = name;
         this.proxy = proxy;
         this.provider = provider;
@@ -29,6 +30,7 @@ class ServerInfo {
         this.inbound = inbound;
         this.outbound = outbound;
         this.multiplier = multiplier;
+        this.tags = tags;
     }
 
     get priority(): number {
@@ -55,6 +57,7 @@ export class ServerBuilder {
     private _inbound: string;
     private _outbound: string;
     private _multiplier: string;
+    private _tags: string[];
 
     constructor(name: string, proxy: Proxy) {
         this.name = name;
@@ -64,6 +67,7 @@ export class ServerBuilder {
         this._inbound = "";
         this._outbound = "";
         this._multiplier = "1.0";
+        this._tags = [];
     }
 
     withResolver(resolver: Resolver) {
@@ -95,6 +99,10 @@ export class ServerBuilder {
         this._multiplier = value;
     }
 
+    set tag(tag: string) {
+        this._tags.push(tag);
+    }
+
     build() {
         return new ServerInfo(this.name, 
             this.proxy, 
@@ -102,7 +110,8 @@ export class ServerBuilder {
             this._serverType,
             this._inbound,
             this._outbound,
-            this._multiplier);
+            this._multiplier,
+            this._tags);
     }
 }
 
