@@ -48,7 +48,10 @@ class MayingResolver extends Resolver {
                 builder.serverType = serverTypeMatches[1];
             }
         }
+    }
 
+    public sortMethod(): string[] {
+        return ["name"];
     }
 }
 

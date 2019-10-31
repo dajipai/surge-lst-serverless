@@ -38,7 +38,10 @@ export class ProxyContext {
         noOutbound: noOutboundFilters = [],
         noMultiplier: noMultiplierFilters = [],
         noServerType: noServerTypeFilters = [],
-      }: {[name: string]: string[]}, resolver: Resolver, sortMethod: string[], useEmoji: boolean) {
+      }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, sortMethod?: string[]) {
+        if (sortMethod === undefined) {
+            sortMethod = resolver.sortMethod();
+        }
         const data = await this.getProxies(url);
         const proxies: OrderedMap<string,ServerInfo> = OrderedMap<string,Proxy>(data).map((value, name) => {
             return (new ServerBuilder(name, value)).withResolver(resolver).build();
@@ -64,7 +67,7 @@ export class ProxyContext {
                 return filter.includes(property);
             });
         }).valueSeq().sort((a, b) => {
-            return List(sortMethod).map((key) => {
+            return List(sortMethod!).map((key) => {
                 return <number>(<string>(<any>a)[key]).localeCompare(<string>(<any>b)[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {

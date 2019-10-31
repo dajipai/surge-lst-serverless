@@ -41,4 +41,8 @@ export default class Resolver {
             return !(server.proxy instanceof Direct);
         };
     }
+
+    public sortMethod(): string[] {
+        return ["outbound"];
+    }
 }

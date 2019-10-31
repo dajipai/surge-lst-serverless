@@ -7,6 +7,7 @@ import { IValidator, Validator, ValidationError } from "./validator";
 import { Result, Ok, Err } from "@usefultools/monads";
 import semver, { coerce, SemVer } from "semver";
 import { Software, Surge, QuantumultX } from "./softwares";
+import Resolver from "./resolver";
 
 export interface Interceptor<T> {
     check(data?: string): IValidator
@@ -19,12 +20,17 @@ export interface SurgeNodeListLambdaParameters {
     id?: string
     useEmoji: string
     token: string
-    sortMethod: string[]
+    sortMethod?: string[]
     output: Software
     multiValueQueryStringParameters: {[name: string]: string[]}
 }
 
 export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
+    protected readonly name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
 
     check(data?: string): IValidator {
         return new Validator(data);
@@ -102,7 +108,7 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeList
             id: queryStringParameters.id,
             token: queryStringParameters.token || "",
             useEmoji: queryStringParameters.emoji || "true",
-            sortMethod: queryStringParameters.sort ? queryStringParameters.sort.split(">").filter(Server.isValidComparator) : ["outbound"],
+            sortMethod: queryStringParameters.sort ? queryStringParameters.sort.split(">").filter(Server.isValidComparator) : undefined,
             multiValueQueryStringParameters,
             output,
         });
