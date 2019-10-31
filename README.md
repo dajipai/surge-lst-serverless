@@ -18,6 +18,7 @@ Not all APIs available are listed in the doc.
 - [x] Conair
 - [x] Boslife
 - [x] YTOO
+- [x] Maying
 
 ## Supported Input Type
 
