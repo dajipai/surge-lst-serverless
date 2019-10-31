@@ -68,7 +68,6 @@ export class ProxyContext {
             });
         }).valueSeq().sort((a, b) => {
             return List(sortMethod!).map((key) => {
-                // TODO: extract properties of class
                 return <number>a[key].localeCompare(b[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
