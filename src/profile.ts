@@ -5,12 +5,12 @@ import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Proxy } from "./proxy";
 import { Formatter } from "./formatter";
 import { SurgeFormatter } from "./formatter/surge";
-import { ProxiesInput } from "./input";
+import { ProxiesInput, Subscription } from "./input";
 import { QuantumultXFormatter } from "./formatter/quanx";
-import { Software, Surge } from "./softwares";
+import { Software, Surge, QuantumultX } from "./softwares";
 
 export class ProxyContext {
-    private provider: ProxiesInput;
+    private readonly provider: ProxiesInput;
     private formatter: Formatter;
     private software: Software;
 
@@ -26,6 +26,16 @@ export class ProxyContext {
   
     async getProxies(url: string): Promise<Array<[string, Proxy]>> {
        return await this.provider.proxies(url);
+    }
+
+    get respHeader(): {[key: string]: string} {
+        if (this.software instanceof QuantumultX && this.provider instanceof Subscription) {
+            const info = this.provider.subscriptionInfo;
+            if (info !== undefined) {
+                return {"subscription-userinfo": info};
+            }
+        }
+        return {};
     }
 
     async handle(url: string, {

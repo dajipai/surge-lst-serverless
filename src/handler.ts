@@ -25,11 +25,11 @@ export const yoyu: Handler<
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new SurgeNodeList(), output);
-    const result = await context.handle(`https://home.yoyu.cc/subscribe/${id}/${token}/node-list/`, multiValueQueryStringParameters, yoyuResolver, useEmoji === "true", sortMethod);
+    const context = new ProxyContext(new Subscription(), output);
+    const result = await context.handle(`https://home.yoyu.cc/subscribe/${id}/${token}/sip002/`, multiValueQueryStringParameters, yoyuResolver, useEmoji === "true", sortMethod);
     return Ok({
       statusCode: 200,
-      headers: {"content-type": "text/plain"},
+      headers: {"content-type": "text/plain", ...context.respHeader},
       body: result
     });
   });

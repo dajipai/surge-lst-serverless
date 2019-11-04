@@ -1,5 +1,5 @@
 import { Software } from ".";
-import { Proxy, V2rayProxy, ShadowsocksProxy } from "../proxy";
+import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy } from "../proxy";
 import { SemVer, gte, coerce } from "semver";
 
 export class Surge implements Software {
@@ -23,6 +23,8 @@ export class Surge implements Software {
                 return gte(this.version, Surge.IOS_BUILD_1429);
             }
         } else if (proxy instanceof ShadowsocksProxy) {
+            return true;
+        } else if (proxy instanceof ShadowsocksRProxy && proxy.compatibleWithSS()) {
             return true;
         }
         return false;

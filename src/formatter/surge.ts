@@ -1,5 +1,5 @@
 import { Formatter } from ".";
-import { Proxy, ShadowsocksProxy, V2rayProxy } from "../proxy";
+import { Proxy, ShadowsocksProxy, V2rayProxy, ShadowsocksRProxy } from "../proxy";
 
 export class SurgeFormatter implements Formatter {
     format(proxy: Proxy, name: string) : string {
@@ -18,6 +18,8 @@ export class SurgeFormatter implements Formatter {
                 res += `,ws-headers=${proxy.wsHeaders}`
             }
             return res;
+        } else if (proxy instanceof ShadowsocksRProxy) {
+            return this.format(proxy.toShadowsocksProxy(), name);
         }
         throw new Error("the proxy type is not supported by Surge");
     }

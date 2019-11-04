@@ -6,11 +6,26 @@ import { splitKV } from "./surge";
 import { URL } from "url";
 
 export class Subscription implements ProxiesInput {
+    private upload: number;
+    private download: number;
+    private total: number;
+
     constructor() {
+        this.upload = 0;
+        this.download = 0;
+        this.total = -1;
     }
 
     async proxies(url: string) : Promise<Array<[string, Proxy]>> {
         let resp = await axios.get<string>(url);
+        if (resp.headers['subscription-userinfo'] !== undefined) {
+            const userInfo = resp.headers['subscription-userinfo'].match(/upload=(\d+); download=(\d+); total=(\d+)/);
+            if (userInfo != null) {
+                this.upload = parseInt(userInfo[1]);
+                this.download = parseInt(userInfo[2]);
+                this.total = parseInt(userInfo[3]);
+            }
+        }
         return <Array<[string,string]>> (Base64.decode(resp.data).split("\n").map((link): [string, Proxy]|null => {
             if(link.startsWith("vmess://")) {
                 return parseVmessLink(link);
@@ -21,6 +36,12 @@ export class Subscription implements ProxiesInput {
             }
             return null;
         }).filter(arr => arr !== null) || []);
+    }
+
+    get subscriptionInfo(): string|undefined {
+        if (this.total !== -1) {
+            return `upload=${this.upload}; download=${this.download}; total=${this.total}`;
+        }
     }
 }
 

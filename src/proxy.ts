@@ -45,6 +45,18 @@ export class ShadowsocksRProxy implements Proxy {
         this.udpRelay = udpRelay;
         this.group = group;
     }
+
+    compatibleWithSS(): Boolean {
+        // if `protocol` is origin, obfs must be plain
+        if (this.protocol === 'origin' && this.obfs === 'plain') {
+            return true;
+        }
+        return false;
+    }
+
+    toShadowsocksProxy() : ShadowsocksProxy {
+        return new ShadowsocksProxy(this.host, this.port, this.password, this.encryptionMethod, this.obfs, this.obfsParameter, this.udpRelay);
+    }
 }
 
 export class V2rayProxy implements Proxy {
