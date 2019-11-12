@@ -46,7 +46,7 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
             };
         }
 
-        event.multiValueQueryStringParameters =  event.multiValueQueryStringParameters || {};
+        event.multiValueQueryStringParameters =  event.multiValueQueryStringParameters ?? {};
 
         let parameters = this.convert(event.headers, event.queryStringParameters, event.multiValueQueryStringParameters);
 
@@ -105,9 +105,9 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeList
         }
         return Ok({
             id: queryStringParameters.id,
-            token: queryStringParameters.token || "",
-            useEmoji: queryStringParameters.emoji || "true",
-            sortMethod: queryStringParameters.sort ? queryStringParameters.sort.split(">").filter(Server.isValidComparator) : undefined,
+            token: queryStringParameters.token ?? "",
+            useEmoji: queryStringParameters.emoji ?? "true",
+            sortMethod: queryStringParameters.sort?.split(">").filter(Server.isValidComparator),
             multiValueQueryStringParameters,
             output,
         });

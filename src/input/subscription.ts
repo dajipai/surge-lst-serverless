@@ -59,10 +59,10 @@ export const parseSSRLink = (data: string): [string, Proxy] => {
         map[obj[0]] = obj[1];
         return map;
     }, {});
-    obfsparam = obfsparam === undefined ? undefined : Base64.decode(obfsparam);
-    protoparam = protoparam === undefined ? undefined : Base64.decode(protoparam);
-    remarks = remarks === undefined ? "" : Base64.decode(remarks);
-    group = group === undefined ? undefined : Base64.decode(group);
+    obfsparam = obfsparam?.fromBase64();
+    protoparam = protoparam?.fromBase64();
+    remarks = remarks?.fromBase64() ?? "";
+    group = group?.fromBase64();
     return [remarks,
         new ShadowsocksRProxy(host, parseInt(port), Base64.decode(base64pass), method, protocol, obfs, group, obfsparam, protoparam)];
 }
