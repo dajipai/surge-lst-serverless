@@ -1,5 +1,5 @@
 import { OrderedMap, List } from "immutable";
-import { addFlag } from "emoji-append";
+import { getFlagFromAbbr } from "emoji-append";
 import Resolver from "./resolver";
 import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Proxy } from "./proxy";
@@ -94,7 +94,7 @@ export class ProxyContext {
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {
-                return this.formatter.format(server.proxy, addFlag(server.name));
+                return this.formatter.format(server.proxy, `${getFlagFromAbbr(server.outbound)} ${server.name}`);
             } else {
                 return this.formatter.format(server.proxy, server.name);
             }
