@@ -40,13 +40,21 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
     async process(event: APIGatewayProxyEvent, callback: ControllerFunction<T>): Promise<APIGatewayProxyResult> {
         if (!event.queryStringParameters) {
             return {
-              statusCode: 400,
-              headers: {"content-type": "text/plain"},
-              body: "invalid parameters"
+                statusCode: 400,
+                headers: {"content-type": "text/plain"},
+                body: "invalid parameters"
             };
         }
 
         event.multiValueQueryStringParameters =  event.multiValueQueryStringParameters ?? {};
+
+        if (event.headers === undefined) {
+            return {
+                statusCode: 400,
+                headers: {"content-type": "text/plain"},
+                body: "invalid headers"
+            };
+        }
 
         let parameters = this.convert(event.headers, event.queryStringParameters, event.multiValueQueryStringParameters);
 
