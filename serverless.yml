@@ -89,6 +89,12 @@ functions:
       - http:
           path: maying
           method: get
+  n3ro:
+    handler: src/bridge.n3ro
+    events:
+      - http:
+          path: n3ro
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
