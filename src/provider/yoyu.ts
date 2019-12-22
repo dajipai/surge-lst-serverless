@@ -17,11 +17,11 @@ class YoYuResolver extends Resolver {
             builder.multiplier = matches[1];
         }
 
-        // Only provide one tag `IPLC`
+        // tag - `IPLC`
         if (builder.name.includes("IPLC")) {
             builder.tag = "IPLC";
         }
-
+        // tag - `CN2`
         if (builder.name.includes("CN2")) {
             builder.tag = "CN2";
         }
