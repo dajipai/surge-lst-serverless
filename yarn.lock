@@ -832,7 +832,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@usefultools/monads@^3.0.0":
+"@usefultools/monads@^3.0.1":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@usefultools/monads/-/monads-3.0.2.tgz#1cfff023c1a054eeab60f7ca73b561aaa43eb63b"
   integrity sha512-rKWolsiueEjhpcFkr8oreo1bTOfrJMkUOpsDqcGTwcubZAPi+RyeqzPOd6Zypo0aAmLFViu4X/6CXt7mKwhwdg==
