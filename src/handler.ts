@@ -6,7 +6,7 @@ import {
 } from "aws-lambda";
 import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver, mayingResolver, n3roResolver } from "./provider";
 import { ProxyContext } from "./profile";
-import { SurgeProfile, SurgeNodeList, Subscription } from "./input";
+import { SurgeProfile, SSDSubscription, Subscription } from "./input";
 import { NodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
@@ -124,15 +124,15 @@ export const n3ro: Handler<
   APIGatewayProxyEvent,
   APIGatewayProxyResult
 > = async (event) => {
-  return await new NodeListInterceptor("n3ro").process(event, async (interceptor, {output, id, token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  return await new NodeListInterceptor("n3ro").process(event, async (interceptor, {output, token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
     if(interceptor.check(token).isEmpty()) {
       return Err(ValidationError.create(400, "token cannot be empty"));
     }
     if(interceptor.check(useEmoji).isNotBoolean()) {
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
-    const context = new ProxyContext(new Subscription(), output);
-    const result = await context.handle(`https://nnn3ro.link/api/client/sip002?id=${id}&password=${token}`, multiValueQueryStringParameters, n3roResolver, useEmoji === "true", sortMethod);
+    const context = new ProxyContext(new SSDSubscription(), output);
+    const result = await context.handle(`https://nnn3ro.link/link/${token}?mu=3`, multiValueQueryStringParameters, n3roResolver, useEmoji === "true", sortMethod);
     return Ok({
       statusCode: 200,
       headers: {"content-type": "text/plain"},

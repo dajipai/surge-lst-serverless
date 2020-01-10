@@ -6,3 +6,4 @@ export interface ProxiesInput {
 
 export { SurgeProfile, SurgeNodeList } from "./surge";
 export { Subscription } from "./subscription";
+export { SSDSubscription } from "./ssd";
