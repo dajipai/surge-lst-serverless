@@ -832,10 +832,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@usefultools/monads@^3.0.1":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@usefultools/monads/-/monads-3.0.2.tgz#1cfff023c1a054eeab60f7ca73b561aaa43eb63b"
-  integrity sha512-rKWolsiueEjhpcFkr8oreo1bTOfrJMkUOpsDqcGTwcubZAPi+RyeqzPOd6Zypo0aAmLFViu4X/6CXt7mKwhwdg==
+"@usefultools/monads@=3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@usefultools/monads/-/monads-3.0.1.tgz#98fde10a9aea9ed2b9e5bdcdad337f6ebbef7686"
+  integrity sha512-14lFUt0wumgg1GRwlWZO1C5dB5jTcpcSEUBNHzNwOckYQbZj86FFpxyn/CPxfuT/PhVn0j6xSY6RUj9dOrCtgg==
   dependencies:
     "@usefultools/utils" "^6.3.1"
 
