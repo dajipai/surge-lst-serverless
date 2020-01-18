@@ -140,3 +140,24 @@ export const n3ro: Handler<
     });
   });
 };
+
+export const ssrpass_ss: Handler<
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult
+> = async (event) => {
+  return await new NodeListInterceptor("ssrpass-ss").process(event, async (interceptor, {output, token, useEmoji, sortMethod, multiValueQueryStringParameters}) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+    if(interceptor.check(token).isEmpty()) {
+      return Err(ValidationError.create(400, "token cannot be empty"));
+    }
+    if(interceptor.check(useEmoji).isNotBoolean()) {
+      return Err(ValidationError.create(400, "emoji is not type of boolean"));
+    }
+    const context = new ProxyContext(new SSDSubscription(), output);
+    const result = await context.handle(`https://ss.blacklist.pw/link/${token}?mu=3`, multiValueQueryStringParameters, n3roResolver, useEmoji === "true", sortMethod);
+    return Ok({
+      statusCode: 200,
+      headers: {"content-type": "text/plain"},
+      body: result
+    });
+  });
+};

@@ -95,6 +95,12 @@ functions:
       - http:
           path: n3ro
           method: get
+  ssrpass-ss:
+    handler: src/bridge.ssrpass_ss
+    events:
+      - http:
+          path: ssrpass/ss
+          method: get        
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
