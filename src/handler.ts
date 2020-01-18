@@ -4,7 +4,7 @@ import {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
-import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver, mayingResolver, n3roResolver } from "./provider";
+import { yoyuResolver, boslifeResolver, conairResolver, ytooResolver, mayingResolver, n3roResolver, ssrpassResolver } from "./provider";
 import { ProxyContext } from "./profile";
 import { SurgeProfile, SSDSubscription, Subscription } from "./input";
 import { NodeListInterceptor } from "./interceptor";
@@ -153,7 +153,7 @@ export const ssrpass_ss: Handler<
       return Err(ValidationError.create(400, "emoji is not type of boolean"));
     }
     const context = new ProxyContext(new SSDSubscription(), output);
-    const result = await context.handle(`https://ss.blacklist.pw/link/${token}?mu=3`, multiValueQueryStringParameters, n3roResolver, useEmoji === "true", sortMethod);
+    const result = await context.handle(`https://ss.blacklist.pw/link/${token}?mu=3`, multiValueQueryStringParameters, ssrpassResolver, useEmoji === "true", sortMethod);
     return Ok({
       statusCode: 200,
       headers: {"content-type": "text/plain"},
