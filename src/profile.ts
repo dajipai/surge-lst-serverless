@@ -3,24 +3,15 @@ import { getFlagFromAbbr } from "emoji-append";
 import Resolver from "./resolver";
 import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Proxy } from "./proxy";
-import { Formatter } from "./formatter";
-import { SurgeFormatter } from "./formatter/surge";
 import { ProxiesInput, Subscription } from "./input";
-import { QuantumultXFormatter } from "./formatter/quanx";
-import { Software, Surge, QuantumultX } from "./softwares";
+import { Software, QuantumultX } from "./softwares";
 
 export class ProxyContext {
     private readonly provider: ProxiesInput;
-    private formatter: Formatter;
     private software: Software;
 
     constructor(provider: ProxiesInput, output: Software) {
         this.software = output;
-        if (output instanceof Surge) {
-            this.formatter = new SurgeFormatter();
-        } else {
-            this.formatter = new QuantumultXFormatter();
-        }
         this.provider = provider;
     }
   
@@ -94,9 +85,9 @@ export class ProxyContext {
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
         }).map((server) => {
             if (useEmoji) {
-                return this.formatter.format(server.proxy, `${getFlagFromAbbr(server.outbound)} ${server.name}`);
+                return this.software.format(server.proxy, `${getFlagFromAbbr(server.outbound)} ${server.name}`);
             } else {
-                return this.formatter.format(server.proxy, server.name);
+                return this.software.format(server.proxy, server.name);
             }
         }).toArray().join("\n");
     }

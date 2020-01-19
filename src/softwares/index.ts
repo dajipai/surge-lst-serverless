@@ -1,6 +1,7 @@
 import { Proxy } from "../proxy";
+import { Formatter } from "./formatter";
 
-export interface Software {
+export interface Software extends Formatter {
     satisfies(proxy: Proxy) : boolean
 }
 
