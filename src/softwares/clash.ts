@@ -1,6 +1,8 @@
 import { Software } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy } from "../proxy";
 import { safeDump } from "js-yaml";
+import ServerInfo from "../server";
+import { getFlagFromAbbr } from "emoji-append";
 
 /*
  *
@@ -19,6 +21,23 @@ import { safeDump } from "js-yaml";
     cipher: chacha20-ietf-poly1305
     password: "password"
     # udp: true
+
+ # vmess
+ # cipher support auto/aes-128-gcm/chacha20-poly1305/none
+ - name: "vmess"
+   type: vmess
+   server: server
+   port: 443
+   uuid: uuid
+   alterId: 32
+   cipher: auto
+   # udp: true
+   # tls: true
+   # skip-cert-verify: true
+   # network: ws
+   # ws-path: /path
+   # ws-headers:
+   #   Host: v2ray.com
   */
 
 const convertToClashProxy = (proxy: Proxy, name: string) : any => {
@@ -48,7 +67,15 @@ export class Clash implements Software {
         return false;
     }
 
-    format(proxy: Proxy, name: string) : string {
-        return convertToClashProxy(proxy, name);
+    format(proxies: ServerInfo[], options: {[key: string]: any}) : string {
+        const useEmoji : boolean = options["useEmoji"] ?? true;
+        const clashProxies = proxies.map((server) => {
+            if (useEmoji) {
+                return convertToClashProxy(server.proxy, `${getFlagFromAbbr(server.outbound)} ${server.name}`);
+            } else {
+                return convertToClashProxy(server.proxy, server.name);
+            }
+        });
+        return safeDump({proxies: clashProxies});
     }
 }

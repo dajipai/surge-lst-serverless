@@ -1,13 +1,14 @@
-import { Software } from ".";
+import { ComposableOutputSoftware } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy } from "../proxy";
 import { SemVer, gte, coerce } from "semver";
 
-export class Surge implements Software {
+export class Surge extends ComposableOutputSoftware {
     static IOS_BUILD_1429 = <SemVer> coerce("1429");
     readonly version?: SemVer;
     readonly platform?: string;
 
     constructor(version?: SemVer, platform?: string) {
+        super();
         this.version = version;
         this.platform = platform;
     }
@@ -30,7 +31,7 @@ export class Surge implements Software {
         return false;
     }
 
-    format(proxy: Proxy, name: string) : string {
+    writeSingleProxy(proxy: Proxy, name: string) : string {
         if (proxy instanceof ShadowsocksProxy) {
             let res = `${name} = ss,${proxy.host},${proxy.port},encrypt-method=${proxy.encryptionMethod},password=${proxy.password}`;
             if (proxy.obfs !== undefined) {
@@ -47,7 +48,7 @@ export class Surge implements Software {
             }
             return res;
         } else if (proxy instanceof ShadowsocksRProxy) {
-            return this.format(proxy.toShadowsocksProxy(), name);
+            return this.writeSingleProxy(proxy.toShadowsocksProxy(), name);
         }
         throw new Error("the proxy type is not supported by Surge");
     }

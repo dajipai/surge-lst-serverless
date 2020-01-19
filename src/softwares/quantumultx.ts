@@ -1,10 +1,11 @@
-import { Software } from ".";
+import { ComposableOutputSoftware } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy, HttpProxy } from "../proxy";
 
-export class QuantumultX implements Software {
+export class QuantumultX extends ComposableOutputSoftware {
     readonly build?: number;
     
     constructor(build?: number) {
+        super();
         this.build = build;
     }
     
@@ -35,7 +36,7 @@ export class QuantumultX implements Software {
         return false;
     }
 
-    format(proxy: Proxy, name: string) : string {
+    writeSingleProxy(proxy: Proxy, name: string) : string {
         if (proxy instanceof ShadowsocksProxy) {
             // shadowsocks=ss-a.example.com:80, method=chacha20, password=pwd, obfs=http, obfs-host=bing.com, obfs-uri=/resource/file, fast-open=false, udp-relay=false, server_check_url=http://www.apple.com/generate_204, tag=Sample-A
             let res = `shadowsocks=${proxy.host}:${proxy.port},method=${proxy.encryptionMethod},password=${proxy.password}`;

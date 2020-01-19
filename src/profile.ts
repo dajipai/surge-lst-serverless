@@ -1,5 +1,4 @@
 import { OrderedMap, List } from "immutable";
-import { getFlagFromAbbr } from "emoji-append";
 import Resolver from "./resolver";
 import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Proxy } from "./proxy";
@@ -49,7 +48,7 @@ export class ProxyContext {
         const proxies: OrderedMap<string,ServerInfo> = OrderedMap<string,Proxy>(data).map((value, name) => {
             return (new ServerBuilder(name, value)).withResolver(resolver).build();
         }).filter(resolver.defaultFilter());
-        return proxies.filter(
+        return this.software.format(proxies.filter(
             info => this.software.satisfies(info.proxy)
         ).filter((server) => {
             return List<string|string[]>([server.inbound, server.outbound, server.multiplier, server.serverType, server.tags])
@@ -83,12 +82,6 @@ export class ProxyContext {
             return List(sortMethod!).map((key) => {
                 return <number>a[key].localeCompare(b[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
-        }).map((server) => {
-            if (useEmoji) {
-                return this.software.format(server.proxy, `${getFlagFromAbbr(server.outbound)} ${server.name}`);
-            } else {
-                return this.software.format(server.proxy, server.name);
-            }
-        }).toArray().join("\n");
+        }).toArray(), { useEmoji });
     }
 }

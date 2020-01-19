@@ -7,6 +7,9 @@ import { IValidator, Validator, ValidationError } from "./validator";
 import { Result, Ok, Err } from "@usefultools/monads";
 import semver, { coerce, SemVer } from "semver";
 import { Software, Surge, QuantumultX } from "./softwares";
+import { Clash } from "./softwares/clash";
+
+const AVAILABLE_OUTPUTS = ["surge", "quanx", "clash"];
 
 export interface Interceptor<T> {
     check(data?: string): IValidator
@@ -73,7 +76,7 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
 export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
     convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<SurgeNodeListLambdaParameters, Error> {
         let output: Software;
-        if (queryStringParameters.output === undefined || !["surge", "quanx"].includes(queryStringParameters.output)) {
+        if (queryStringParameters.output === undefined || !AVAILABLE_OUTPUTS.includes(queryStringParameters.output)) {
             let userAgent = unescape(headers["User-Agent"].toLowerCase());
             if (userAgent.startsWith("surge")) {
                 if (userAgent.includes("x86_64")) {
@@ -108,6 +111,8 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeList
             output = new QuantumultX();
         } else if (queryStringParameters.output === "surge") {
             output = new Surge();
+        } else if (queryStringParameters.output === "clash") {
+            output = new Clash();
         } else {
             return Err(new Error("invalid output type"));
         }

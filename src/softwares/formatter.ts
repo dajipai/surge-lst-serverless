@@ -1,5 +1,5 @@
-import { Proxy } from "../proxy";
+import ServerInfo from "../server";
 
 export interface Formatter {
-    format(proxy: Proxy, name: string) : string
+    format(proxies: ServerInfo[], options: {[key: string]: any}) : string
 }
