@@ -18,7 +18,8 @@ export interface Interceptor<T> {
 
 type ControllerFunction<T> = (context: Interceptor<T>, parameters: T) => Promise<Result<APIGatewayProxyResult, ValidationError>>;
 
-export interface SurgeNodeListLambdaParameters {
+export interface NodeListLambdaParameters {
+    [key: string]: any
     id?: string
     useEmoji: string
     token: string
@@ -73,8 +74,8 @@ export abstract class AbstractLambdaInterceptor<T> implements Interceptor<T> {
     }
 }
 
-export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeListLambdaParameters> {
-    convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<SurgeNodeListLambdaParameters, Error> {
+export class NodeListInterceptor extends AbstractLambdaInterceptor<NodeListLambdaParameters> {
+    convert(headers: {[name: string]: string}, queryStringParameters: {[name: string]: string}, multiValueQueryStringParameters: {[name: string]: string[]}): Result<NodeListLambdaParameters, Error> {
         let output: Software;
         if (queryStringParameters.output === undefined || !AVAILABLE_OUTPUTS.includes(queryStringParameters.output)) {
             let userAgent = unescape(headers["User-Agent"].toLowerCase());
@@ -104,6 +105,8 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<SurgeNodeList
                     return Err(new Error("invalid user-agent"));
                 }
                 output = new QuantumultX(parseInt(UA[1]));
+            } else if (userAgent.toLocaleLowerCase().includes("clash")) {
+                output = new Clash();
             } else {
                 output = new Surge();
             }
