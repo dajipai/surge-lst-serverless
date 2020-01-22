@@ -7,7 +7,6 @@ export class BoundMap {
 
     match(name: string): string | undefined {
         for (let [keyword, bound] of this.boundSet) {
-            console.log(`try to match ${keyword} in ${name}`);
             if (name.includes(keyword)) {
                 return bound;
             }
