@@ -6,7 +6,7 @@ const BoslifeServerTypes = ["中转"];
 
 class BoslifeResolver extends Resolver {
     constructor() {
-        super(BoslifeInboundsMap, BoslifeOutboundsMap, BoslifeServerTypes, "Boslife");
+        super("Boslife", BoslifeServerTypes);
     }
 }
 

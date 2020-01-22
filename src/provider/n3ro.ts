@@ -7,7 +7,7 @@ const N3roServerTypes: string[] = ["CN2", "IPLC", "HINET", "BGP"];
 
 class N3roResolver extends Resolver {
     constructor() {
-        super(N3roInboundsMap, N3roOutboundsMap, N3roServerTypes, "N3RO");
+        super("N3RO", N3roServerTypes);
     }
 
     public resolve(builder: ServerBuilder): void {

@@ -1,15 +1,16 @@
 import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Direct } from "./proxy";
+import { BoundMap, commonInboundsMap, commonOutboundsMap } from "./boundMap";
 
 export default class Resolver {
-    private readonly inboundsMap: {[key: string]: string};
-    private readonly outboundsMap: {[key: string]: string};
+    private readonly inboundsMap: BoundMap;
+    private readonly outboundsMap: BoundMap;
     private readonly serverTypes: string[];
     private readonly provider: string;
 
-    constructor(inboundsMap: {[key: string]: string}, outboundsMap: {[key: string]: string}, serverTypes: string[], provider: string) {
-        this.inboundsMap = inboundsMap;
-        this.outboundsMap = outboundsMap;
+    constructor(provider: string, serverTypes: string[], inboundsMap?: BoundMap, outboundsMap?: BoundMap, ) {
+        this.inboundsMap = inboundsMap ?? commonInboundsMap;
+        this.outboundsMap = outboundsMap ?? commonOutboundsMap;
         this.serverTypes = serverTypes;
         this.provider = provider;
     }
@@ -20,18 +21,9 @@ export default class Resolver {
 
     public resolve(builder: ServerBuilder): void {
         builder.provider = this.provider;
-        for (const city in this.inboundsMap) {
-            if (builder.name.includes(city)) {
-                builder.inbound = this.inboundsMap[city];
-                break;
-            }
-        }
-        for (const city in this.outboundsMap) {
-            if (builder.name.includes(city)) {
-                builder.outbound = this.outboundsMap[city];
-                break;
-            }
-        }
+        builder.inbound = this.inboundsMap.match(builder.name) ?? "";
+        builder.outbound = this.outboundsMap.match(builder.name) ?? "";
+
         for (const serverType of this.serverTypes) {
             if (builder.name.includes(serverType)) {
                 builder.serverType = serverType;

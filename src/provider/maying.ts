@@ -1,7 +1,6 @@
 import Resolver from "../resolver";
 import { ServerBuilder, AllowSortedKeys } from "../server";
 
-const MayingInboundsMap: {[key: string]: string} = { 上海: "SH", 深圳: "SZ"};
 const MayingOutboundsMap: {[key: string]: string} = { 
     香港: "HK",
     大阪: "JP",
@@ -32,7 +31,7 @@ const MayingServerTypes: string[] = ["测试", "应急"];
 
 class MayingResolver extends Resolver {
     constructor() {
-        super(MayingInboundsMap, MayingOutboundsMap, MayingServerTypes, "Maying");
+        super("Maying", MayingServerTypes);
     }
 
     public resolve(builder: ServerBuilder): void {
