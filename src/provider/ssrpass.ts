@@ -6,7 +6,7 @@ const SSRPassSSServerTypes: string[] = [];
 
 class SSRPassSSResolver extends Resolver {
     constructor() {
-        super(SSRPassSSInboundsMap, SSRPassSSOutboundsMap, SSRPassSSServerTypes, "Conair");
+        super(SSRPassSSInboundsMap, SSRPassSSOutboundsMap, SSRPassSSServerTypes, "SSRPass-SS");
     }
 }
 

@@ -14,6 +14,10 @@ export default class Resolver {
         this.provider = provider;
     }
 
+    get providerName() {
+        return this.provider;
+    }
+
     public resolve(builder: ServerBuilder): void {
         builder.provider = this.provider;
         for (const city in this.inboundsMap) {

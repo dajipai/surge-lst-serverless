@@ -1,7 +1,23 @@
-export { default as yoyuResolver } from "./yoyu";
-export { default as conairResolver } from "./conair";
-export { default as boslifeResolver } from "./boslife";
-export { default as ytooResolver } from "./ytoo";
-export { default as mayingResolver } from "./maying";
-export { default as n3roResolver } from "./n3ro";
-export { default as ssrpassResolver } from "./ssrpass";
+import { readdirSync } from "fs";
+import { join } from "path";
+import Resolver from "../resolver";
+
+const normalizedPath = join(__dirname);
+const resolverMap : {[name: string]: Resolver} = {}
+
+const __load_providers = () => {
+    readdirSync(normalizedPath).filter((file) => "index.ts" !== file).forEach(file => {
+        let module = require("./" + file);
+        let resolver = module.default;
+        if (resolver instanceof Resolver) {
+            resolverMap[resolver.providerName.toLowerCase()] = resolver;
+        }
+    });
+}
+
+__load_providers();
+
+export const findResolver = (name: string): Resolver|undefined => {
+    console.log(resolverMap);
+    return resolverMap[name.toLowerCase()];
+}
