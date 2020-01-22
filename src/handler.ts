@@ -4,7 +4,7 @@ import {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
-import { findResolver } from "./provider";
+import { default as providerLoader } from "./provider";
 import { ProxyContext } from "./profile";
 import { SurgeProfile, SSDSubscription, Subscription, ProxiesInput } from "./input";
 import { NodeListInterceptor } from "./interceptor";
@@ -22,7 +22,7 @@ const renderUrlTemplate = (template: string, parameters: string[]): ((data: {[ke
 }
 
 function defineHandler<A extends ProxiesInput>(name: string, urlTemplate: string, provider: new () => A): void {
-  const resolver = findResolver(name);
+  const resolver = providerLoader.findResolver(name);
   if (resolver === undefined) {
     throw new Error(`cannot find resolver ${name}`);
   }
