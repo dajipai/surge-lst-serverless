@@ -26,6 +26,12 @@ class ProviderLoader {
     findResolver(name: string): Resolver|undefined {
         return this.resolverMap[name.toLowerCase()];
     }
+
+    forEachResolver(callback: (name: string, resolver: Resolver) => void) {
+        for (let name in this.resolverMap) {
+            callback(name, this.resolverMap[name]);
+        }
+    }
 }
 
 export default new ProviderLoader();

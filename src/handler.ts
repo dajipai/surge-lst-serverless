@@ -20,11 +20,7 @@ const renderUrlTemplate = (template: string, parameters: string[]): ((data: {[ke
   }
 }
 
-function defineHandler(name: string): void {
-  const resolver = providerLoader.findResolver(name);
-  if (resolver === undefined) {
-    throw new Error(`cannot find resolver for ${name}`);
-  }
+providerLoader.forEachResolver((name, resolver) => {
   if (resolver.providerTemplates().length < 1) {
     throw new Error(`cannot find available template for ${name}`);
   }
@@ -52,12 +48,4 @@ function defineHandler(name: string): void {
   };
   // runtime export
   module.exports[name.replace("-", "_")] = handler;
-}
-
-defineHandler("yoyu")
-defineHandler("boslife");
-defineHandler("conair");
-defineHandler("ytoo");
-defineHandler("maying");
-defineHandler("n3ro");
-defineHandler("ssrpass-ss");
+});
