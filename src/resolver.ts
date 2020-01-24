@@ -1,8 +1,9 @@
 import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
 import { Direct } from "./proxy";
 import { BoundMap, commonInboundsMap, commonOutboundsMap } from "./boundMap";
+import { ProxiesInput } from "./input";
 
-export default class Resolver {
+export default abstract class Resolver {
     private readonly inboundsMap: BoundMap;
     private readonly outboundsMap: BoundMap;
     private readonly serverTypes: string[];
@@ -39,6 +40,8 @@ export default class Resolver {
             return !(server.proxy instanceof Direct);
         };
     }
+
+    abstract providerTemplates(): Array<[string, new () => ProxiesInput]>;
 
     public sortMethod(): AllowSortedKeys[] {
         return ["outbound"];

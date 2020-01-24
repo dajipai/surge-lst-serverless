@@ -1,32 +1,7 @@
 import Resolver from "../resolver";
 import { ServerBuilder, AllowSortedKeys } from "../server";
+import { ProxiesInput, Subscription } from "../input";
 
-const MayingOutboundsMap: {[key: string]: string} = { 
-    香港: "HK",
-    大阪: "JP",
-    东京: "JP",
-    首尔: "KR",
-    硅谷: "US",
-    新加坡: "SG",
-    波特兰: "US",
-    洛杉矶: "US",
-    圣何塞: "US",
-    达拉斯: "US",
-    西雅图: "US",
-    芝加哥: "US",
-    伦敦: "UK",
-    法兰克福: "DE",
-    彰化: "TW",
-    新北: "TW",
-    台北: "TW",
-    圣克拉拉: "US",
-    凤凰城: "US",
-    圣彼得堡: "RU",
-    悉尼: "AU",
-    曼谷: "TH",
-    台中: "TW",
-    埼玉: "JP",
-};
 const MayingServerTypes: string[] = ["测试", "应急"];
 
 class MayingResolver extends Resolver {
@@ -66,6 +41,10 @@ class MayingResolver extends Resolver {
 
     public sortMethod(): AllowSortedKeys[] {
         return [];
+    }
+
+    providerTemplates(): Array<[string, new () => ProxiesInput]> {
+        return new Array(["https://sub.ssr.sh/link/${token}?mu=1", Subscription]);
     }
 }
 

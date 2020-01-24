@@ -6,7 +6,6 @@ import {
 } from "aws-lambda";
 import { default as providerLoader } from "./provider";
 import { ProxyContext } from "./profile";
-import { SurgeProfile, SSDSubscription, Subscription, ProxiesInput } from "./input";
 import { NodeListInterceptor } from "./interceptor";
 import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
@@ -21,11 +20,15 @@ const renderUrlTemplate = (template: string, parameters: string[]): ((data: {[ke
   }
 }
 
-function defineHandler<A extends ProxiesInput>(name: string, urlTemplate: string, provider: new () => A): void {
+function defineHandler(name: string): void {
   const resolver = providerLoader.findResolver(name);
   if (resolver === undefined) {
-    throw new Error(`cannot find resolver ${name}`);
+    throw new Error(`cannot find resolver for ${name}`);
   }
+  if (resolver.providerTemplates().length < 1) {
+    throw new Error(`cannot find available template for ${name}`);
+  }
+  const [urlTemplate, provider] = resolver.providerTemplates()[0];
   const requiredParameters = Array.from(urlTemplate.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
   const urlOnce = renderUrlTemplate(urlTemplate, requiredParameters);
   const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= async (event) => {
@@ -51,10 +54,10 @@ function defineHandler<A extends ProxiesInput>(name: string, urlTemplate: string
   module.exports[name.replace("-", "_")] = handler;
 }
 
-defineHandler("yoyu", "https://home.yoyu.cc/subscribe/${id}/${token}/sip002/", Subscription)
-defineHandler("boslife", "https://api.cn1.info/downloads/conf/${token}.conf", SurgeProfile);
-defineHandler("conair", "https://conair.me/link/${token}?mu=6", SurgeProfile);
-defineHandler("ytoo", "https://ytoo.xyz/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}", Subscription);
-defineHandler("maying", "https://sub.ssr.sh/link/${token}?mu=1", Subscription);
-defineHandler("n3ro", "https://nnn3ro.link/link/${token}?mu=3", SSDSubscription);
-defineHandler("ssrpass-ss", "https://ss.blacklist.pw/link/${token}?mu=3", SSDSubscription);
+defineHandler("yoyu")
+defineHandler("boslife");
+defineHandler("conair");
+defineHandler("ytoo");
+defineHandler("maying");
+defineHandler("n3ro");
+defineHandler("ssrpass-ss");

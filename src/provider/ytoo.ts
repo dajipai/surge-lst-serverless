@@ -1,5 +1,6 @@
 import Resolver from "../resolver";
 import { ServerBuilder } from "../server";
+import { Subscription, ProxiesInput } from "../input";
 
 const YTOOServerTypes: string[] = ['日用', 'BGP', 'Test', 'None'];
 
@@ -19,6 +20,10 @@ class YTOOResolver extends Resolver {
         if (tagMatcher != null) {
             builder.tag = tagMatcher[1];
         }
+    }
+
+    providerTemplates(): Array<[string, new () => ProxiesInput]> {
+        return new Array(["https://ytoo.xyz/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}", Subscription]);
     }
 }
 
