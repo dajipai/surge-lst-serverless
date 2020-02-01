@@ -2,18 +2,18 @@
   "name": "surge-lst-serverless",
   "version": "1.0.0",
   "devDependencies": {
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^25.1.1",
     "jest": "^25.1.0",
-    "serverless": "^1.61.3",
-    "serverless-offline": "^6.0.0-alpha.62",
-    "ts-jest": "^25.0.0"
+    "serverless": "^1.62.0",
+    "serverless-offline": "^6.0.0-alpha.64",
+    "ts-jest": "^25.1.0"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.40",
     "@types/js-base64": "^2.3.1",
-    "@types/js-yaml": "^3.12.1",
-    "@types/node": "^13.5.0",
-    "@types/semver": "^6.2.0",
+    "@types/js-yaml": "^3.12.2",
+    "@types/node": "^13.7.0",
+    "@types/semver": "^7.1.0",
     "@types/validator": "^12.0.1",
     "@usefultools/monads": "=3.0.0",
     "axios": "^0.19.2",
@@ -21,10 +21,10 @@
     "immutable": "^4.0.0-rc.12",
     "js-base64": "^2.5.1",
     "js-yaml": "^3.13.1",
-    "runtypes": "^4.0.3",
-    "semver": "^7.1.1",
+    "runtypes": "^4.1.0",
+    "semver": "^7.1.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
-    "validator": "^12.1.0"
+    "validator": "^12.2.0"
   }
 }
