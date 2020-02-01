@@ -40,7 +40,7 @@ export class ProxyContext {
         noMultiplier: noMultiplierFilters = [],
         noServerType: noServerTypeFilters = [],
         noTags: noTagFilters = [],
-      }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, sortMethod?: AllowSortedKeys[]) {
+      }: {[name: string]: string[]}, resolver: Resolver, useEmoji: boolean, udpRelay?: boolean, sortMethod?: AllowSortedKeys[]) {
         if (sortMethod === undefined) {
             sortMethod = resolver.sortMethod();
         }
@@ -82,6 +82,6 @@ export class ProxyContext {
             return List(sortMethod!).map((key) => {
                 return <number>a[key].localeCompare(b[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
-        }).toArray(), { useEmoji });
+        }).toArray(), { useEmoji, udpRelay });
     }
 }

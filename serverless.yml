@@ -100,7 +100,13 @@ functions:
     events:
       - http:
           path: ssrpass/ss
-          method: get        
+          method: get
+  nex:
+    handler: src/bridge.nexitally
+    events:
+      - http:
+          path: nex
+          method: get     
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

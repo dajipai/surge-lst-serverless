@@ -34,11 +34,8 @@ providerLoader.forEachResolver((name, resolver) => {
           return Err(ValidationError.create(400, `${rp} cannot be empty`));
         }
       }
-      if(interceptor.check(parameters.useEmoji).isNotBoolean()) {
-        return Err(ValidationError.create(400, "emoji is not type of boolean"));
-      }
       const context = new ProxyContext(new provider(), parameters.output);
-      const result = await context.handle(urlOnce(parameters), parameters.multiValueQueryStringParameters, resolver, parameters.useEmoji === "true", parameters.sortMethod);
+      const result = await context.handle(urlOnce(parameters), parameters.multiValueQueryStringParameters, resolver, parameters.useEmoji, parameters.udpRelay, parameters.sortMethod);
       return Ok({
         statusCode: 200,
         headers: {"content-type": "text/plain", ...context.respHeader},

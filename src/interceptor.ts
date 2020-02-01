@@ -21,8 +21,9 @@ type ControllerFunction<T> = (context: Interceptor<T>, parameters: T) => Promise
 export interface NodeListLambdaParameters {
     [key: string]: any
     id?: string
-    useEmoji: string
+    useEmoji: boolean
     token: string
+    udpRelay? : boolean
     sortMethod?: AllowSortedKeys[]
     output: Software
     multiValueQueryStringParameters: {[name: string]: string[]}
@@ -122,8 +123,9 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<NodeListLambd
         return Ok({
             id: queryStringParameters.id,
             token: queryStringParameters.token ?? "",
-            useEmoji: queryStringParameters.emoji ?? "true",
+            useEmoji: queryStringParameters.emoji === "true",
             sortMethod: queryStringParameters.sort?.split(">").filter(Server.isValidComparator),
+            udpRelay: queryStringParameters.udpRelay === "true",
             multiValueQueryStringParameters,
             output,
         });
