@@ -986,14 +986,14 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@usefultools/monads@=3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@usefultools/monads/-/monads-3.0.0.tgz#023ba84c8ac43624875004180f275eb7a3a52756"
-  integrity sha512-PEgElKFbZ27En7nPnXFCPvMy0+4dk6ptrT1H12a05G/vUXv7j9b/svXqO28UuIaxKu10/FV9wEk4jWjr8au++w==
+"@usefultools/monads@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@usefultools/monads/-/monads-3.0.3.tgz#8f23526063f46318cb763acf32d4ba956d49626d"
+  integrity sha512-8V3iNqCenyjwEIbpwdY6mlDcNGAEe2pk346+2lcPx6LSNnaGyVpfSQHaEDn+QDr5b4RPvHS3WcNoI2ypl7CoBg==
   dependencies:
-    "@usefultools/utils" "^6.3.0"
+    "@usefultools/utils" "^6.3.1"
 
-"@usefultools/utils@^6.3.0":
+"@usefultools/utils@^6.3.1":
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/@usefultools/utils/-/utils-6.3.1.tgz#7ae24d5adeb38f1221a0dacf9f286d0879542089"
   integrity sha512-PxliPDBShL60HaMn+W7faKjcxFqEVK2aanBFeD2BGMorbpZw924A5p/Hk2Nwr4rM8aH/2qW2eGA9fn/ynhwV9A==
