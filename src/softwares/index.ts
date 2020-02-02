@@ -13,7 +13,6 @@ export abstract class ComposableOutputSoftware implements Software {
 
     format(proxies: ServerInfo[], options: {[key: string]: any}) : string {
         const useEmoji : boolean = options["useEmoji"] ?? true;
-        console.log(options)
         const forceUDPRelay = options["udpRelay"] ? options["udpRelay"] as boolean : false;
         return proxies.map((server) => {
             if (forceUDPRelay && server.proxy instanceof ShadowsocksProxy) {

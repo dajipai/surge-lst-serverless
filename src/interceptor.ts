@@ -123,7 +123,7 @@ export class NodeListInterceptor extends AbstractLambdaInterceptor<NodeListLambd
         return Ok({
             id: queryStringParameters.id,
             token: queryStringParameters.token ?? "",
-            useEmoji: queryStringParameters.emoji === "true",
+            useEmoji: queryStringParameters.emoji ? queryStringParameters.emoji === "true" : true,
             sortMethod: queryStringParameters.sort?.split(">").filter(Server.isValidComparator),
             udpRelay: queryStringParameters.udpRelay === "true",
             multiValueQueryStringParameters,
