@@ -83,6 +83,12 @@ functions:
       - http:
           path: ytoo
           method: get
+  ytoo-ss:
+    handler: src/bridge.ytoo_ss
+    events:
+      - http:
+          path: ytoo/ss
+          method: get
   maying:
     handler: src/bridge.maying
     events:

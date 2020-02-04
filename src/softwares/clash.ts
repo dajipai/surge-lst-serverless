@@ -42,7 +42,7 @@ import { getFlagFromAbbr } from "emoji-append";
 
 const convertToClashProxy = (proxy: Proxy, name: string) : any => {
     if (proxy instanceof ShadowsocksProxy) {
-        return {
+        const defaultOutput = {
             name: name,
             type: "ss",
             server: proxy.host,
@@ -51,6 +51,37 @@ const convertToClashProxy = (proxy: Proxy, name: string) : any => {
             password: proxy.password,
             udp: proxy.udpRelay
         };
+        if (proxy.obfs) {
+            return Object.assign({}, defaultOutput, {
+                plugin: "obfs",
+                "plugin-opts": {
+                    mode: proxy.obfs,
+                    host: proxy.obfsHost
+                }
+            });
+        }
+        return defaultOutput;
+    } else if (proxy instanceof V2rayProxy) {
+        const defaultOutput = {
+            name: name,
+            type: "vmess",
+            server: proxy.host,
+            port: proxy.port,
+            uuid: proxy.username,
+            cipher: "auto",
+            tls: proxy.tls,
+            alterId: 1,
+        };
+        if (proxy.ws) {
+            return Object.assign({}, defaultOutput, {
+                network: "ws",
+                "ws-path": proxy.wsPath,
+                "ws-headers": {
+                    "Host": proxy.obfsHost
+                }
+            });
+        }
+        return defaultOutput;
     }
 }
 
