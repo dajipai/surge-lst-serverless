@@ -929,10 +929,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^25.1.1":
-  version "25.1.1"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.1.1.tgz#dcf65a8ee315b91ad39c0d358ae0ddc5602ab0e9"
-  integrity sha512-bKSZJYZJLzwaoVYNN4W3A0RvKNYsrLm5tsuXaMlfYDxKf4gY2sFrMYneCugNQWGg1gjPW+FHBwNrwPzEi4sIsw==
+"@types/jest@^25.1.2":
+  version "25.1.2"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.1.2.tgz#1c4c8770c27906c7d8def5d2033df9dbd39f60da"
+  integrity sha512-EsPIgEsonlXmYV7GzUqcvORsSS9Gqxw/OvkGwHfAdpjduNRxMlhsav0O5Kb0zijc/eXSO/uW6SJt9nwull8AUQ==
   dependencies:
     jest-diff "^25.1.0"
     pretty-format "^25.1.0"
@@ -5725,10 +5725,10 @@ semver@^7.1.2:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.1.2.tgz#847bae5bce68c5d08889824f02667199b70e3d87"
   integrity sha512-BJs9T/H8sEVHbeigqzIEo57Iu/3DG6c4QoqTfbQB3BPA4zgzAomh/Fk9E7QtjWQ8mx2dgA9YCfSF4y9k9bHNpQ==
 
-serverless-offline@^6.0.0-alpha.64:
-  version "6.0.0-alpha.64"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-6.0.0-alpha.64.tgz#de116c1bcf399dfb2ee7afd04f92cebd4f613b4f"
-  integrity sha512-Y0mv954JWnZqMaeJsxZ8kKX0Z7xG68nGPQ4Hx9K+TI00fJNjyMz0nfGTUS8rtuWO1Z7tn0sxpBKO2LAL7oQQHg==
+serverless-offline@^6.0.0-alpha.65:
+  version "6.0.0-alpha.65"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-6.0.0-alpha.65.tgz#0ffdedf4c45d34bdcb565bd3238150188a85c1a5"
+  integrity sha512-s4ymZUdYMwvTo585d/L5DGnwpEhFssP1iGDRQfegOAwMhK8HxlTXIQI1CZGFL6os5WKpTEKf+T65tnXbh30u7g==
   dependencies:
     "@hapi/boom" "^7.4.11"
     "@hapi/h2o2" "^8.3.2"
@@ -5750,15 +5750,15 @@ serverless-offline@^6.0.0-alpha.64:
     p-queue "^6.2.1"
     please-upgrade-node "^3.2.0"
     portfinder "^1.0.25"
-    semver "^7.1.1"
+    semver "^7.1.2"
     update-notifier "^4.0.0"
     velocityjs "^2.0.0"
     ws "^7.2.1"
 
-serverless@^1.62.0:
-  version "1.62.0"
-  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.62.0.tgz#fd7f653602302c3c3934187bc25fb881eb3838cd"
-  integrity sha512-tfTp9o1UHq5gpGv6o5u8SGgOxCv63hIQ/Tob5grLEkmxwZf2DUjNpI08J+oMbjwje1o1zKYRukpnMMYODii2UA==
+serverless@^1.63.0:
+  version "1.63.0"
+  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.63.0.tgz#1e0a0a7174e95c484e51f2c8199f504987994fb8"
+  integrity sha512-dMwUiAsVoE+25R2jmD0+DfRf9VpvjBN8mgqweXtvm3k6TP536a9Wug8Ue6pc0KpEPc++zg5lIyd1zlTlrSHnPg==
   dependencies:
     "@serverless/cli" "^1.4.0"
     "@serverless/enterprise-plugin" "^3.3.0"
@@ -5771,6 +5771,7 @@ serverless@^1.62.0:
     chalk "^2.4.2"
     child-process-ext "^2.1.0"
     ci-info "^1.6.0"
+    d "^1.0.1"
     dayjs "^1.8.19"
     download "^7.1.0"
     essentials "^1.1.1"
@@ -5790,6 +5791,7 @@ serverless@^1.62.0:
     jszip "^3.2.2"
     jwt-decode "^2.2.0"
     lodash "^4.17.15"
+    memoizee "^0.4.14"
     mkdirp "^0.5.1"
     nanomatch "^1.2.13"
     ncjsm "^4.0.1"
@@ -6433,10 +6435,10 @@ trim-repeated@^1.0.0:
   dependencies:
     escape-string-regexp "^1.0.2"
 
-ts-jest@^25.1.0:
-  version "25.1.0"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-25.1.0.tgz#06e776c4cce8a4da8eec4945f36a5823d0c0f9ba"
-  integrity sha512-1Lf576ulKhbxX5og+tG8udVg/5cgcMLPBxp1iCqbbf6VvUK4gEsgAtzMjl8u98izhLrzKMPB0LxCBKEZ5l19Hw==
+ts-jest@^25.2.0:
+  version "25.2.0"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-25.2.0.tgz#dfd87c2b71ef4867f5a0a44f40cb9c67e02991ac"
+  integrity sha512-VaRdb0da46eorLfuHEFf0G3d+jeREcV+Wb/SvW71S4y9Oe8SHWU+m1WY/3RaMknrBsnvmVH0/rRjT8dkgeffNQ==
   dependencies:
     bs-logger "0.x"
     buffer-from "1.x"

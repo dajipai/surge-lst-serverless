@@ -1,5 +1,5 @@
 import Resolver from "../resolver";
-import { ProxiesInput, SurgeProfile } from "../input";
+import { ProxiesInput, SurgeProfile, SurgeNodeList } from "../input";
 
 const ConairServerTypes: string[] = ["南北互通", "專綫", "回國", "BGP"];
 
@@ -9,7 +9,7 @@ class ConairResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://conair.me/link/${token}?mu=6", SurgeProfile]);
+        return new Array(["https://conair.me/link/${token}?mu=7", SurgeNodeList]);
     }
 }
 

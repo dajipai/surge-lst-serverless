@@ -48,14 +48,23 @@ export class ShadowsocksRProxy implements Proxy {
 
     compatibleWithSS(): Boolean {
         // if `protocol` is origin, obfs must be plain
-        if (this.protocol === 'origin' && this.obfs === 'plain') {
+        if ((this.protocol === 'origin' || 
+            this.protocol === 'verify_sha1' ||
+            this.protocol === 'auth_sha1' || 
+            this.protocol === 'auth_sha1_v2' || 
+            this.protocol === 'auth_sha1_v4') && 
+            (this.obfs === 'plain'|| 
+            this.obfs === 'http_simple' ||
+            this.obfs === 'http_post' || 
+            this.obfs === 'random_head')) {
             return true;
         }
         return false;
     }
 
     toShadowsocksProxy() : ShadowsocksProxy {
-        return new ShadowsocksProxy(this.host, this.port, this.password, this.encryptionMethod, this.obfs, this.obfsParameter, this.udpRelay);
+        // since obfs == plain, it is off
+        return new ShadowsocksProxy(this.host, this.port, this.password, this.encryptionMethod, undefined, undefined, this.udpRelay);
     }
 }
 

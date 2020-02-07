@@ -2,11 +2,11 @@
   "name": "surge-lst-serverless",
   "version": "1.0.0",
   "devDependencies": {
-    "@types/jest": "^25.1.1",
+    "@types/jest": "^25.1.2",
     "jest": "^25.1.0",
-    "serverless": "^1.62.0",
-    "serverless-offline": "^6.0.0-alpha.64",
-    "ts-jest": "^25.1.0"
+    "serverless": "^1.63.0",
+    "serverless-offline": "^6.0.0-alpha.65",
+    "ts-jest": "^25.2.0"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.40",
