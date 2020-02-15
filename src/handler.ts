@@ -4,10 +4,11 @@ import {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
+import * as Task from "fp-ts/lib/Task";
+import { pipe } from 'fp-ts/lib/pipeable';
 import { default as providerLoader } from "./provider";
 import { ProxyContext } from "./profile";
 import { NodeListInterceptor } from "./interceptor";
-import { Result, Ok, Err } from "@usefultools/monads";
 import { ValidationError } from "./validator";
 
 const renderUrlTemplate = (template: string, parameters: string[]): ((data: {[key: string]: string}) => string) => {
@@ -27,21 +28,22 @@ providerLoader.forEachResolver((name, resolver) => {
   const [urlTemplate, provider] = resolver.providerTemplates()[0];
   const requiredParameters = Array.from(urlTemplate.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
   const urlOnce = renderUrlTemplate(urlTemplate, requiredParameters);
-  const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= async (event) => {
-    return await new NodeListInterceptor(name).process(event, async (interceptor, parameters) : Promise<Result<APIGatewayProxyResult, ValidationError>> => {
+  const interceptor = new NodeListInterceptor(name);
+  const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= (event, _ctx, callback) => {
+    interceptor.process(event, async (interceptor, parameters) : Promise<APIGatewayProxyResult> => {
       for (let rp of requiredParameters) {
         if(interceptor.check(parameters[rp]).isEmpty()) {
-          return Err(ValidationError.create(400, `${rp} cannot be empty`));
+          throw ValidationError.create(400, `${rp} cannot be empty`);
         }
       }
       const context = new ProxyContext(new provider(), parameters.output);
       const result = await context.handle(urlOnce(parameters), parameters.multiValueQueryStringParameters, resolver, parameters.useEmoji, parameters.udpRelay, parameters.sortMethod);
-      return Ok({
+      return {
         statusCode: 200,
-        headers: {"content-type": "text/plain", ...context.respHeader},
+        headers: { "content-type": "text/plain", ...context.respHeader },
         body: result
-      });
-    });
+      };
+    })().then((resp) => callback(null, resp))
   };
   // runtime export
   module.exports[name.replace("-", "_")] = handler;
