@@ -86,6 +86,10 @@ const vmessExample = `
 BGP-京韩-KT-A(0.2) = vmess, 1.2.3.4, 12345, username=user-name-example-uuid, ws=true, tls=false, ws-path=/
 `
 
+const vmessHostHeaderExample = `
+BGP-京韩-KT-A(0.2) = vmess, 1.2.3.4, 12345, username=user-name-example-uuid, ws=true, tls=false, ws-path=/, ws-headers=Host:play.itunes.apple.com
+`
+
 
 test("General Profile", () => {
     let proxies = getProxiesFromSurgeProfile(mockedProfile);
@@ -148,12 +152,20 @@ test("legacySSNodeListUDP", () => {
     expect(proxies[0][0]).toEqual("專綫-上海-加拿大");
     expect(proxies[0][1]).toBeInstanceOf(ShadowsocksProxy);
     expect(proxies[0][1]).toStrictEqual(new ShadowsocksProxy("1.2.3.4", 12345, "password", "aes-128-cfb", undefined, undefined, true));
-})
+});
 
 test("legacyVmess", () => {
     let proxies = getProxiesFromSurgeNodeList(vmessExample);
     expect(proxies.length).toBe(1);
     expect(proxies[0][0]).toEqual("BGP-京韩-KT-A(0.2)");
     expect(proxies[0][1]).toBeInstanceOf(V2rayProxy);
-    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/", ""));
-})
+    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/", "", {}));
+});
+
+test("vmessWithHostHeader", () => {
+    let proxies = getProxiesFromSurgeNodeList(vmessHostHeaderExample);
+    expect(proxies.length).toBe(1);
+    expect(proxies[0][0]).toEqual("BGP-京韩-KT-A(0.2)");
+    expect(proxies[0][1]).toBeInstanceOf(V2rayProxy);
+    expect(proxies[0][1]).toStrictEqual(new V2rayProxy("1.2.3.4", 12345, "user-name-example-uuid", true, false, "/", "play.itunes.apple.com", {}));
+});

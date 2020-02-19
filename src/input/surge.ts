@@ -137,9 +137,12 @@ export const createSurgeProxy = (content: string): Proxy => {
         }
         const wsHeaders = Object.fromEntries((server.getKey("ws-headers") ?? "").split("|").map((entry) => {
             let pos = entry.indexOf(":");
-            return [entry.substring(0, pos), entry.substring(pos)];
-        }));
-        return new V2rayProxy(host, port, username, ws, tls, wsPath, "", wsHeaders);
+            if (pos < 0) {
+                return [];
+            }
+            return [entry.substring(0, pos), entry.substring(pos + 1)];
+        }).filter((arr) => arr.length == 2));
+        return new V2rayProxy(host, port, username, ws, tls, wsPath, wsHeaders['Host'] ?? "", wsHeaders);
     // custom, probably ss
     } else if (content.startsWith("custom")) {
         const server = new SurgeDict(content);
