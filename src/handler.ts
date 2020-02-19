@@ -4,8 +4,6 @@ import {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
-import * as Task from "fp-ts/lib/Task";
-import { pipe } from 'fp-ts/lib/pipeable';
 import { default as providerLoader } from "./provider";
 import { ProxyContext } from "./profile";
 import { NodeListInterceptor } from "./interceptor";
