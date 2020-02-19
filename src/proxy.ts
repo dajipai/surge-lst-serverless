@@ -75,10 +75,10 @@ export class V2rayProxy implements Proxy {
     readonly wsPath: string;
     readonly ws: boolean;
     readonly tls: boolean;
-    readonly obfsHost: string;
-    readonly wsHeaders?: string;
+    readonly obfsHost?: string;
+    readonly wsHeaders: {[key: string]: string};
 
-    constructor(host: string, port: number, username: string, ws: boolean, tls: boolean, wsPath: string, obfsHost: string, wsHeaders?: string) {
+    constructor(host: string, port: number, username: string, ws: boolean, tls: boolean, wsPath: string, obfsHost?: string, wsHeaders?: {[key: string]: string}) {
         this.host = host;
         this.port = port;
         this.username = username;
@@ -86,7 +86,14 @@ export class V2rayProxy implements Proxy {
         this.tls = tls;
         this.wsPath = wsPath;
         this.obfsHost = obfsHost;
-        this.wsHeaders = wsHeaders;
+        this.wsHeaders = wsHeaders ?? {};
+        if (this.obfsHost) {
+            this.wsHeaders['Host'] = this.obfsHost;
+        }
+    }
+
+    get headers(): string {
+        return this.wsHeaders ? Object.keys(this.wsHeaders).map((key) => `${key}:${this.wsHeaders[key]}`).join("|") : ""
     }
 
     // helpers
