@@ -1,7 +1,8 @@
-import ServerInfo, { ServerBuilder, AllowSortedKeys } from "./server";
+import ServerInfo, { ServerBuilder, serverInfoSortableKeyCodec } from "./server";
 import { Direct } from "./proxy";
 import { BoundMap, commonInboundsMap, commonOutboundsMap } from "./boundMap";
 import { ProxiesInput } from "./input";
+import * as t from "io-ts";
 
 export default abstract class Resolver {
     private readonly inboundsMap: BoundMap;
@@ -43,7 +44,7 @@ export default abstract class Resolver {
 
     abstract providerTemplates(): Array<[string, new () => ProxiesInput]>;
 
-    public sortMethod(): AllowSortedKeys[] {
+    public sortMethod(): t.TypeOf<typeof serverInfoSortableKeyCodec> {
         return ["outbound"];
     }
 }
