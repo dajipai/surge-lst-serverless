@@ -6,19 +6,20 @@ import { ProxiesInput, Subscription } from "./input";
 import { Software } from "./softwares";
 import * as t from "io-ts";
 import { QuantumultX } from "./softwares/quantumultx";
+import { withFallback } from 'io-ts-types/lib/withFallback'
 
 export const serverFilters = t.type({
-    inbound: t.array(t.string),
-    outbound: t.array(t.string),
-    multiplier: t.array(t.string),
-    serverType: t.array(t.string),
-    tags: t.array(t.string),
+    inbound: withFallback(t.array(t.string), []),
+    outbound: withFallback(t.array(t.string), []),
+    multiplier: withFallback(t.array(t.string), []),
+    serverType: withFallback(t.array(t.string), []),
+    tags: withFallback(t.array(t.string), []),
     // filterNot
-    noInbound: t.array(t.string),
-    noOutbound: t.array(t.string),
-    noMultiplier: t.array(t.string),
-    noServerType: t.array(t.string),
-    noTags: t.array(t.string),
+    noInbound: withFallback(t.array(t.string), []),
+    noOutbound: withFallback(t.array(t.string), []),
+    noMultiplier: withFallback(t.array(t.string), []),
+    noServerType: withFallback(t.array(t.string), []),
+    noTags: withFallback(t.array(t.string), [])
 });
 
 export class ProxyContext {

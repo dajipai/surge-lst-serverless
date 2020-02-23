@@ -13,18 +13,20 @@ import { fromConnection, Middleware, StatusOpen } from "hyper-ts";
 import { Either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { serverFilters } from "./profile";
+import { BooleanFromString } from "io-ts-types/lib/BooleanFromString";
+import { withMessage } from 'io-ts-types/lib/withMessage';
+import { withFallback } from 'io-ts-types/lib/withFallback'
 
 type ControllerFunction = (context: LambdaInterceptor, parameters: CombinedParameters) => Promise<APIGatewayProxyResult>;
 
-export const nodeListParameters = t.type({
-    id: t.string,
-    useEmoji: t.boolean,
-    token: t.string,
-    udpRelay: t.boolean,
+export const nodeListParameters = t.intersection([t.type({
+    id: withMessage(t.string, () => "id cannot be null"),
+    useEmoji: withFallback(BooleanFromString, true),
+    token: withMessage(t.string, () => "token cannot be null"),
+    udpRelay: withFallback(BooleanFromString, false),
     // never failed
-    sortMethod: serverInfoSortableKeyCodec,
-    filters: serverFilters
-});
+    sortMethod: withFallback(serverInfoSortableKeyCodec, [])
+}), serverFilters]);
 
 type CombinedParameters = t.TypeOf<typeof nodeListParameters> & {software: Software};
 
@@ -52,15 +54,28 @@ export class LambdaInterceptor {
     }
 }
 
+function flattenQuery(query: {[key: string]: string|string[]|undefined}, ...keys: string[]) {
+    for (let key of keys) {
+        let value = query[key];
+        if (value === undefined || !Array.isArray(value)) {
+            continue
+        }
+        query[key] = value[0];
+    }
+}
+
 export function extractQuery(queryStringParameters: unknown, userAgent: unknown): E.Either<Error, CombinedParameters> {
-    let query = queryStringParameters as {[key: string]: string|string[]|undefined};
+    let query = queryStringParameters as {[key: string]: string[]|undefined};
+    flattenQuery(query, "id", "token", "useEmoji", "udpRelay", "sortMethod");
     return pipe(
         softwareFromQuery.decode(query.output),
         E.orElse((_err) => softwareFromUserAgent.decode(userAgent)),
         E.chain((software) => {
-            return E.either.chain(nodeListParameters.decode(query), parameter => t.success(Object.assign({}, parameter, {software})))
+            return E.either.chain(nodeListParameters.decode(query), p => t.success(Object.assign({}, p, {software})))
         }),
-        E.orElse(err => E.left(new Error(err[0].message ?? "invalid user input")))
+        E.orElse(err => {
+            return E.left(new Error(err[0].message ?? "invalid user input"));
+        })
     );
 }
 
