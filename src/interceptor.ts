@@ -14,10 +14,10 @@ import { firstOfNonEmptyArray } from "./middleware";
 
 export const nodeListParameters = t.intersection([t.type({
     url: withMessage(firstOfNonEmptyArray(t.string), () => "cannot assemble url"),
-    useEmoji: withFallback(firstOfNonEmptyArray(BooleanFromString), true),
+    emoji: withFallback(firstOfNonEmptyArray(BooleanFromString), true),
     udpRelay: withFallback(firstOfNonEmptyArray(BooleanFromString), false),
     // never failed
-    sortMethod: withFallback(serverInfoSortableKeyCodec, [])
+    sort: withFallback(serverInfoSortableKeyCodec, [])
 }), serverFilters]);
 
 export type CombinedParameters = t.TypeOf<typeof nodeListParameters> & {software: Software};

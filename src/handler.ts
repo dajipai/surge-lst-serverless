@@ -26,6 +26,7 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
         result = result.replace("${" + param + "}", queryVal[0]);
       }
     }
+    // simulate here user input
     query.url = [result];
 
     return callback(queryStringParameters, userAgent);
@@ -37,6 +38,14 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
 function badRequest(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, never, void> {
   return pipe(
     H.status(H.Status.BadRequest),
+    H.ichain(() => H.closeHeaders()),
+    H.ichain(() => H.send(err.message))
+  )
+}
+
+function serverError(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, never, void> {
+  return pipe(
+    H.status(H.Status.ServerError),
     H.ichain(() => H.closeHeaders()),
     H.ichain(() => H.send(err.message))
   )
@@ -54,7 +63,7 @@ providerLoader.forEachResolver((name, resolver) => {
       H.ichain<CombinedParameters, H.StatusOpen, H.ResponseEnded, Error, void>((parameters) => 
         pipe(
           H.fromTaskEither(TE.tryCatch(() => 
-            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.useEmoji, parameters.udpRelay, parameters.sortMethod), 
+            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort), 
             (err) => err as Error)),
           H.ichain<string, H.StatusOpen, H.ResponseEnded, Error, void>((result) => 
             pipe(
@@ -64,7 +73,7 @@ providerLoader.forEachResolver((name, resolver) => {
               H.ichain(() => H.send(result))
             )
           ),
-          H.orElse(badRequest)
+          H.orElse(serverError)
         )
       ),
       H.orElse(badRequest)
