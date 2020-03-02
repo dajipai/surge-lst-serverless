@@ -45,7 +45,7 @@ export class ProxyContext {
         return {};
     }
 
-    async handle(url: string, filters: t.TypeOf<typeof serverFilters>, resolver: Resolver, useEmoji: boolean, udpRelay: boolean, sortMethod: t.TypeOf<typeof serverInfoSortableKeyCodec>): Promise<string> {
+    async handle(url: string, filters: t.TypeOf<typeof serverFilters>, resolver: Resolver, useEmoji: boolean, udpRelay: boolean, sortMethod: t.TypeOf<typeof serverInfoSortableKeyCodec>): Promise<[string, {[key: string]: string}]> {
         if (sortMethod === undefined || sortMethod.length === 0) {
             sortMethod = resolver.sortMethod();
         }
@@ -53,7 +53,7 @@ export class ProxyContext {
         const proxies: OrderedMap<string,ServerInfo> = OrderedMap<string,Proxy>(data).map((value, name) => {
             return (new ServerBuilder(name, value)).withResolver(resolver).build();
         }).filter(resolver.defaultFilter());
-        return this.software.format(proxies.filter(
+        return [this.software.format(proxies.filter(
             info => this.software.satisfies(info.proxy)
         ).filter((server) => {
             return List<string|string[]>([server.inbound, server.outbound, server.multiplier, server.serverType, server.tags])
@@ -87,6 +87,6 @@ export class ProxyContext {
             return List(sortMethod!).map((key) => {
                 return <number>a[key].localeCompare(b[key]);
             }).unshift(b.priority - a.priority).filterNot(x => x === 0).first(a.name.localeCompare(b.name, "pinyin"));
-        }).toArray(), { useEmoji, udpRelay });
+        }).toArray(), { useEmoji, udpRelay }), this.respHeader];
     }
 }

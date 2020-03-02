@@ -12,6 +12,7 @@ import { decodeQueryWithHeaders, extractQuery, CombinedParameters } from "./inte
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
 import { ProxyContext } from "./profile";
+import { sequenceT } from "fp-ts/lib/Apply";
 
 const renderUrlTemplate = (template: string) => (callback: (queryStringParameters: unknown, userAgent: unknown) => E.Either<Error, CombinedParameters>) => {
   const requiredParameters = Array.from(template.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
@@ -31,6 +32,11 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
 
     return callback(queryStringParameters, userAgent);
   }
+}
+
+function multiHeaders(headers: {[key: string]: string}): H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void> {
+  const headersMiddleware: Array<H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void>> = Object.entries(headers).map(([key, value]) => H.header(key, value));
+  return pipe(sequenceT(H.middleware)(headersMiddleware[0], ...headersMiddleware.slice(1)), H.map(() => {}))
 }
 
 // `???`: withMessage(firstOfNonEmptyArray(t.string), () => "??? cannot be null"),
@@ -65,12 +71,12 @@ providerLoader.forEachResolver((name, resolver) => {
           H.fromTaskEither(TE.tryCatch(() => 
             (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort), 
             (err) => err as Error)),
-          H.ichain<string, H.StatusOpen, H.ResponseEnded, Error, void>((result) => 
+          H.ichain<[string, {[key: string]: string}], H.StatusOpen, H.ResponseEnded, Error, void>(([body, headers]) => 
             pipe(
               H.status(H.Status.OK),
-              H.ichain(() => H.header("Content-Type", "text/plain")),
+              H.ichain(() => multiHeaders(Object.assign({}, {"Content-Type": "text/plain"}, headers))),
               H.ichain(() => H.closeHeaders()),
-              H.ichain(() => H.send(result))
+              H.ichain(() => H.send(body))
             )
           ),
           H.orElse(serverError)
