@@ -106,5 +106,6 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                             .registerMap({ 台湾: "TW", 德国: "DE", 日本: "JP", 狮城: "SG", 美国: "US", 香港: "HK", 港: "HK", 韩国: "KR", 伦敦: "UK", 东京: "JP", 首尔: "KR", 土耳其: "TR", 印度: "IN", 阿根廷: "AR" })
                             .registerMap({ 俄罗斯: "RU", 德国: "DE", 美国: "US", 香港: "HK", 台湾: "TW", 德: "DE", 新: "SG", 港: "HK", 美: "US", 日: "JP", 韩: "KR", 英: "UK", 台: "TW"})
                             .registerMap({ 台: "TW", 德: "DE", 日: "JP", 美: "US", 港: "HK", 韩: "KR", 新: "SG", 俄罗斯: "RU", 台湾: "TW", 日本: "JP", 香港: "HK", 菲律宾: "PH", 狮城: "SG"})
+                            .registerMap({ USA: "US", Germany: "DE", Korea: "KR", Netherlands: "NL", Russia: "RU", France: "FR", "United Kingdom": "UK", Turkey: "TR", Thailand: "TH", Canada: "CA", Sydney: "AU", "United Arab Emirates": "AE", India: "IN", Brazil: "BR" })
                             .register("墨西哥", "MX")
                             .build();
