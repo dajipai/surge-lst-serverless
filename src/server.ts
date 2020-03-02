@@ -1,6 +1,7 @@
 import Resolver from "./resolver";
 import { Proxy } from "./proxy";
 import * as t from "io-ts";
+import { firstOfNonEmptyArray } from "./middleware";
 
 export const serverInfoSortableKey = t.union([
     t.literal('name'),
@@ -9,7 +10,7 @@ export const serverInfoSortableKey = t.union([
     t.literal('serverType')
 ]);
 
-export const serverInfoSortableKeyCodec = t.string.pipe(new t.Type<Array<t.TypeOf<typeof serverInfoSortableKey>>, string, string>(
+export const serverInfoSortableKeyCodec = firstOfNonEmptyArray(t.string).pipe(new t.Type<Array<t.TypeOf<typeof serverInfoSortableKey>>, string, string>(
     "serverInfoSortableKeyCodec",
     (u: unknown): u is Array<t.TypeOf<typeof serverInfoSortableKey>> => Array.isArray(u) && u.every(serverInfoSortableKey.is),
     (input: string, _context) => {

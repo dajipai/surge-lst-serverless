@@ -45,7 +45,7 @@ export class ProxyContext {
         return {};
     }
 
-    async handle(url: string, filters: t.TypeOf<typeof serverFilters>, resolver: Resolver, useEmoji: boolean, udpRelay: boolean, sortMethod: t.TypeOf<typeof serverInfoSortableKeyCodec>) {
+    async handle(url: string, filters: t.TypeOf<typeof serverFilters>, resolver: Resolver, useEmoji: boolean, udpRelay: boolean, sortMethod: t.TypeOf<typeof serverInfoSortableKeyCodec>): Promise<string> {
         if (sortMethod === undefined || sortMethod.length === 0) {
             sortMethod = resolver.sortMethod();
         }
