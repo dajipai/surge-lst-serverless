@@ -112,7 +112,7 @@ functions:
     events:
       - http:
           path: nex
-          method: get     
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

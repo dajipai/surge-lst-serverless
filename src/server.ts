@@ -1,16 +1,23 @@
 import Resolver from "./resolver";
 import { Proxy } from "./proxy";
-import { Union, Literal } from "runtypes";
+import * as t from "io-ts";
+import { firstOfNonEmptyArray } from "./middleware";
 
-export type AllowSortedKeys = "name" | "inbound" | "outbound" | "serverType";
-export type FromServerInfoKeys = { [k in AllowSortedKeys]: string };
+export const serverInfoSortableKey = t.union([
+    t.literal('name'),
+    t.literal('inbound'),
+    t.literal('outbound'),
+    t.literal('serverType')
+]);
 
-const ServerInfoKeyUnion = Union(
-    Literal('name'),
-    Literal('inbound'),
-    Literal('outbound'),
-    Literal('serverType'),
-);
+export const serverInfoSortableKeyCodec = firstOfNonEmptyArray(t.string).pipe(new t.Type<Array<t.TypeOf<typeof serverInfoSortableKey>>, string, string>(
+    "serverInfoSortableKeyCodec",
+    (u: unknown): u is Array<t.TypeOf<typeof serverInfoSortableKey>> => Array.isArray(u) && u.every(serverInfoSortableKey.is),
+    (input: string, _context) => {
+        return t.success(input.split(">").filter(serverInfoSortableKey.is));
+    },
+    (arr: Array<t.TypeOf<typeof serverInfoSortableKey>>) => arr.join(" > ")
+));
 
 class ServerInfo {
     readonly name: string;
@@ -39,13 +46,6 @@ class ServerInfo {
             return Infinity;
         }
         return 0;
-    }
-
-    static isValidComparator(key: string): key is AllowSortedKeys {
-        if (ServerInfoKeyUnion.guard(key)) {
-            return true;
-        }
-        return false;
     }
 }
 

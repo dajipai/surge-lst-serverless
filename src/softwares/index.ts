@@ -28,4 +28,5 @@ export abstract class ComposableOutputSoftware implements Software {
 }
 
 export { QuantumultX } from "./quantumultx";
+export { Clash } from "./clash";
 export { Surge } from "./surge";

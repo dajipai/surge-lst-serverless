@@ -1,6 +1,7 @@
 import Resolver from "../resolver";
-import { ServerBuilder, AllowSortedKeys } from "../server";
+import { ServerBuilder, serverInfoSortableKeyCodec } from "../server";
 import { ProxiesInput, Subscription } from "../input";
+import * as t from "io-ts";
 
 const MayingServerTypes: string[] = ["测试", "应急"];
 
@@ -39,7 +40,7 @@ class MayingResolver extends Resolver {
         }
     }
 
-    public sortMethod(): AllowSortedKeys[] {
+    public sortMethod(): t.TypeOf<typeof serverInfoSortableKeyCodec> {
         return [];
     }
 
