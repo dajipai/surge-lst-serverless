@@ -10,15 +10,25 @@ import { toRequestHandler } from './middleware';
 import { pipe } from "fp-ts/lib/pipeable";
 import { decodeQueryWithHeaders, extractQuery, CombinedParameters } from "./interceptor";
 import * as TE from "fp-ts/lib/TaskEither";
+import * as E from "fp-ts/lib/Either";
 import { ProxyContext } from "./profile";
 
-const renderUrlTemplate = (template: string, parameters: string[]): ((data: {[key: string]: string}) => string) => {
-  return (data: {[key: string]: string}): string => {
+const renderUrlTemplate = (template: string) => (callback: (queryStringParameters: unknown, userAgent: unknown) => E.Either<Error, CombinedParameters>) => {
+  const requiredParameters = Array.from(template.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
+  return (queryStringParameters: unknown, userAgent: unknown): E.Either<Error, CombinedParameters> => {
     let result = template;
-    for (let param of parameters) {
-      result = result.replace("${" + param + "}", data[param]);
+    let query = queryStringParameters as {[key: string]: string[]|undefined};
+    for (let param of requiredParameters) {
+      let queryVal = query[param];
+      if (queryVal === undefined || queryVal.length === 0) {
+        return E.left(new Error(`required parameter ${param}`));
+      } else {
+        result = result.replace("${" + param + "}", queryVal[0]);
+      }
     }
-    return result;
+    query.url = [result];
+
+    return callback(queryStringParameters, userAgent);
   }
 }
 
@@ -37,11 +47,10 @@ providerLoader.forEachResolver((name, resolver) => {
     throw new Error(`cannot find available template for ${name}`);
   }
   const [urlTemplate, provider] = resolver.providerTemplates()[0];
-  const requiredParameters = Array.from(urlTemplate.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
-  const urlOnce = renderUrlTemplate(urlTemplate, requiredParameters);
+  const extractURLAndQuery = renderUrlTemplate(urlTemplate)(extractQuery);
   const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= toRequestHandler(
     pipe(
-      decodeQueryWithHeaders(extractQuery, "User-Agent"),
+      decodeQueryWithHeaders(extractURLAndQuery, "User-Agent"),
       H.ichain<CombinedParameters, H.StatusOpen, H.ResponseEnded, Error, void>((parameters) => 
         pipe(
           H.fromTaskEither(TE.tryCatch(() => 
@@ -50,6 +59,7 @@ providerLoader.forEachResolver((name, resolver) => {
           H.ichain<string, H.StatusOpen, H.ResponseEnded, Error, void>((result) => 
             pipe(
               H.status(H.Status.OK),
+              H.ichain(() => H.header("Content-Type", "text/plain")),
               H.ichain(() => H.closeHeaders()),
               H.ichain(() => H.send(result))
             )

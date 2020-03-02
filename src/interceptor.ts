@@ -8,10 +8,12 @@ import { Either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { serverFilters } from "./profile";
 import { BooleanFromString } from "io-ts-types/lib/BooleanFromString";
+import { withMessage } from 'io-ts-types/lib/withMessage';
 import { withFallback } from 'io-ts-types/lib/withFallback';
 import { firstOfNonEmptyArray } from "./middleware";
 
 export const nodeListParameters = t.intersection([t.type({
+    url: withMessage(firstOfNonEmptyArray(t.string), () => "cannot assemble url"),
     useEmoji: withFallback(firstOfNonEmptyArray(BooleanFromString), true),
     udpRelay: withFallback(firstOfNonEmptyArray(BooleanFromString), false),
     // never failed
