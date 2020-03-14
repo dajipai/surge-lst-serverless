@@ -2384,10 +2384,10 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-emoji-append@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.5.tgz#5542b050dce997b190ddfcf82d176f3f7b333b0b"
-  integrity sha512-H6/8TYwKIEb8GFOQkdjf5uNlnQdNUAPxX1nk/7/oOm82TnKi4OxfgG5BivnF0vrHIkG4pQH4WzswF5d2tNotwQ==
+emoji-append@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.6.tgz#cc144c9ac81d3034a3c53a47bfa31644c583a655"
+  integrity sha512-GnqrhBtHFZGCqKOLQ2xVkv8eVi1GcwaPXzHn4mUZcQUUAEj5WwtbsdYIYONiB244Zna3ulaK0Vp9uDaGOwvm8A==
   dependencies:
     core-js "3.6.4"
 
