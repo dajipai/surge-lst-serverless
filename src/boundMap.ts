@@ -109,4 +109,7 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                             .registerMap({ 台: "TW", 德: "DE", 日: "JP", 美: "US", 港: "HK", 韩: "KR", 新: "SG", 俄罗斯: "RU", 台湾: "TW", 日本: "JP", 香港: "HK", 菲律宾: "PH", 狮城: "SG"})
                             .registerMap({ USA: "US", Germany: "DE", Korea: "KR", Netherlands: "NL", Russia: "RU", France: "FR", "United Kingdom": "UK", Turkey: "TR", Thailand: "TH", Canada: "CA", Sydney: "AU", "United Arab Emirates": "AE", India: "IN", Brazil: "BR", Ireland: "IE", "South Africa": "ZA", Sweden: "SE", Malaysia: "MY" })
                             .register("墨西哥", "MX")
+                            .register("意大利", "IT")
+                            .register("意国", "IT")
+                            .register("義大利", "IT")
                             .build();
