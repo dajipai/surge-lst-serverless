@@ -102,6 +102,7 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                                 台中: "TW",
                                 埼玉: "JP",
                                 费利蒙: "US",
+                                米兰: "IT",
                             })
                             .registerMap({ Taiwan: "TW", America: "US", Japan: "JP", "Hong Kong": "HK", Singapore: "SG"})
                             .registerMap({ 台湾: "TW", 德国: "DE", 日本: "JP", 狮城: "SG", 美国: "US", 香港: "HK", 港: "HK", 韩国: "KR", 伦敦: "UK", 东京: "JP", 首尔: "KR", 土耳其: "TR", 印度: "IN", 阿根廷: "AR" })
