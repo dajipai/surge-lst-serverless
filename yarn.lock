@@ -1100,10 +1100,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^25.2.2":
-  version "25.2.2"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.2.tgz#6a752e7a00f69c3e790ea00c345029d5cefa92bf"
-  integrity sha512-aRctFbG8Pb7DSLzUt/fEtL3q/GKb9mretFuYhRub2J0q6NhzBYbx9HTQzHrWgBNIxYOlxGNVe6Z54cpbUt+Few==
+"@types/jest@^25.2.3":
+  version "25.2.3"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.3.tgz#33d27e4c4716caae4eced355097a47ad363fdcaf"
+  integrity sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -2731,10 +2731,10 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-emoji-append@^1.3.8:
-  version "1.3.8"
-  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.8.tgz#46da0581b1f9376ad412446c259d4e04c1c070d1"
-  integrity sha512-Dxrd4QWmDPMGL7gfs9oKrm+mn1tlpVNhr3IEv5L+1nRL+3LMVEgtdey0xTo3S4CkRwp/VyUZgIhyF1H7VlF1JA==
+emoji-append@^1.3.9:
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.9.tgz#e0a2349baa97c39957dc51227b037f836a956c6c"
+  integrity sha512-22ItV8Zn0KaR5+hjWBLGDqetbZsmU0E6NpjKJlS7qXyrN5D6ahOWVGU47SBRzAgQiUraf54RuQwjfsTgKYUpbQ==
   dependencies:
     core-js "3.6.5"
 
