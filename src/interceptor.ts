@@ -25,7 +25,7 @@ export type CombinedParameters = t.TypeOf<typeof nodeListParameters> & {software
 export function extractQuery(queryStringParameters: unknown, userAgent: unknown): E.Either<Error, CombinedParameters> {
     let query = queryStringParameters as {[key: string]: string[]|undefined};
     return pipe(
-        softwareFromQuery.decode(query.output),
+        softwareFromQuery.decode(query.output ? query.output[0] : ""),
         E.orElse((_err) => softwareFromUserAgent.decode(userAgent)),
         E.chain((software) => {
             return E.either.chain(nodeListParameters.decode(query), p => t.success(Object.assign({}, p, {software})))
