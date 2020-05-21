@@ -27,14 +27,18 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                 if (UA === null) {
                     return t.failure(input, context);
                 }
-                return t.success(new Surge(<SemVer> coerce(UA[1]), "ios"));
+                return t.success(new Surge(<SemVer>coerce(UA[1]), "ios"));
             }
         } else if (userAgent.startsWith("quantumult x")) {
-            let UA = userAgent.match(/^quantumult x\/(\d+)/);
+            let UA = userAgent.match(/^quantumult x\/([\d\.]+)/);
             if (UA === null) {
                 return t.failure(input, context);
             }
-            return t.success(new QuantumultX(parseInt(UA[1])));
+            if (UA[1].includes(".")) {
+                return t.success(new QuantumultX(undefined, UA[1]));
+            } else {
+                return t.success(new QuantumultX(parseInt(UA[1])));
+            }
         } else if (userAgent.includes("clash")) {
             return t.success(new Clash());
         } else {

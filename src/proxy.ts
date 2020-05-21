@@ -101,7 +101,7 @@ export class V2rayProxy implements Proxy {
         if (this.ws == true) {
             return "chacha20-ietf-poly1305";
         }
-        return "none;"
+        return "none";
     }
 }
 

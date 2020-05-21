@@ -2,11 +2,13 @@ import { ComposableOutputSoftware } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy, HttpProxy } from "../proxy";
 
 export class QuantumultX extends ComposableOutputSoftware {
-    readonly build?: number;
+    readonly legacyBuild?: number;
+    readonly version?: string;
     
-    constructor(build?: number) {
+    constructor(build?: number, version?: string) {
         super();
-        this.build = build;
+        this.legacyBuild = build;
+        this.version = version;
     }
     
     satisfies(proxy: Proxy) : boolean {
@@ -17,10 +19,10 @@ export class QuantumultX extends ComposableOutputSoftware {
             return true;
         }
         if (proxy instanceof V2rayProxy) {
-            if (this.build === undefined) {
+            if (this.legacyBuild === undefined) {
                 return true;
             }
-            if (this.build >= 123) {
+            if (this.legacyBuild >= 123) {
                 return true;
             }
         }
@@ -57,9 +59,9 @@ export class QuantumultX extends ComposableOutputSoftware {
             } else if (proxy.ws) {
                 obfs = "ws";
             } else {
-                return `vmess = ${proxy.host}:${proxy.port}, method=${proxy.method}, password=${proxy.username}, tag=${name}`;
+                return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},tag=${name}`;
             }
-            return `vmess = ${proxy.host}:${proxy.port}, method=${proxy.method}, password=${proxy.username}, obfs=${obfs}, obfs-host=${proxy.obfsHost}, obfs-uri=${proxy.wsPath}, tag=${name}`;
+            return `vmess=${proxy.host}:${proxy.port},method=${proxy.method},password=${proxy.username},obfs=${obfs},obfs-host=${proxy.obfsHost},obfs-uri=${proxy.wsPath},tag=${name}`;
         } else if (proxy instanceof ShadowsocksRProxy) {
             // shadowsocks=ssr-a.example.com:443, method=chacha20, password=pwd, ssr-protocol=auth_chain_b, ssr-protocol-param=def, obfs=tls1.2_ticket_fastauth, obfs-host=bing.com, tag=Sample-D
             let res = `shadowsocks=${proxy.host}:${proxy.port},method=${proxy.encryptionMethod},password=${proxy.password},ssr-protocol=${proxy.protocol},obfs=${proxy.obfs}`;
