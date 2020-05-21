@@ -44,6 +44,10 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
     (_software) => "TBD"
 ));
 
+/**
+ * Codec to convert "quanx", "clash" and "surge" literals to Software,
+ * or encode instances of Software to string
+ */
 export const softwareFromQuery = AvailableOutput.pipe(new t.Type<Software, t.TypeOf<typeof AvailableOutput>, t.TypeOf<typeof AvailableOutput>>(
     "softwareQueryCodec",
     softwareFromUserAgent.is,
