@@ -51,7 +51,7 @@ function badRequest(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, nev
 
 function serverError(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, never, void> {
   return pipe(
-    H.status(H.Status.ServerError),
+    H.status(H.Status.InternalServerError),
     H.ichain(() => H.closeHeaders()),
     H.ichain(() => H.send(err.message))
   )
@@ -74,7 +74,7 @@ providerLoader.forEachResolver((name, resolver) => {
           H.ichain<[string, {[key: string]: string}], H.StatusOpen, H.ResponseEnded, Error, void>(([body, headers]) => 
             pipe(
               H.status(H.Status.OK),
-              H.ichain(() => multiHeaders(Object.assign({}, {"Content-Type": "text/plain"}, headers))),
+              H.ichain(() => multiHeaders(Object.assign({}, {"Content-Type": "text/plain;charset=utf-8"}, headers))),
               H.ichain(() => H.closeHeaders()),
               H.ichain(() => H.send(body))
             )
