@@ -113,6 +113,12 @@ functions:
       - http:
           path: nex
           method: get
+  aaex:
+    handler: src/bridge.aaex
+    events:
+      - http:
+          path: aaex
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

@@ -2806,10 +2806,10 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-emoji-append@^1.3.9:
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.9.tgz#e0a2349baa97c39957dc51227b037f836a956c6c"
-  integrity sha512-22ItV8Zn0KaR5+hjWBLGDqetbZsmU0E6NpjKJlS7qXyrN5D6ahOWVGU47SBRzAgQiUraf54RuQwjfsTgKYUpbQ==
+emoji-append@^1.3.10:
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/emoji-append/-/emoji-append-1.3.10.tgz#a72ae1d0b42b0cc9a41ae1fde0a7688848fa9d2e"
+  integrity sha512-K/RzsZG6vf0htlUyQrz3P6dCiVx4Rfb/CSWK90DIkanv/duNiuNhI3g/djERHDyt+PWX0V3v6oaUlLzq8BKxfA==
   dependencies:
     core-js "3.6.5"
 
