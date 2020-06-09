@@ -21,6 +21,9 @@ Not all APIs available are listed in the doc.
 - [x] Maying
 - [x] N3RO
 - [x] SSRPASS - SS
+- [x] Nex
+- [x] AAEX
+- [x] NyanCat  
 
 ## Supported Input Type
 
