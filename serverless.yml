@@ -119,6 +119,12 @@ functions:
       - http:
           path: aaex
           method: get
+  nyancat:
+    handler: src/bridge.nyancat
+    events:
+      - http:
+          path: nyancat
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
