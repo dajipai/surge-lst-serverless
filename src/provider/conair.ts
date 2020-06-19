@@ -9,7 +9,7 @@ class ConairResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://conair.me/link/${token}?mu=7", SurgeNodeList]);
+        return new Array(["https://conair.cloud/subscribe/${token}?mu=7", SurgeNodeList]);
     }
 }
 
