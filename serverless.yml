@@ -125,6 +125,12 @@ functions:
       - http:
           path: nyancat
           method: get
+  nyancat-iepl:
+    handler: src/bridge.nyancat_iepl
+    events:
+      - http:
+          path: nyancat/iepl
+          method: get        
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
