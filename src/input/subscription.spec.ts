@@ -1,3 +1,4 @@
+import Base64 from "js-base64";
 import { ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { V2rayProxy } from "../proxy";
 import { parseSSRLink, parseVmessLink, parseSIP002Link } from "./subscription";
