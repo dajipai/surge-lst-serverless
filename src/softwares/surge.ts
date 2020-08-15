@@ -1,6 +1,7 @@
 import { ComposableOutputSoftware } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy } from "../proxy";
 import { SemVer, gte, coerce } from "semver";
+import { ProxyContext } from "../profile";
 
 export class Surge extends ComposableOutputSoftware {
     static IOS_BUILD_1429 = <SemVer> coerce("1429");
@@ -42,8 +43,11 @@ export class Surge extends ComposableOutputSoftware {
             }
             return res;
         } else if (proxy instanceof V2rayProxy) {
-            let res = `${name} = vmess,${proxy.host},${proxy.port},username=${proxy.username},ws=${proxy.ws},tls=${proxy.tls},ws-path=${proxy.wsPath}`;
-            if (proxy.wsHeaders !== undefined) {
+            let res = `${name} = vmess,${proxy.host},${proxy.port},username=${proxy.username},ws=${proxy.ws},tls=${proxy.tls}`;
+            if (proxy.ws) {
+                res += `ws-path=${proxy.wsPath}`;
+            }
+            if (proxy.ws && proxy.wsHeaders !== undefined) {
                 res += `,ws-headers=${proxy.headers}`
             }
             return res;
