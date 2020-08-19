@@ -45,7 +45,7 @@ class MayingResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://sub.ssr.sh/link/${token}?mu=1", Subscription]);
+        return new Array(["https://sub.ssr.ac/link/${token}?mu=1", Subscription]);
     }
 }
 
