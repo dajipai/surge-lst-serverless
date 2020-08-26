@@ -130,7 +130,13 @@ functions:
     events:
       - http:
           path: nyancat/iepl
-          method: get        
+          method: get
+  tempest:
+    handler: src/bridge.tempest
+    events:
+      - http:
+          path: tempest
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
