@@ -1,7 +1,7 @@
 import Resolver from "../resolver";
 import { ProxiesInput, Subscription } from "../input";
 
-const NexServerTypes: string[] = [];
+const NexServerTypes: string[] = ["Premium"];
 
 class NexResolver extends Resolver {
     constructor() {
