@@ -74,7 +74,7 @@ export const commonInboundsMap = BoundMap.newBuilder()
                             .register("辽宁", "LN").build();
 
 export const commonOutboundsMap = BoundMap.newBuilder()
-                            .registerMap({ 英国: "UK", 台湾: "TW", 日本: "JP", 新加坡: "SG", 美国: "US", 香港: "HK", 土耳其: "TR", 澳大利亚: "AU", 印度: "IN", 加拿大: "CA" })
+                            .registerMap({ 英国: "UK", 台湾: "TW", 日本: "JP", 新加坡: "SG", 美国: "US", 香港: "HK", 土耳其: "TR", 澳大利亚: "AU", 印度: "IN", 加拿大: "CA", HK: "HK", JP: "JP", SG: "SG", US: "US" })
                             .registerMap({ 台灣: "TW", 台湾: "TW", 日本: "JP", 新加坡: "SG", 美國: "US", 香港: "HK", 韓國: "KR", 韩国: "KR", 加拿大: "CA", 土耳其: "TR", 俄羅斯: "RU", 印度: "IN", 法國: "FR", 德國: "DE", 阿根廷: "AR", 英國: "UK", 尼德蘭: "NL", 泰国: "TH", 泰國: "TH"})
                             .registerMap({ 
                                 香港: "HK",
@@ -125,4 +125,7 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                             .register("孟买", "IN")
                             .register("哈巴罗夫斯克", "RU")
                             .register("多伦多", "CA")
+                            .register("巴西", "BR")
+                            .register("澳", "AU")
+                            .register("马来西亚", "MY")
                             .build();
