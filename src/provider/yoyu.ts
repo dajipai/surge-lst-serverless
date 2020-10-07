@@ -2,7 +2,7 @@ import Resolver from "../resolver";
 import { ServerBuilder } from "../server";
 import { Subscription, ProxiesInput } from "../input";
 
-const YoYuServerTypes: string[] = ["BGP", "测试", "专线", "日用", "购物", "游戏", "GIA", "回国", "IPLC"];
+const YoYuServerTypes: string[] = ["CEN", "Daily", "EC", "NBGP", "PBGP", "GM", "SP"];
 
 class YoYuResolver extends Resolver {
     constructor() {
@@ -14,15 +14,6 @@ class YoYuResolver extends Resolver {
         const matches = builder.name.match(/\[(\d\.\d)\]/);
         if (matches != null) {
             builder.multiplier = matches[1];
-        }
-
-        // tag - `CN2`
-        if (builder.name.includes("CN2")) {
-            builder.tag = "CN2";
-        }
-
-        if (builder.serverType === "回国") {
-            builder.outbound = "CN";
         }
     }
 
