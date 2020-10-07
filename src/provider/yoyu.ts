@@ -27,7 +27,7 @@ class YoYuResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://home.yoyu.cc/subscribe/${id}/${token}/sip002/", Subscription]);
+        return new Array(["https://yoyu.cc/subscribe/${id}/${token}/sip002/", Subscription]);
     }
 }
 
