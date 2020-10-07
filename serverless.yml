@@ -77,12 +77,6 @@ functions:
       - http:
           path: conair
           method: get
-  ytoo:
-    handler: src/bridge.ytoo
-    events:
-      - http:
-          path: ytoo
-          method: get
   ytoo-ss:
     handler: src/bridge.ytoo_ss
     events:
