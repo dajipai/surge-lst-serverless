@@ -11,7 +11,7 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
         let userAgent = unescape(input.toLowerCase());
         if (userAgent.startsWith("surge")) {
             if (userAgent.includes("x86_64")) {
-                // macos version
+                // legacy macos version, in case someone is still using version 3
                 // build 893 is the last stable version of `3.3.0`
                 let UA = userAgent.match(/^surge\/([\d\.]+)/);
                 if (UA === null) {
@@ -27,7 +27,7 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                 if (UA === null) {
                     return t.failure(input, context);
                 }
-                return t.success(new Surge(<SemVer>coerce(UA[1]), "ios"));
+                return t.success(new Surge(<SemVer>coerce(UA[1]), "universal"));
             }
         } else if (userAgent.startsWith("quantumult x")) {
             let UA = userAgent.match(/^quantumult x\/([\d\.]+)/);

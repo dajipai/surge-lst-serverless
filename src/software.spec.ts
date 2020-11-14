@@ -21,6 +21,18 @@ test("input surge string", () => {
     expect((result as Right<Software>).right).toStrictEqual(new Surge());
 });
 
+test("input surge macos version 4 string", () => {
+    let result: Either<Errors, Software> = softwareFromUserAgent.decode("Surge/1191 CFNetwork/1207.2 Darwin/20.1.0");
+    expect(isRight(result)).toBe(true);
+    expect((result as Right<Surge>).right.platform).toEqual("universal");
+});
+
+test("input surge macos legacy version string", () => {
+    let result: Either<Errors, Software> = softwareFromUserAgent.decode("Surge/3.3.1 Darwin/19.0.0(x86_64)");
+    expect(isRight(result)).toBe(true);
+    expect((result as Right<Surge>).right.platform).toEqual("macos");
+});
+
 test("input unknown string", () => {
     let result: Either<Errors, Software> = softwareFromQuery.decode("surgex");
     expect(isLeft(result)).toBe(true);

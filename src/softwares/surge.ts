@@ -1,7 +1,6 @@
 import { ComposableOutputSoftware } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy, ShadowsocksRProxy } from "../proxy";
 import { SemVer, gte, coerce } from "semver";
-import { ProxyContext } from "../profile";
 
 export class Surge extends ComposableOutputSoftware {
     static IOS_BUILD_1429 = <SemVer> coerce("1429");
@@ -21,8 +20,8 @@ export class Surge extends ComposableOutputSoftware {
             }
             if (this.platform === "macos") {
                 return gte(this.version, "3.3.1");
-            } else if (this.platform === "ios") {
-                return gte(this.version, Surge.IOS_BUILD_1429);
+            } else if (this.platform === "universal") {
+                return true;
             }
         } else if (proxy instanceof ShadowsocksProxy) {
             return true;
