@@ -4,7 +4,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "jest": "^26.6.3",
-    "serverless": "^2.11.1",
+    "serverless": "^2.12.0",
     "serverless-offline": "^6.8.0",
     "ts-jest": "^26.4.4"
   },
@@ -13,7 +13,7 @@
     "@types/cookie": "^0.4.0",
     "@types/js-base64": "^3.0.0",
     "@types/js-yaml": "^3.12.5",
-    "@types/node": "^14.14.7",
+    "@types/node": "^14.14.9",
     "@types/semver": "^7.3.4",
     "axios": "^0.21.0",
     "cookie": "^0.4.1",
@@ -21,13 +21,13 @@
     "fp-ts": "^2.8.5",
     "hyper-ts": "^0.6.0",
     "immutable": "^4.0.0-rc.12",
-    "io-ts": "^2.2.12",
+    "io-ts": "^2.2.13",
     "io-ts-types": "^0.5.12",
     "js-base64": "^3.6.0",
     "js-yaml": "^3.14.0",
     "runtypes": "^5.0.1",
     "semver": "^7.3.2",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.2"
   }
 }
