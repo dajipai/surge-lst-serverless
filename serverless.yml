@@ -125,6 +125,12 @@ functions:
       - http:
           path: tempest
           method: get
+  lanmei:
+    handler: src/bridge.lanmei
+    events:
+      - http:
+          path: lanmei
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
