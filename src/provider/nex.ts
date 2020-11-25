@@ -9,7 +9,7 @@ class NexResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://www.nenode.best/downloadConfig/ShadowRocketImportService.aspx?urk=${token}&t=ssn", Subscription]);
+        return new Array(["https://www.nenode.best/downloadConfig/ShadowRocketImportService.aspx?urk=${token}&t=sip002", Subscription]);
     }
 }
 
