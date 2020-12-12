@@ -1,4 +1,3 @@
-"use strict";
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
@@ -18,9 +17,9 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
   const requiredParameters = Array.from(template.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
   return (queryStringParameters: unknown, userAgent: unknown): E.Either<Error, CombinedParameters> => {
     let result = template;
-    let query = queryStringParameters as {[key: string]: string[]|undefined};
-    for (let param of requiredParameters) {
-      let queryVal = query[param];
+    const query = queryStringParameters as {[key: string]: string[]|undefined};
+    for (const param of requiredParameters) {
+      const queryVal = query[param];
       if (queryVal === undefined || queryVal.length === 0) {
         return E.left(new Error(`required parameter ${param}`));
       } else {
@@ -35,7 +34,7 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
 }
 
 function multiHeaders(headers: {[key: string]: string}): H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void> {
-  const headersMiddleware: Array<H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void>> = Object.entries(headers).map(([key, value]) => H.header(key, value));
+  const headersMiddleware: H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void>[] = Object.entries(headers).map(([key, value]) => H.header(key, value));
   return pipe(sequenceT(H.middleware)(headersMiddleware[0], ...headersMiddleware.slice(1)), H.map(() => {}))
 }
 
@@ -66,12 +65,12 @@ providerLoader.forEachResolver((name, resolver) => {
   const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= toRequestHandler(
     pipe(
       decodeQueryWithHeaders(extractURLAndQuery, "User-Agent"),
-      H.ichain<CombinedParameters, H.StatusOpen, H.ResponseEnded, Error, void>((parameters) => 
+      H.ichain<CombinedParameters, H.StatusOpen, H.ResponseEnded, Error, void>((parameters) =>
         pipe(
-          H.fromTaskEither(TE.tryCatch(() => 
-            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort), 
+          H.fromTaskEither(TE.tryCatch(() =>
+            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort),
             (err) => err as Error)),
-          H.ichain<[string, {[key: string]: string}], H.StatusOpen, H.ResponseEnded, Error, void>(([body, headers]) => 
+          H.ichain<[string, {[key: string]: string}], H.StatusOpen, H.ResponseEnded, Error, void>(([body, headers]) =>
             pipe(
               H.status(H.Status.OK),
               H.ichain(() => multiHeaders(Object.assign({}, {"Content-Type": "text/plain;charset=utf-8"}, headers))),
@@ -85,7 +84,7 @@ providerLoader.forEachResolver((name, resolver) => {
       H.orElse(badRequest)
     )
   );
-  
+
   // runtime export
   module.exports[name.replace("-", "_")] = handler;
 });
