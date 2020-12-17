@@ -84,7 +84,7 @@ export class V2rayProxy implements Proxy {
         this.username = username;
         this.ws = ws;
         this.tls = tls;
-        this.wsPath = wsPath;
+        this.wsPath = wsPath ?? "/";
         this.obfsHost = obfsHost;
         this.wsHeaders = wsHeaders ?? {};
         if (this.obfsHost) {
