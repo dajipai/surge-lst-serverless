@@ -84,7 +84,7 @@ test("decode fake anrun link", () => {
     expect(value).toStrictEqual(new V2rayProxy("www.example.com", 2333, "1386f85e-657b-4d6e-9d56-78badb75e1fd", true, false, "", ""));
     expect((value as V2rayProxy).wsPath).toEqual("/");
     expect((value as V2rayProxy).wsHeaders).toEqual({});
-    expect((value as V2rayProxy).headers).toEqual("");
+    expect((value as V2rayProxy).headerEmpty()).toBe(true);
 });
 
 const SIP002example = "ss://Y2hhY2hhMjAtaWV0ZjpwYXNzd29yZA==@example.yoyu.xyz:12345#BGP%20%E5%8C%97%E4%BA%AC-%E7%BE%8E%E5%9B%BD%2001%20%5B0.3%5D";
