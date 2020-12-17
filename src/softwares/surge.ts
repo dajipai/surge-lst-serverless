@@ -44,7 +44,7 @@ export class Surge extends ComposableOutputSoftware {
         } else if (proxy instanceof V2rayProxy) {
             let res = `${name} = vmess,${proxy.host},${proxy.port},username=${proxy.username},ws=${proxy.ws},tls=${proxy.tls}`;
             if (proxy.ws) {
-                res += `ws-path=${proxy.wsPath}`;
+                res += `,ws-path=${proxy.wsPath}`;
             }
             if (proxy.ws && proxy.wsHeaders !== undefined) {
                 res += `,ws-headers=${proxy.headers}`
