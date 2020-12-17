@@ -46,7 +46,7 @@ export class Surge extends ComposableOutputSoftware {
             if (proxy.ws) {
                 res += `,ws-path=${proxy.wsPath}`;
             }
-            if (proxy.ws && proxy.wsHeaders !== {}) {
+            if (proxy.ws && proxy.headerEmpty()) {
                 res += `,ws-headers=${proxy.headers}`
             }
             return res;

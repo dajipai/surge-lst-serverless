@@ -36,45 +36,69 @@ const exampleJsonVmess = {
 };
 
 const exampleMockYtooJsonVmess = {
-    "add":"1.5.1.5",
-    "host":"appleid.apple.com",
-    "id":"1386f85e-657b-4d6e-9d56-78badb75e1fd",
-    "net":"ws",
-    "path":"\/",
-    "port":"2333",
-    "ps":"BGP-\u4eac\u5fb7-GIA-A(0.3)",
-    "tls":"",
-    "v":2,
-    "aid":1,
-    "type":"none"
+    "add": "1.5.1.5",
+    "host": "appleid.apple.com",
+    "id": "1386f85e-657b-4d6e-9d56-78badb75e1fd",
+    "net": "ws",
+    "path": "\/",
+    "port": "2333",
+    "ps": "BGP-\u4eac\u5fb7-GIA-A(0.3)",
+    "tls": "",
+    "v": 2,
+    "aid": 1,
+    "type": "none"
+};
+
+const exampleMockAnrunJsonVmess = {
+    "v": "2",
+    "ps": "\ud83c\udded\ud83c\uddf0\u4e2d\u56fd\u9999\u6e2fBGP-13-\u5206\u5e03\u63a5\u5165-1.5x",
+    "add": "www.example.com",
+    "port": 2333,
+    "id": "1386f85e-657b-4d6e-9d56-78badb75e1fd",
+    "aid": 1,
+    "net": "ws",
+    "type": "none",
+    "host": "",
+    "path": "",
+    "tls": ""
 };
 
 test("decode vmess link from wiki", () => {
-    let [name, value] = parseVmessLink("vmess://" + Base64.encode(JSON.stringify(exampleJsonVmess)));
+    const [name, value] = parseVmessLink("vmess://" + Base64.encode(JSON.stringify(exampleJsonVmess)));
     expect(name).toBe("备注别名");
     expect(value).toBeInstanceOf(V2rayProxy);
     expect(value).toStrictEqual(new V2rayProxy("111.111.111.111", 32000, "1386f85e-657b-4d6e-9d56-78badb75e1fd", false, true, "/", "www.bbb.com"));
 });
 
 test("decode fake ytoo link", () => {
-    let [name, value] = parseVmessLink("vmess://" + Base64.encode(JSON.stringify(exampleMockYtooJsonVmess)));
+    const [name, value] = parseVmessLink("vmess://" + Base64.encode(JSON.stringify(exampleMockYtooJsonVmess)));
     expect(name).toBe("BGP-京德-GIA-A(0.3)");
     expect(value).toBeInstanceOf(V2rayProxy);
     expect(value).toStrictEqual(new V2rayProxy("1.5.1.5", 2333, "1386f85e-657b-4d6e-9d56-78badb75e1fd", true, false, "/", "appleid.apple.com"));
+});
+
+test("decode fake anrun link", () => {
+    const [name, value] = parseVmessLink("vmess://" + Base64.encode(JSON.stringify(exampleMockAnrunJsonVmess)));
+    expect(name).toBe("🇭🇰中国香港BGP-13-分布接入-1.5x");
+    expect(value).toBeInstanceOf(V2rayProxy);
+    expect(value).toStrictEqual(new V2rayProxy("www.example.com", 2333, "1386f85e-657b-4d6e-9d56-78badb75e1fd", true, false, "", ""));
+    expect((value as V2rayProxy).wsPath).toEqual("/");
+    expect((value as V2rayProxy).wsHeaders).toEqual({});
+    expect((value as V2rayProxy).headers).toEqual("");
 });
 
 const SIP002example = "ss://Y2hhY2hhMjAtaWV0ZjpwYXNzd29yZA==@example.yoyu.xyz:12345#BGP%20%E5%8C%97%E4%BA%AC-%E7%BE%8E%E5%9B%BD%2001%20%5B0.3%5D";
 const SIP002ExampleOBFS = `ss://${Base64.encode("chacha20-ietf:password")}@ss.example.com:12345?plugin=${encodeURIComponent("simple-obfs;obfs=http;obfs-host=www.baidu.com")}#Example123`;
 
 test("SIP002 without obfs", () => {
-    let [name, value] = parseSIP002Link(SIP002example);
+    const [name, value] = parseSIP002Link(SIP002example);
     expect(name).toBe("BGP 北京-美国 01 [0.3]");
     expect(value).toBeInstanceOf(ShadowsocksProxy);
     expect(value).toStrictEqual(new ShadowsocksProxy("example.yoyu.xyz", 12345, "password", "chacha20-ietf"));
 });
 
 test("SIP002 without obfs", () => {
-    let [name, value] = parseSIP002Link(SIP002ExampleOBFS);
+    const [name, value] = parseSIP002Link(SIP002ExampleOBFS);
     expect(name).toBe("Example123");
     expect(value).toBeInstanceOf(ShadowsocksProxy);
     expect(value).toStrictEqual(new ShadowsocksProxy("ss.example.com", 12345, "password", "chacha20-ietf", "http", "www.baidu.com"));

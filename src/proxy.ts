@@ -85,11 +85,19 @@ export class V2rayProxy implements Proxy {
         this.ws = ws;
         this.tls = tls;
         this.wsPath = wsPath ?? "/";
+        // Fix
+        if (this.ws === true && this.wsPath == "") {
+            this.wsPath = "/";
+        }
         this.obfsHost = obfsHost;
         this.wsHeaders = wsHeaders ?? {};
         if (this.obfsHost) {
             this.wsHeaders['Host'] = this.obfsHost;
         }
+    }
+
+    headerEmpty(): boolean {
+        return Object.keys(this.wsHeaders).length === 0;
     }
 
     get headers(): string {
