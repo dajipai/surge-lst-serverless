@@ -1,6 +1,6 @@
 import { Software } from ".";
 import { Proxy, V2rayProxy, ShadowsocksProxy } from "../proxy";
-import { safeDump } from "js-yaml";
+import { dump } from "js-yaml";
 import ServerInfo from "../server";
 import { getFlagFromAbbr } from "emoji-append";
 
@@ -107,6 +107,6 @@ export class Clash implements Software {
                 return convertToClashProxy(server.proxy, server.name);
             }
         });
-        return safeDump({proxies: clashProxies});
+        return dump({proxies: clashProxies});
     }
 }
