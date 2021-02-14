@@ -130,4 +130,8 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                             .register("马来西亚", "MY")
                             .registerMap({KR: "KR", TW: "TW"})
                             .register("Hong+Kong", "HK")
+                            .register("迪拜", "AE")
+                            .register("UK", "UK")
+                            .register("DE", "DE")
+                            .register("RU", "RU")
                             .build();
