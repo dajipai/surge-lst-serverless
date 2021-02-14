@@ -27,7 +27,7 @@ jobs:
       - run: npx jest
         name: Jest
       - name: Deploy to AWS Lambda
-        uses: serverless/github-action@v2
+        uses: serverless/github-action@v2.17.1
         with:
           args: deploy --stage production -v
         env:
