@@ -63,15 +63,21 @@ export class ServerlessConnection<S> implements Connection<S> {
         return this.event.body
     }
 
-    getHeader(name: string): Array<String> | string | undefined {
+    getHeader(name: string): string[] | string | undefined {
         return this.event.headers[name] ?? this.event.multiValueHeaders[name]
     }
 
-    getParams(): { [name: string]: string } {
+    getParams(): { [name: string]: string | undefined } {
+        if (this.event.pathParameters == null) {
+            return {}
+        }
         return this.event.pathParameters ?? {}
     }
 
-    getQuery(): { [name: string]: Array<String> } {
+    getQuery(): { [name: string]: string | string[] | undefined } {
+        if (this.event.queryStringParameters == null || this.event.multiValueQueryStringParameters == null) {
+            return {}
+        }
         return Object.assign({}, this.event.queryStringParameters, this.event.multiValueQueryStringParameters)
     }
 

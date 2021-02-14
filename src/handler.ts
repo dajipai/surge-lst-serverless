@@ -17,7 +17,7 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
   const requiredParameters = Array.from(template.matchAll(/\${(.*?)}/g)).map((group) => group[1]);
   return (queryStringParameters: unknown, userAgent: unknown): E.Either<Error, CombinedParameters> => {
     let result = template;
-    const query = queryStringParameters as {[key: string]: string[]|undefined};
+    const query = queryStringParameters as {[key: string]: string[] | string | undefined};
     for (const param of requiredParameters) {
       const queryVal = query[param];
       if (queryVal === undefined || queryVal.length === 0) {
