@@ -1321,10 +1321,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.12.tgz#9c72e865380a7dc99999ea0ef20fc9635b503d20"
   integrity sha512-zWz/8NEPxoXNT9YyF2osqyA9WjssZukYpgI4UYZpOjcyqwIUqWGkcCionaEb9Ki+FULyPyvNFpg/329Kd2/pbw==
 
-"@types/node@^14.14.27":
-  version "14.14.27"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.27.tgz#c7127f8da0498993e13b1a42faf1303d3110d2f2"
-  integrity sha512-Ecfmo4YDQPwuqTCl1yBxLV5ihKfRlkBmzUEDcfIRvDxOTGQEeikr317Ln7Gcv0tjA8dVgKI3rniqW2G1OyKDng==
+"@types/node@^14.14.28":
+  version "14.14.28"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.28.tgz#cade4b64f8438f588951a6b35843ce536853f25b"
+  integrity sha512-lg55ArB+ZiHHbBBttLpzD07akz0QPrZgUODNakeC09i62dnrywr9mFErHuaPlB6I7z+sEbK+IYmplahvplCj2g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4182,10 +4182,10 @@ into-stream@^3.1.0:
     from2 "^2.1.1"
     p-is-promise "^1.1.0"
 
-io-ts-types@^0.5.13:
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.13.tgz#f4eba9dd982152695654d1f22c39c8041e0fea44"
-  integrity sha512-zN7QTJC8DmnRcDw/QO30U4EiK7UPcPq470cKH+NBZtgfUimqIr7hT+bTVZkVW+qF1HDZ0W3qUfvl5FOd/yBRpw==
+io-ts-types@^0.5.14:
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.14.tgz#93b744049aa8d10af17fa117e0a9dfa21b897e1e"
+  integrity sha512-wehWbf0IjCMB+5768810uiUyLi/xhWWLTzWUXvi/WBqbyokuYZUX7vnCC7Aop9duuVm6/kX94IFaCFbARCSTtw==
 
 io-ts@^2.2.14:
   version "2.2.14"
