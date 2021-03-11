@@ -14,7 +14,6 @@ Not all APIs available are listed in the doc.
 
 ## Supported service providers
 
-- [x] YoYu
 - [x] Conair
 - [x] Boslife
 - [x] YTOO
@@ -23,6 +22,7 @@ Not all APIs available are listed in the doc.
 - [x] SSRPASS - SS
 - [x] Nex
 - [x] AAEX
+- [x] ImmTel
 
 ## Supported Input Type
 
