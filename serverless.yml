@@ -59,12 +59,6 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  yoyu:
-    handler: src/bridge.yoyu
-    events:
-      - http:
-          path: yoyu
-          method: get
   boslife:
     handler: src/bridge.boslife
     events:
@@ -76,12 +70,6 @@ functions:
     events:
       - http:
           path: conair
-          method: get
-  ytoo-ss:
-    handler: src/bridge.ytoo_ss
-    events:
-      - http:
-          path: ytoo/ss
           method: get
   maying:
     handler: src/bridge.maying
