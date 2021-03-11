@@ -107,18 +107,6 @@ functions:
       - http:
           path: aaex
           method: get
-  nyancat:
-    handler: src/bridge.nyancat
-    events:
-      - http:
-          path: nyancat
-          method: get
-  nyancat-iepl:
-    handler: src/bridge.nyancat_iepl
-    events:
-      - http:
-          path: nyancat/iepl
-          method: get
   lanmei:
     handler: src/bridge.lanmei
     events:
@@ -130,6 +118,12 @@ functions:
     events:
       - http:
           path: anrun
+          method: get
+  immtel:
+    handler: src/bridge.immtel
+    events:
+      - http:
+          path: immtel
           method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}

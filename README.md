@@ -23,7 +23,6 @@ Not all APIs available are listed in the doc.
 - [x] SSRPASS - SS
 - [x] Nex
 - [x] AAEX
-- [x] NyanCat  
 
 ## Supported Input Type
 
