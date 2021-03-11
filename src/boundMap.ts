@@ -135,4 +135,7 @@ export const commonOutboundsMap = BoundMap.newBuilder()
                             .register("DE", "DE")
                             .register("RU", "RU")
                             .register("United States", "US")
+                            .register("RUS", "RU")
+                            .register("AUS", "AU")
+                            .register("俄国", "RU")
                             .build();
