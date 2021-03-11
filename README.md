@@ -2,7 +2,7 @@
 
 > A simple surge node list generator
 
-[![Build Status](https://dev.azure.com/lujiajing1126/surge-lst/_apis/build/status/dajipai.surge-lst-serverless?branchName=master)](https://dev.azure.com/lujiajing1126/surge-lst/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://github.com/dajipai/surge-lst-serverless/actions/workflows/main/badge.svg)](https://github.com/dajipai/surge-lst-serverless/actions)
 
 ## Usage
 
