@@ -19,10 +19,11 @@ Not all APIs available are listed in the doc.
 - [x] YTOO
 - [x] Maying
 - [x] N3RO
-- [x] SSRPASS - SS
 - [x] Nex
 - [x] AAEX
 - [x] ImmTel
+- [x] Anrun
+- [x] Lanmei
 
 ## Supported Input Type
 
