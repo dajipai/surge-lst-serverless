@@ -2,7 +2,7 @@
 
 > A simple surge node list generator
 
-[![Build Status](https://github.com/dajipai/surge-lst-serverless/actions/workflows/main/badge.svg)](https://github.com/dajipai/surge-lst-serverless/actions)
+[![Build Status](https://github.com/dajipai/surge-lst-serverless/actions/workflows/main.yml/badge.svg)](https://github.com/dajipai/surge-lst-serverless/actions)
 
 ## Usage
 
