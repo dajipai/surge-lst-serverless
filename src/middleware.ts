@@ -21,6 +21,7 @@ import {
     cons,
     toArray
 } from 'hyper-ts/lib/express'
+import { Readable } from 'stream'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as E from 'fp-ts/lib/Either'
 import * as cookie from 'cookie'
@@ -115,6 +116,10 @@ export class ServerlessConnection<S> implements Connection<S> {
     endResponse(): ServerlessConnection<ResponseEnded> {
         return this.chain(endResponse, true)
     }
+
+    pipeStream(stream: Readable): ServerlessConnection<ResponseEnded> {
+        return this.chain({ type: 'pipeStream', stream }, true)
+    }
 }
 
 function parseCookie(res: APIGatewayProxyResult): { [key: string]: string } {
@@ -163,6 +168,8 @@ function run(res: APIGatewayProxyResult, action: Action): APIGatewayProxyResult 
             return res
         case 'setStatus':
             res.statusCode = action.status
+            return res
+        case 'pipeStream':
             return res
     }
 }
