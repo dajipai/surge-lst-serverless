@@ -1,10 +1,9 @@
 import { ProxiesInput } from ".";
 import axios from "axios";
-import { Base64 } from "js-base64";
+import { Base64, decode } from "js-base64";
 import { Proxy, V2rayProxy, ShadowsocksRProxy, ShadowsocksProxy } from "../proxy";
 import { splitKV } from "./surge";
 import { URL } from "url";
-Base64.extendString();
 
 export class Subscription implements ProxiesInput {
     private upload: number;
@@ -60,10 +59,10 @@ export const parseSSRLink = (data: string): [string, Proxy] => {
         map[obj[0]] = obj[1];
         return map;
     }, {});
-    obfsparam = obfsparam?.fromBase64();
-    protoparam = protoparam?.fromBase64();
-    remarks = remarks?.fromBase64() ?? "";
-    group = group?.fromBase64();
+    obfsparam = obfsparam ? decode(obfsparam) : obfsparam;
+    protoparam = protoparam ? decode(protoparam) : protoparam;
+    remarks = remarks ? decode(remarks) : "";
+    group = group ? decode(group) : group;
     return [remarks,
         new ShadowsocksRProxy(host, parseInt(port), Base64.decode(base64pass), method, protocol, obfs, group, obfsparam, protoparam)];
 }
