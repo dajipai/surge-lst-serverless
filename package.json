@@ -3,31 +3,30 @@
   "version": "1.0.0",
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "jest": "^26.6.3",
-    "serverless": "^2.43.0",
+    "jest": "^27.0.4",
+    "serverless": "^2.45.2",
     "serverless-offline": "^7.0.0",
-    "ts-jest": "^26.5.6"
+    "ts-jest": "^27.0.3"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.76",
+    "@types/aws-lambda": "^8.10.77",
     "@types/cookie": "^0.4.0",
-    "@types/js-base64": "^3.0.0",
     "@types/js-yaml": "^4.0.1",
-    "@types/node": "^15.6.0",
+    "@types/node": "^15.12.2",
     "@types/semver": "^7.3.6",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
     "emoji-append": "^1.3.10",
     "fp-ts": "^2.10.5",
-    "hyper-ts": "^0.6.1",
+    "hyper-ts": "^0.6.5",
     "immutable": "^4.0.0-rc.12",
     "io-ts": "^2.2.16",
     "io-ts-types": "^0.5.16",
     "js-base64": "^3.6.1",
     "js-yaml": "^4.1.0",
-    "runtypes": "^6.3.0",
+    "runtypes": "^6.3.1",
     "semver": "^7.3.5",
     "ts-node": "^10.0.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   }
 }
