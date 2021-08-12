@@ -119,3 +119,9 @@ functions:
       - http:
           path: ytoo/ss
           method: get
+  blinkload:
+    handler: src/bridge.blinkload
+    events:
+      - http:
+          path: blinkload
+          method: get
