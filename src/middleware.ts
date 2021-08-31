@@ -8,21 +8,20 @@ import {
 import {
     Connection,
     CookieOptions,
-    Middleware,
     HeadersOpen,
     ResponseEnded,
-    Status,
-    execMiddleware
+    Status
 } from 'hyper-ts'
 import {
-    Action,
-    LinkedList,
-    nil,
-    cons,
-    toArray
+    Middleware,
+    execMiddleware
+} from 'hyper-ts/lib/Middleware'
+import {
+    Action
 } from 'hyper-ts/lib/express'
+import * as L from 'fp-ts-contrib/List'
 import { Readable } from 'stream'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import * as cookie from 'cookie'
 import * as t from 'io-ts'
@@ -45,7 +44,7 @@ export class ServerlessConnection<S> implements Connection<S> {
         readonly context: Context,
         readonly callback: APIGatewayProxyCallback,
         readonly resp: APIGatewayProxyResult,
-        readonly actions: LinkedList<Action> = nil,
+        readonly actions: L.List<Action> = L.nil,
         readonly ended: boolean = false
     ) { }
 
@@ -53,7 +52,7 @@ export class ServerlessConnection<S> implements Connection<S> {
      * @since 0.5.0
      */
     chain<T>(action: Action, ended: boolean = false): ServerlessConnection<T> {
-        return new ServerlessConnection<T>(this.event, this.context, this.callback, this.resp, cons(action, this.actions), ended)
+        return new ServerlessConnection<T>(this.event, this.context, this.callback, this.resp, L.cons(action, this.actions), ended)
     }
 
     getRequest(): IncomingMessage {
@@ -191,7 +190,7 @@ function exec<I, O, E>(
             E.fold(errorHanlder(callback), c => {
                 const { actions: list, resp, ended } = c as ServerlessConnection<O>
                 const len = list.length
-                const actions = toArray(list)
+                const actions = L.toArray(list)
                 for (let i = 0; i < len; i++) {
                     run(resp, actions[i])
                 }

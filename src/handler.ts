@@ -6,7 +6,7 @@ import {
 import { default as providerLoader } from "./provider";
 import * as H from "hyper-ts";
 import { toRequestHandler } from './middleware';
-import { pipe } from "fp-ts/lib/pipeable";
+import { pipe } from "fp-ts/lib/function";
 import { decodeQueryWithHeaders, extractQuery, CombinedParameters } from "./interceptor";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
