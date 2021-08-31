@@ -2,31 +2,31 @@
   "name": "surge-lst-serverless",
   "version": "1.0.0",
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "jest": "^27.0.6",
-    "serverless": "^2.50.0",
-    "serverless-offline": "^7.0.0",
-    "ts-jest": "^27.0.3"
+    "@types/jest": "^27.0.1",
+    "jest": "^27.1.0",
+    "serverless": "^2.57.0",
+    "serverless-offline": "^8.0.0",
+    "ts-jest": "^27.0.5"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.77",
-    "@types/cookie": "^0.4.0",
-    "@types/js-yaml": "^4.0.1",
-    "@types/node": "^15.12.5",
-    "@types/semver": "^7.3.6",
+    "@types/aws-lambda": "^8.10.83",
+    "@types/cookie": "^0.4.1",
+    "@types/js-yaml": "^4.0.3",
+    "@types/node": "^16.7.8",
+    "@types/semver": "^7.3.8",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
     "emoji-append": "^1.3.10",
-    "fp-ts": "^2.10.5",
-    "hyper-ts": "^0.6.5",
-    "immutable": "^4.0.0-rc.12",
+    "fp-ts": "^2.11.1",
+    "hyper-ts": "^0.7.1",
+    "immutable": "4.0.0-rc.14",
     "io-ts": "^2.2.16",
     "io-ts-types": "^0.5.16",
     "js-base64": "^3.6.1",
     "js-yaml": "^4.1.0",
-    "runtypes": "^6.3.1",
+    "runtypes": "^6.3.2",
     "semver": "^7.3.5",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.5"
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }
