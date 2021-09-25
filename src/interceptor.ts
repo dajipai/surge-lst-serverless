@@ -1,9 +1,10 @@
 import { serverInfoSortableKeyCodec } from "./server";
 import * as E from 'fp-ts/lib/Either';
-import { pipe } from 'fp-ts/lib/pipeable';
+import { pipe } from 'fp-ts/function';
 import { Software } from "./softwares";
 import { softwareFromUserAgent, softwareFromQuery } from "./software";
-import { fromConnection, Middleware, StatusOpen } from "hyper-ts";
+import { StatusOpen } from "hyper-ts";
+import { Middleware, fromConnection } from "hyper-ts/lib/Middleware";
 import { Either } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { serverFilters } from "./profile";

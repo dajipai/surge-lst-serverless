@@ -4,7 +4,14 @@ import {
   Handler,
 } from "aws-lambda";
 import { default as providerLoader } from "./provider";
-import * as H from "hyper-ts";
+import {
+  middleware,
+  Status,
+  HeadersOpen,
+  StatusOpen,
+  ResponseEnded
+} from 'hyper-ts';
+import * as H from "hyper-ts/lib/Middleware";
 import { toRequestHandler } from './middleware';
 import { pipe } from "fp-ts/lib/function";
 import { decodeQueryWithHeaders, extractQuery, CombinedParameters } from "./interceptor";
@@ -33,24 +40,24 @@ const renderUrlTemplate = (template: string) => (callback: (queryStringParameter
   }
 }
 
-function multiHeaders(headers: {[key: string]: string}): H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void> {
-  const headersMiddleware: H.Middleware<H.HeadersOpen, H.HeadersOpen, never, void>[] = Object.entries(headers).map(([key, value]) => H.header(key, value));
-  return pipe(sequenceT(H.middleware)(headersMiddleware[0], ...headersMiddleware.slice(1)), H.map(() => {}))
+function multiHeaders(headers: {[key: string]: string}): H.Middleware<HeadersOpen, HeadersOpen, never, void> {
+  const headersMiddleware: H.Middleware<HeadersOpen, HeadersOpen, never, void>[] = Object.entries(headers).map(([key, value]) => H.header(key, value));
+  return pipe(sequenceT(middleware)(headersMiddleware[0], ...headersMiddleware.slice(1)), H.map(() => {}))
 }
 
 // `???`: withMessage(firstOfNonEmptyArray(t.string), () => "??? cannot be null"),
 
-function badRequest(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, never, void> {
+function badRequest(err: Error): H.Middleware<StatusOpen, ResponseEnded, never, void> {
   return pipe(
-    H.status(H.Status.BadRequest),
+    H.status(Status.BadRequest),
     H.ichain(() => H.closeHeaders()),
     H.ichain(() => H.send(err.message))
   )
 }
 
-function serverError(err: Error): H.Middleware<H.StatusOpen, H.ResponseEnded, never, void> {
+function serverError(err: Error): H.Middleware<StatusOpen, ResponseEnded, never, void> {
   return pipe(
-    H.status(H.Status.InternalServerError),
+    H.status(Status.InternalServerError),
     H.ichain(() => H.closeHeaders()),
     H.ichain(() => H.send(err.message))
   )
@@ -65,14 +72,14 @@ providerLoader.forEachResolver((name, resolver) => {
   const handler : Handler<APIGatewayProxyEvent,APIGatewayProxyResult>= toRequestHandler(
     pipe(
       decodeQueryWithHeaders(extractURLAndQuery, "User-Agent"),
-      H.ichain<CombinedParameters, H.StatusOpen, H.ResponseEnded, Error, void>((parameters) =>
+      H.ichain<CombinedParameters, StatusOpen, ResponseEnded, Error, void>((parameters) =>
         pipe(
           H.fromTaskEither(TE.tryCatch(() =>
             (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort),
             (err) => err as Error)),
-          H.ichain<[string, {[key: string]: string}], H.StatusOpen, H.ResponseEnded, Error, void>(([body, headers]) =>
+          H.ichain<[string, {[key: string]: string}], StatusOpen, ResponseEnded, Error, void>(([body, headers]) =>
             pipe(
-              H.status(H.Status.OK),
+              H.status(Status.OK),
               H.ichain(() => multiHeaders(Object.assign({}, {"Content-Type": "text/plain;charset=utf-8"}, headers))),
               H.ichain(() => H.closeHeaders()),
               H.ichain(() => H.send(body))
