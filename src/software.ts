@@ -28,6 +28,12 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                     return t.failure(input, context);
                 }
                 return t.success(new Surge(<SemVer>coerce(UA[1]), "macos"));
+            } else if (userAgent.includes("ios")) { // User-Agent: Surge Mac/1348
+                let UA = userAgent.match(/^surge ios\/(\d+)/);
+                if (UA === null) {
+                    return t.failure(input, context);
+                }
+                return t.success(new Surge(<SemVer>coerce(UA[1]), "ios"));
             } else {
                 let UA = userAgent.match(/^surge\/(\d+)/);
                 if (UA === null) {
