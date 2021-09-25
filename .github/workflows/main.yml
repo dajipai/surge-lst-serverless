@@ -26,6 +26,8 @@ jobs:
         name: Install dependencies
       - run: npx jest
         name: Jest
+      - run: tsc
+        name: Build TypeScript
       - name: Deploy to AWS Lambda
         uses: serverless/github-action@v2.17.1
         with:

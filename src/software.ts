@@ -10,6 +10,7 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
     (input, context) => {
         let userAgent = unescape(input.toLowerCase());
         if (userAgent.startsWith("surge")) {
+            // User-Agent: Surge/1348 CFNetwork/1240.0.4 Darwin/20.6.0
             if (userAgent.includes("x86_64")) {
                 // legacy macos version, in case someone is still using version 3
                 // build 893 is the last stable version of `3.3.0`
