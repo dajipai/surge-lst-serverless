@@ -23,7 +23,7 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                 }
                 return t.success(new Surge(version, "macos"));
             } else if (userAgent.includes("mac")) { // User-Agent: Surge Mac/1348
-                let UA = userAgent.match(/^surge Mac\/(\d+)/);
+                let UA = userAgent.match(/^surge mac\/(\d+)/);
                 if (UA === null) {
                     return t.failure(input, context);
                 }
