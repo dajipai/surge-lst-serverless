@@ -10,7 +10,6 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
     (input, context) => {
         let userAgent = unescape(input.toLowerCase());
         if (userAgent.startsWith("surge")) {
-            // User-Agent: Surge/1348 CFNetwork/1240.0.4 Darwin/20.6.0
             if (userAgent.includes("x86_64")) {
                 // legacy macos version, in case someone is still using version 3
                 // build 893 is the last stable version of `3.3.0`
@@ -23,6 +22,12 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                     return t.failure(input, context);
                 }
                 return t.success(new Surge(version, "macos"));
+            } else if (userAgent.includes("Mac")) { // User-Agent: Surge Mac/1348
+                let UA = userAgent.match(/^surge Mac\/(\d+)/);
+                if (UA === null) {
+                    return t.failure(input, context);
+                }
+                return t.success(new Surge(<SemVer>coerce(UA[1]), "macos"));
             } else {
                 let UA = userAgent.match(/^surge\/(\d+)/);
                 if (UA === null) {
