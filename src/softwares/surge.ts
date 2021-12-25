@@ -37,6 +37,9 @@ export class Surge extends ComposableOutputSoftware {
             if (proxy.obfs !== undefined) {
                res += `,obfs=${proxy.obfs},obfs-host=${proxy.obfsHost}`;
             }
+            if (proxy.tfo) {
+                res += ",tfo=true";
+            }
             if (proxy.udpRelay) {
                 res += ",udp-relay=true";
             }

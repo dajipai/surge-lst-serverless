@@ -104,7 +104,12 @@ export const createSurgeProxy = (content: string): Proxy => {
         if (udpRelayStr === "true") {
             udpRelay = true;
         }
-        return new ShadowsocksProxy(host, port, password, encryptMethod, obfs, obfsHost, udpRelay);
+        const tfoStr = server.getKey("tfo");
+        let tfo = false;
+        if (tfoStr === "true") {
+            tfo = true;
+        }
+        return new ShadowsocksProxy(host, port, password, encryptMethod, obfs, obfsHost, udpRelay, tfo);
     // vmess
     } else if (content.startsWith("vmess")) {
         const server = new SurgeDict(content); 
@@ -171,7 +176,12 @@ export const createSurgeProxy = (content: string): Proxy => {
         if (udpRelayStr === "true") {
             udpRelay = true;
         }
-        return new ShadowsocksProxy(host, port, password, encryptMethod, obfs, obfsHost, udpRelay);
+        const tfoStr = server.getKey("tfo");
+        let tfo = false;
+        if (tfoStr === "true") {
+            tfo = true;
+        }
+        return new ShadowsocksProxy(host, port, password, encryptMethod, obfs, obfsHost, udpRelay, tfo);
     } else if (content.startsWith("http")) {
         return new HttpProxy();
     } else if (content.startsWith("external")) {

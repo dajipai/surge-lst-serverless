@@ -9,8 +9,9 @@ export class ShadowsocksProxy implements Proxy {
     readonly obfs?: string;
     readonly obfsHost?: string;
     udpRelay: boolean;
+    tfo: boolean;
 
-    constructor(host: string, port: number, password: string, encryptionMethod: string, obfs?: string, obfsHost?: string, udpRelay: boolean = false) {
+    constructor(host: string, port: number, password: string, encryptionMethod: string, obfs?: string, obfsHost?: string, udpRelay: boolean = false, tfo: boolean = false) {
         this.host = host;
         this.port = port;
         this.password = password;
@@ -18,6 +19,7 @@ export class ShadowsocksProxy implements Proxy {
         this.obfs = obfs;
         this.obfsHost = obfsHost;
         this.udpRelay = udpRelay;
+        this.tfo = tfo;
     }
 }
 

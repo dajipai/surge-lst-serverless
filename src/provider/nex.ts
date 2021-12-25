@@ -9,7 +9,7 @@ class NexResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://www.oxygenplaza.net/downloadConfig/ShadowRocketImportService.aspx?urk=${token}&t=sip002", Subscription]);
+        return new Array(["https://naixisubs.com/downloadConfig/ShadowRocketImportService.aspx?urk=${token}&t=ssaead", Subscription]);
     }
 }
 

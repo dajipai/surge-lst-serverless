@@ -108,7 +108,7 @@ export class ServerlessConnection<S> implements Connection<S> {
         return this.chain({ type: 'setStatus', status })
     }
 
-    setBody(body: unknown): ServerlessConnection<ResponseEnded> {
+    setBody(body: String | Buffer): ServerlessConnection<ResponseEnded> {
         return this.chain({ type: 'setBody', body }, true)
     }
 
@@ -116,7 +116,7 @@ export class ServerlessConnection<S> implements Connection<S> {
         return this.chain(endResponse, true)
     }
 
-    pipeStream(stream: Readable): ServerlessConnection<ResponseEnded> {
+    pipeStream(stream: NodeJS.ReadableStream): ServerlessConnection<ResponseEnded> {
         return this.chain({ type: 'pipeStream', stream }, true)
     }
 }
@@ -225,7 +225,7 @@ export function firstOfNonEmptyArray<C extends t.Mixed>(
     const arr = t.array(codec)
     return new t.Type(
         name,
-        (u): u is t.TypeOf<C> => arr.is(u) && isNonEmpty(u) && codec.is(u[0]) ,
+        (u): u is t.TypeOf<C> => arr.is(u) && isNonEmpty(u) && codec.is(u[0]),
         (u, c) =>
             either.chain(arr.validate(u, c), as => {
                 const onea = fromArray(as)
