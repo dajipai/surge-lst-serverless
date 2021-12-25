@@ -17,6 +17,7 @@ export const nodeListParameters = t.intersection([t.type({
     url: withMessage(firstOfNonEmptyArray(t.string), () => "cannot assemble url"),
     emoji: withFallback(firstOfNonEmptyArray(BooleanFromString), true),
     udpRelay: withFallback(firstOfNonEmptyArray(BooleanFromString), false),
+    tfo: withFallback(firstOfNonEmptyArray(BooleanFromString), false),
     // never failed
     sort: withFallback(serverInfoSortableKeyCodec, [])
 }), serverFilters]);

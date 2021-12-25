@@ -75,7 +75,7 @@ providerLoader.forEachResolver((name, resolver) => {
       H.ichain<CombinedParameters, StatusOpen, ResponseEnded, Error, void>((parameters) =>
         pipe(
           H.fromTaskEither(TE.tryCatch(() =>
-            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.sort),
+            (new ProxyContext(new provider(), parameters.software)).handle(parameters.url, parameters, resolver, parameters.emoji, parameters.udpRelay, parameters.tfo, parameters.sort),
             (err) => err as Error)),
           H.ichain<[string, {[key: string]: string}], StatusOpen, ResponseEnded, Error, void>(([body, headers]) =>
             pipe(
