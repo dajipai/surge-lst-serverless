@@ -62,23 +62,17 @@ functions:
       - http:
           path: boslife
           method: get
-  conair:
-    handler: src/bridge.conair
-    events:
-      - http:
-          path: conair
-          method: get
   maying:
     handler: src/bridge.maying
     events:
       - http:
           path: maying
           method: get
-  n3ro:
-    handler: src/bridge.n3ro
+  flower:
+    handler: src/bridge.flower
     events:
       - http:
-          path: n3ro
+          path: flower
           method: get
   nex:
     handler: src/bridge.nexitally
@@ -97,12 +91,6 @@ functions:
     events:
       - http:
           path: lanmei
-          method: get
-  anrun:
-    handler: src/bridge.anrun
-    events:
-      - http:
-          path: anrun
           method: get
   immtel:
     handler: src/bridge.immtel
