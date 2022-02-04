@@ -29,7 +29,7 @@ jobs:
       - run: tsc
         name: Build TypeScript
       - name: Deploy to AWS Lambda
-        uses: serverless/github-action@v2.17.1
+        uses: serverless/github-action@v3
         with:
           args: deploy --stage production -v
         env:
