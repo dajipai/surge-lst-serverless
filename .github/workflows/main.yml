@@ -30,6 +30,7 @@ jobs:
         name: Build TypeScript
       - name: Deploy to AWS Lambda
         uses: serverless/github-action@v3
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           args: deploy --stage production -v
         env:
