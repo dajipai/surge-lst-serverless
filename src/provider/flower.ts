@@ -18,7 +18,7 @@ class FlowerResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://flowercloud.yt/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}&sip002=1", Subscription]);
+        return new Array(["https://flowercloud.xyz/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}&sip002=1", Subscription]);
     }
 }
 
