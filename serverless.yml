@@ -110,3 +110,9 @@ functions:
       - http:
           path: blinkload
           method: get
+  tag:
+    handler: src/bridge.tag
+    events:
+      - http:
+          path: tag
+          method: get
