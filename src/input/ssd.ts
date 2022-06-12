@@ -2,7 +2,6 @@ import { ProxiesInput } from ".";
 import axios from "axios";
 import { Base64 } from "js-base64";
 import { Proxy, ShadowsocksProxy } from "../proxy";
-import { URL } from "url";
 Base64.extendString();
 
 export const SSD_SCHEME = "ssd://";
@@ -44,7 +43,7 @@ export class SSDSubscription implements ProxiesInput {
     async proxies(url: string) : Promise<Array<[string, Proxy]>> {
         let resp = await axios.get<string>(url);
         if (resp.data.startsWith(SSD_SCHEME)) {
-            const ssdData: SSDSchema = JSON.parse(Base64.decode(resp.data.substr(SSD_SCHEME.length)));
+            const ssdData: SSDSchema = JSON.parse(Base64.decode(resp.data.substring(SSD_SCHEME.length)));
             const port = ssdData.port;
             const passwd = ssdData.password;
             const encryption = ssdData.encryption;
