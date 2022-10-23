@@ -23,7 +23,7 @@ class YTOOSSResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://ytoo.xyz/modules/servers/V2raySocks/osubscribe.php?sid=${id}&token=${token}&sip002=1", Subscription]);
+        return new Array(["https://api.oxycontin.cc/osubscribe.php?sid=${id}&token=${token}&sip002=1", Subscription]);
     }
 }
 
