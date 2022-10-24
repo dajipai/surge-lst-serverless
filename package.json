@@ -1,6 +1,10 @@
 {
   "name": "surge-lst-serverless",
   "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "dev": "sls offline"
+  },
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "jest": "^28.1.1",

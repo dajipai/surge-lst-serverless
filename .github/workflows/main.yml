@@ -26,8 +26,7 @@ jobs:
         name: Install dependencies
       - run: npx jest
         name: Jest
-      - run: tsc
-        name: Build TypeScript
+      - run: npm run build
       - name: Deploy to AWS Lambda
         uses: serverless/github-action@v3
         if: ${{ github.ref == 'refs/heads/master' }}
