@@ -23,7 +23,7 @@ class YTOOSSResolver extends Resolver {
     }
 
     providerTemplates(): Array<[string, new () => ProxiesInput]> {
-        return new Array(["https://api.wcc.best/sub?target=ss&url=https%3A%2F%2Fapi.oxycontin.cc%2Fosubscribe.php%3Fsid%3D${id}%26token%3D${token}%26sip002%3D1&insert=false&config=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FSleepyHeeead%2Fsubconverter-config%40master%2Fremote-config%2Fcustomized%2Fytoo.ini&emoji=true&list=false&tfo=false&scv=true&fdn=false&sort=false", Subscription]);
+        return new Array(["https://api.wcc.best/sub?target=ss&url=https%3A%2F%2Fapi.oxycontin.cc%2Fosubscribe.php%3Fsid%3D${id}%26token%3D${token}%26sip002%3D1&insert=false&config=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FSleepyHeeead%2Fsubconverter-config%40master%2Fremote-config%2Fcustomized%2Fytoo.ini&emoji=false&list=false&tfo=false&scv=true&fdn=false&sort=false", Subscription]);
     }
 }
 
