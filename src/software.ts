@@ -35,7 +35,7 @@ export const softwareFromUserAgent = t.string.pipe(new t.Type<Software, string, 
                 }
                 return t.success(new Surge(<SemVer>coerce(UA[1]), "ios"));
             } else if (userAgent.includes("tvOS")) {
-                let UA = userAgent.match(/^surge tvOS\/(\d+)/);
+                let UA = userAgent.match(/^Surge tvOS\/(\d+)/);
                 if (UA === null) {
                     return t.failure(input, context);
                 }
