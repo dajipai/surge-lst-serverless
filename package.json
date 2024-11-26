@@ -31,7 +31,7 @@
     "js-base64": "^3.7.5",
     "js-yaml": "^4.1.0",
     "runtypes": "^6.6.0",
-    "semver": "^7.3.8",
+    "semver": "^7.5.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   }
