@@ -24,7 +24,7 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs24.x
   region: ap-east-1
 #  stage: dev
 #  region: us-east-1
@@ -56,63 +56,15 @@ package:
    - dist/**
 
 functions:
-  boslife:
-    handler: src/bridge.boslife
-    events:
-      - http:
-          path: boslife
-          method: get
-  maying:
-    handler: src/bridge.maying
-    events:
-      - http:
-          path: maying
-          method: get
-  flower:
-    handler: src/bridge.flower
-    events:
-      - http:
-          path: flower
-          method: get
   nex:
     handler: src/bridge.nexitally
     events:
       - http:
           path: nex
           method: get
-  aaex:
-    handler: src/bridge.aaex
-    events:
-      - http:
-          path: aaex
-          method: get
-  lanmei:
-    handler: src/bridge.lanmei
-    events:
-      - http:
-          path: lanmei
-          method: get
-  immtel:
-    handler: src/bridge.immtel
-    events:
-      - http:
-          path: immtel
-          method: get
   ytoo-ss:
     handler: src/bridge.ytoo_ss
     events:
       - http:
           path: ytoo/ss
-          method: get
-  blinkload:
-    handler: src/bridge.blinkload
-    events:
-      - http:
-          path: blinkload
-          method: get
-  tag:
-    handler: src/bridge.tag
-    events:
-      - http:
-          path: tag
           method: get

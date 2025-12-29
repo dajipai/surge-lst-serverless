@@ -121,7 +121,7 @@ export class ServerlessConnection<S> implements Connection<S> {
     }
 }
 
-function parseCookie(res: APIGatewayProxyResult): { [key: string]: string } {
+function parseCookie(res: APIGatewayProxyResult): Record<string, string | undefined> {
     if (res.headers === undefined) {
         res.headers = {}
     }
@@ -139,7 +139,7 @@ function setCookie(res: APIGatewayProxyResult, newCookie: string): void {
     }
 }
 
-function setCookies(res: APIGatewayProxyResult, cookies: { [key: string]: string }): void {
+function setCookies(res: APIGatewayProxyResult, cookies: Record<string, string | undefined>): void {
     if (res.headers === undefined) {
         res.headers = {}
     }
